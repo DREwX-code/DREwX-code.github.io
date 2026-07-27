@@ -1,126 +1,292 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>DREwX — Browser Tools & Web Engineering</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #0f0f1a;
-      font-family: 'Segoe UI', sans-serif;
-      overflow: hidden;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Andrew, alias DREwX, conçoit des userscripts et outils web performants, intuitifs et utiles au quotidien.">
+  <meta name="theme-color" content="#f5f1e8">
+  <meta property="og:title" content="DREwX — Userscripts soignés pour un web plus fluide">
+  <meta property="og:description" content="Andrew, alias DREwX, conçoit des userscripts et outils web performants, intuitifs et utiles au quotidien.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://drewx-code.github.io/">
+  <link rel="canonical" href="https://drewx-code.github.io/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%231f1e1b'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='Georgia,serif' font-size='38' font-style='italic' fill='%23f7f4ed'%3ED%3C/text%3E%3C/svg%3E">
+  <title>DREwX — Userscripts soignés pour un web plus fluide</title>
+  <script>
+    (() => {
+      try {
+        const saved = localStorage.getItem('drewx-theme');
+        document.documentElement.dataset.theme = saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      } catch {
+        document.documentElement.dataset.theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;520;600;650;720&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Andrew",
+      "alternateName": "DREwX",
+      "url": "https://drewx-code.github.io/",
+      "sameAs": [
+        "https://github.com/DREwX-code",
+        "https://greasyfork.org/users/1259433-d%E2%84%9D-wx",
+        "https://www.reddit.com/user/DrewXDev/"
+      ],
+      "knowsAbout": ["JavaScript", "Userscripts", "UI/UX", "Web automation", "Open source"]
     }
-
-    /* Animated background */
-    body::before {
-      content: '';
-      position: fixed;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      animation: pulse 4s ease-in-out infinite;
-      pointer-events: none;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-      50%       { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
-    }
-
-    .container {
-      text-align: center;
-      padding: 3rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    .links {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: 2rem;
-      flex-wrap: wrap;
-    }
-
-    .links a {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.55rem 1.3rem;
-      background: rgba(99,102,241,0.12);
-      border: 1px solid rgba(99,102,241,0.35);
-      border-radius: 999px;
-      color: #a78bfa;
-      font-size: 0.9rem;
-      text-decoration: none;
-      transition: background 0.2s, border-color 0.2s, color 0.2s;
-    }
-
-    .links a:hover {
-      background: rgba(99,102,241,0.28);
-      border-color: #6366f1;
-      color: #fff;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: #ffffff;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.75rem;
-    }
-
-    h1 span {
-      background: linear-gradient(135deg, #6366f1, #a78bfa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    p {
-      font-size: 1.1rem;
-      color: #94a3b8;
-      margin-bottom: 2.5rem;
-      line-height: 1.6;
-    }
-
-
-  </style>
+  </script>
 </head>
-<body>
-  <div class="container">
-    <h1>Site <span>Under Construction</span></h1>
-    <p>I'm currently working on it.</p>
+<body data-page="home">
+  <a class="skip-link" href="#content" data-i18n="skipLink">Aller au contenu</a>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="scroll-progress" data-scroll-progress aria-hidden="true"></div>
 
-    <div class="links">
-      <a href="https://github.com/DREwX-code" target="_blank">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.84 1.237 1.84 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
-        GitHub
+  <header class="site-header" data-header>
+    <div class="nav wrap">
+      <a class="brand" href="#top" aria-label="DREwX, accueil" data-i18n-aria="homeLabel">
+        <span class="brand-mark" aria-hidden="true">D</span>
+        <span>DREwX</span>
       </a>
-      <a href="https://greasyfork.org/users/1259433-d%E2%84%9D-wx" target="_blank">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="18" height="18" aria-hidden="true">
-            <circle fill="#000" r="48" cy="48" cx="48"/>
-            <clipPath id="GreasyForkCircleClip"><circle r="47" cy="48" cx="48"/></clipPath>
-            <text fill="#fff" clip-path="url(#GreasyForkCircleClip)" text-anchor="middle" font-size="18" font-family="'DejaVu Sans', Verdana, Arial, sans-serif" letter-spacing="-0.75" pointer-events="none">
-                <tspan x="51" y="13">= null;</tspan>
-                <tspan x="56" y="35">function init</tspan>
-                <tspan x="49" y="57">for (var i = 0;</tspan>
-                <tspan x="50" y="79">XmlHttpReq</tspan>
-            </text>
-            <path fill="#000" stroke="#000" stroke-width="4" d="M 44,29 a6.36,6.36 0,0,1 0,9 l36,36 a3.25,3.25 0,0,1 -6.5,6.5 l-36,-36 a6.36,6.36 0,0,1 -9,0 l-19,-19 a1.77,1.77 0,0,1 0,-2.5 l13,-13 a1.77,1.77 0,0,1 2.5,0 z"/>
-            <path fill="#fff" d="M 44,29 a6.36,6.36 0,0,1 0,9 l36,36 a3.25,3.25 0,0,1 -6.5,6.5 l-36,-36 a6.36,6.36 0,0,1 -9,0 l-19,-19 a1.77,1.77 0,0,1 2.5,-2.5 l14,14 4,-4 -14,-14 a1.77,1.77 0,0,1 2.5,-2.5 l14,14 4,-4 -14,-14 a1.77,1.77 0,0,1 2.5,-2.5 z"/>
-        </svg>
-        GreasyFork
-      </a>
+
+      <nav class="nav-desktop" aria-label="Navigation principale" data-i18n-aria="navLabel">
+        <a href="#work" data-i18n="navWork">Projets</a>
+        <a href="#approach" data-i18n="navApproach">Approche</a>
+        <a href="#about" data-i18n="navAbout">À propos</a>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="language-switch" role="group" aria-label="Choisir la langue" data-i18n-aria="languageLabel">
+          <button type="button" data-language="fr" aria-pressed="true">FR</button>
+          <button type="button" data-language="en" aria-pressed="false">EN</button>
+        </div>
+        <button class="icon-button" type="button" data-theme-toggle aria-label="Passer au thème sombre">
+          <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"></path></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.2A8.5 8.5 0 0 1 8.8 4a8.5 8.5 0 1 0 11.2 11.2Z"></path></svg>
+        </button>
+        <button class="icon-button menu-toggle" type="button" data-menu-toggle aria-controls="mobile-menu" aria-expanded="false" aria-label="Ouvrir le menu"><span class="menu-lines" aria-hidden="true"><i></i><i></i></span></button>
+      </div>
     </div>
+  </header>
+
+  <div class="mobile-panel" id="mobile-menu" data-mobile-panel aria-hidden="true" inert>
+    <nav aria-label="Navigation mobile" data-i18n-aria="mobileNavLabel">
+      <a href="#work"><span>01</span><b data-i18n="navWork">Projets</b></a>
+      <a href="#approach"><span>02</span><b data-i18n="navApproach">Approche</b></a>
+      <a href="#about"><span>03</span><b data-i18n="navAbout">À propos</b></a>
+      <a href="projects.html"><span>04</span><b data-i18n="navAllProjects">Tous les projets</b></a>
+    </nav>
   </div>
+
+  <main id="content" tabindex="-1">
+    <section class="hero wrap" id="top" aria-labelledby="hero-title">
+      <div class="hero-copy reveal visible">
+        <span class="eyebrow" data-i18n="heroEyebrow">French Developer · Userscript Engineer</span>
+        <h1 class="display-title" id="hero-title" data-i18n-html="heroTitle">Des userscripts <em>soignés</em> pour un web plus fluide.</h1>
+        <p data-i18n="heroCopy">Je transforme les petites frictions du navigateur en outils rapides, intuitifs et profondément intégrés à vos habitudes.</p>
+        <div class="hero-actions">
+          <a class="button" href="#work"><span data-i18n="heroPrimary">Explorer les projets</span><span class="arrow" aria-hidden="true">→</span></a>
+          <a class="text-link" href="https://greasyfork.org/users/1259433-d%E2%84%9D-wx" target="_blank" rel="noopener noreferrer"><span data-i18n="heroSecondary">Profil Greasy Fork</span><span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="availability"><span class="availability-dot" aria-hidden="true"></span><span data-i18n="availability">Ouvert aux idées et collaborations</span></div>
+      </div>
+
+      <div class="browser-scene reveal visible" data-delay="100" role="img" aria-label="Aperçu interactif d’un userscript DREwX" data-i18n-aria="previewLabel">
+        <div class="browser-window">
+          <div class="browser-bar">
+            <span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span>
+            <div class="address-bar"><span>current.page</span><span class="script-status" data-i18n="demoStatus">Userscript actif</span></div>
+          </div>
+          <div class="demo-body">
+            <div class="demo-kicker" data-i18n="demoKicker">Ultimate Translator</div>
+            <div class="demo-title" data-i18n="demoTitle">Comprendre devrait être instantané.</div>
+            <div class="demo-line"></div><div class="demo-line"></div><div class="demo-line"></div>
+            <span class="selected-text" data-i18n="demoSource">Select any text, anywhere.</span>
+            <div class="translation-card">
+              <div class="translation-head"><span data-i18n="demoDirection">EN → FR</span><span>Ctrl + L</span></div>
+              <p data-i18n="demoResult">Sélectionnez n’importe quel texte, où que vous soyez.</p>
+            </div>
+          </div>
+        </div>
+        <div class="floating-hint" aria-hidden="true">
+          <strong data-i18n="demoHint">Un raccourci.</strong>
+          <span data-i18n="demoHintCopy">Toutes les langues, instantanément.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="proof-strip" aria-label="Chiffres clés" data-i18n-aria="proofLabel">
+      <div class="proof-grid wrap">
+        <div class="proof-item" data-i18n="proofIntro">Conçus pour être adoptés en quelques secondes et gardés au quotidien.</div>
+        <div class="proof-item"><strong>7</strong><span data-i18n="publicScripts">Scripts publics</span></div>
+        <div class="proof-item"><strong>3.7k+</strong><span data-i18n="installs">Installations cumulées</span></div>
+        <div class="proof-item"><strong>4</strong><span data-i18n="flagshipProjects">Projets phares</span></div>
+      </div>
+    </section>
+
+    <section class="section wrap" id="work" aria-labelledby="work-title">
+      <div class="section-heading reveal" data-anchor-focus>
+        <div>
+          <span class="eyebrow" data-i18n="workEyebrow">Travaux sélectionnés</span>
+          <h2 class="display-title" id="work-title" data-i18n-html="workTitle">Des outils utiles.<br>Des détails qui comptent.</h2>
+        </div>
+        <p data-i18n="workIntro">Chaque projet part d’un usage réel : accélérer un workflow, nettoyer une interface ou rendre une fonction complexe presque invisible.</p>
+      </div>
+
+      <div class="featured-grid">
+        <article class="feature-card reveal" data-delay="0">
+          <div class="feature-visual premium-visual">
+            <div class="visual-aura"></div>
+            <div class="product-frame premium-frame" data-product-scene>
+              <div class="product-toolbar"><span class="window-dots"><i></i><i></i><i></i></span><span class="product-address">greasyfork.org/scripts</span><span class="toolbar-action">Dℝ∃wX</span></div>
+              <div class="premium-app" data-demo-theme="dark">
+                <div class="premium-topbar"><span class="gf-brand"><img src="assets/images/greasyfork.svg" width="96" height="96" alt="">Greasy Fork</span><span class="premium-nav">Scripts&nbsp;&nbsp; Forum&nbsp;&nbsp; Help</span><span class="premium-theme-controls"><button type="button" data-demo-action="gf-theme" data-demo-theme-value="light" aria-label="Light theme"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.5 1.5M17.6 17.6l1.5 1.5M2 12h2M20 12h2M4.9 19.1l1.5-1.5M17.6 6.4l1.5-1.5"></path></svg></button><button class="is-active" type="button" data-demo-action="gf-theme" data-demo-theme-value="system" aria-label="System theme"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"></rect><path d="M8 22h8M12 18v4"></path></svg></button><button type="button" data-demo-action="gf-theme" data-demo-theme-value="dark" aria-label="Dark theme"><svg viewBox="0 0 24 24"><path d="M20 15.2A8.5 8.5 0 0 1 8.8 4 8.5 8.5 0 1 0 20 15.2Z"></path></svg></button></span></div>
+                <div class="gf-script-list">
+                  <div class="gf-script-row gf-primary-row">
+                    <div class="gf-script-heading"><img src="assets/images/products/greasyfork-premium.png" width="144" height="144" alt=""><span><strong>GreasyFork Premium</strong><small>Modern themes, favorites, notes and script previews</small></span></div>
+                    <div class="gf-script-meta"><span>Daily installs 22</span><span>Total installs 1.3k</span><span>Ratings 51</span></div>
+                    <div class="gf-script-actions">
+                      <button class="gf-install-button" type="button" data-demo-action="gf-install" aria-label="Install GreasyFork Premium"><svg viewBox="0 0 24 24"><path d="M12 3v11"></path><path d="m7 11 5 5 5-5"></path><path d="M5 20h14"></path></svg><span>Install</span></button>
+                      <button class="gf-action-button gf-note-button" type="button" data-demo-action="gf-note" aria-label="Open note"><svg viewBox="0 0 24 24"><path d="M5 4.5h14v15H5z"></path><path d="M8 8h8"></path><path d="M8 12h5"></path><path d="M16 19.5v-4h3"></path></svg><span class="product-cursor premium-cursor"><svg viewBox="0 0 24 24"><path d="M5 3l13 9-6 1.4 3.4 5.5-2.8 1.7-3.2-5.5L5 19V3Z"></path></svg></span></button>
+                      <button class="gf-action-button gf-detail-button" type="button" data-demo-action="gf-detail" aria-label="Show details"><svg viewBox="0 0 24 24"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg></button>
+                      <button class="gf-star-button" type="button" data-demo-action="gf-favorite" aria-label="Add to favorites"><svg viewBox="0 0 24 24"><path d="m12 3.6 2.55 5.17 5.7.83-4.12 4.01.97 5.67L12 16.6l-5.1 2.68.97-5.67L3.75 9.6l5.7-.83L12 3.6Z"></path></svg></button>
+                    </div>
+                    <div class="gf-note-panel"><div class="gf-note-editor"><span>Useful on every Greasy Fork visit.</span><div class="gf-note-controls"><button type="button" data-demo-action="gf-note-delete" data-i18n="noteDelete">Supprimer</button><button type="button" data-demo-action="gf-note-done" data-i18n="noteDone">Terminé</button></div></div></div>
+                  </div>
+                  <div class="gf-script-row gf-secondary-row"><div class="gf-script-heading"><img src="assets/images/products/omnichat-exporter.png" width="144" height="144" alt=""><span><strong>OmniChat Exporter</strong><small>Export any AI conversation instantly</small></span></div><div class="gf-script-meta"><span>Daily installs 9</span><span>Total installs 729</span><span>Ratings 8</span></div><div class="gf-script-actions"><button class="gf-install-button" type="button" data-demo-action="gf-install" aria-label="Install OmniChat Exporter"><svg viewBox="0 0 24 24"><path d="M12 3v11"></path><path d="m7 11 5 5 5-5"></path><path d="M5 20h14"></path></svg><span>Install</span></button><button class="gf-action-button gf-note-button" type="button" data-demo-action="gf-note" aria-label="Open note"><svg viewBox="0 0 24 24"><path d="M5 4.5h14v15H5z"></path><path d="M8 8h8"></path><path d="M8 12h5"></path><path d="M16 19.5v-4h3"></path></svg></button><button class="gf-action-button gf-detail-button" type="button" data-demo-action="gf-detail" aria-label="Show details"><svg viewBox="0 0 24 24"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg></button><button class="gf-star-button" type="button" data-demo-action="gf-favorite" aria-label="Add to favorites"><svg viewBox="0 0 24 24"><path d="m12 3.6 2.55 5.17 5.7.83-4.12 4.01.97 5.67L12 16.6l-5.1 2.68.97-5.67L3.75 9.6l5.7-.83L12 3.6Z"></path></svg></button></div></div>
+                  <div class="gf-script-row gf-tertiary-row"><div class="gf-script-heading"><img src="assets/images/products/ultimate-translator.png" width="144" height="144" alt=""><span><strong>Ultimate Translator</strong><small>Translate selected text instantly</small></span></div><div class="gf-script-meta"><span>Daily installs 7</span><span>Total installs 408</span><span>Ratings 2</span></div><div class="gf-script-actions"><button class="gf-install-button" type="button" data-demo-action="gf-install" aria-label="Install Ultimate Translator"><svg viewBox="0 0 24 24"><path d="M12 3v11"></path><path d="m7 11 5 5 5-5"></path><path d="M5 20h14"></path></svg><span>Install</span></button><button class="gf-action-button gf-note-button" type="button" data-demo-action="gf-note" aria-label="Open note"><svg viewBox="0 0 24 24"><path d="M5 4.5h14v15H5z"></path><path d="M8 8h8"></path><path d="M8 12h5"></path><path d="M16 19.5v-4h3"></path></svg></button><button class="gf-action-button gf-detail-button" type="button" data-demo-action="gf-detail" aria-label="Show details"><svg viewBox="0 0 24 24"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg></button><button class="gf-star-button" type="button" data-demo-action="gf-favorite" aria-label="Add to favorites"><svg viewBox="0 0 24 24"><path d="m12 3.6 2.55 5.17 5.7.83-4.12 4.01.97 5.67L12 16.6l-5.1 2.68.97-5.67L3.75 9.6l5.7-.83L12 3.6Z"></path></svg></button></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="feature-body">
+            <div class="feature-top"><span class="feature-number">01</span><span class="project-type" data-i18n="projectFeatured">Projet phare</span></div>
+            <h3>GreasyFork Premium</h3>
+            <p data-i18n="premiumDesc">Une refonte complète de Greasy Fork et Sleazy Fork avec thèmes modernes, favoris, aperçu des scripts et outils de productivité.</p>
+            <div class="tag-list"><span class="tag">JavaScript</span><span class="tag">UI / UX</span><span class="tag" data-i18n="tagProductivity">Productivité</span></div>
+            <div class="card-links"><a href="https://github.com/DREwX-code/greasyfork-premium" target="_blank" rel="noopener noreferrer"><span data-i18n="sourceCode">Code source</span> ↗</a><a href="https://greasyfork.org/scripts/562938-greasyfork-premium" target="_blank" rel="noopener noreferrer"><span data-i18n="liveProject">Ouvrir</span> ↗</a></div>
+          </div>
+        </article>
+
+        <article class="feature-card reveal" data-delay="80">
+          <div class="feature-visual chat-visual">
+            <div class="visual-aura"></div>
+            <div class="product-frame omni-frame" data-product-scene>
+              <div class="product-toolbar"><span class="window-dots"><i></i><i></i><i></i></span><span class="product-address">claude.ai/Project-review</span><span class="omni-download-indicator"><svg viewBox="0 0 24 24"><circle class="omni-download-track" cx="12" cy="12" r="9"></circle><circle class="omni-download-progress" cx="12" cy="12" r="9" pathLength="1"></circle><path class="omni-download-icon" d="M12 6v8m0 0 3-3m-3 3-3-3M8 17h8"></path><path class="omni-download-check" d="m8 12 2.6 2.6L16.5 9"></path></svg></span></div>
+              <div class="omni-app">
+                <div class="omni-head"><span class="omni-platform-label">Claude</span><strong>Project review</strong><div class="omni-native-actions"><span class="omni-share-button">Share</span><button class="omni-export-button" type="button" data-demo-action="omni-export" data-i18n-aria="exportConversation" aria-label="Exporter la conversation"><svg viewBox="0 0 24 24"><path d="M12 3v10m0 0 4-4m-4 4-4-4M4 15v4h16v-4"></path></svg></button></div></div>
+                <div class="omni-thread"><span class="omni-role">You</span><p>Make this workflow easier to reuse.</p><span class="omni-role assistant">Claude</span><p>I’ll organize it into a clean, portable structure.</p><div class="omni-code"><div class="omni-code-head"><span><i></i><i></i><i></i></span><b>export.md</b></div><div class="omni-code-line"><em>#</em><span>Project review</span></div><div class="omni-code-line"><em>−</em><span>Reusable workflow</span></div><div class="omni-code-line muted"><em>```</em><span>markdown</span></div></div><div class="omni-message-actions"><button type="button" data-demo-action="omni-copy" data-i18n-aria="demoCopy" aria-label="Copier"><svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"></path></svg></button><button type="button" data-demo-action="omni-speak" data-i18n-aria="demoListen" aria-label="Écouter"><svg viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4V5Z"></path><path d="M16 8.5a5 5 0 0 1 0 7"></path><path d="M19 5a10 10 0 0 1 0 14"></path></svg></button><button type="button" data-demo-action="omni-vote-up" data-i18n-aria="demoHelpful" aria-label="Utile"><svg viewBox="0 0 24 24"><path d="M7 10v10H3V10h4Zm0 9h9.2a2 2 0 0 0 1.9-1.4l2.2-7A2 2 0 0 0 18.4 8H14l.6-3.1A2.4 2.4 0 0 0 12.2 2L7 10Z"></path></svg></button><button type="button" data-demo-action="omni-vote-down" data-i18n-aria="demoNotHelpful" aria-label="Pas utile"><svg viewBox="0 0 24 24"><path d="M7 14V4H3v10h4Zm0-9h9.2a2 2 0 0 1 1.9 1.4l2.2 7a2 2 0 0 1-1.9 2.6H14l.6 3.1a2.4 2.4 0 0 1-2.4 2.9L7 14Z"></path></svg></button><button type="button" data-demo-action="omni-retry" data-i18n-aria="demoRetry" aria-label="Régénérer"><svg viewBox="0 0 24 24"><path d="M20 7v5h-5"></path><path d="M19 12a7.5 7.5 0 1 0-2.2 5.3"></path></svg></button><button class="omni-inline-export" type="button" data-demo-action="omni-export" data-i18n-aria="exportConversation" aria-label="Exporter la conversation"><svg viewBox="0 0 24 24"><path d="M12 3v10m0 0 4-4m-4 4-4-4M4 15v4h16v-4"></path></svg></button></div></div>
+              </div>
+              <div class="omni-format-menu omni-format-menu--header" data-export-menu="header"><button type="button" data-demo-action="omni-format" data-export-format="txt">TXT</button><button type="button" data-demo-action="omni-format" data-export-format="pdf">PDF</button><button type="button" data-demo-action="omni-format" data-export-format="json">JSON</button><button class="omni-markdown-option" type="button" data-demo-action="omni-format" data-export-format="markdown">Markdown (MD)</button></div>
+              <div class="omni-format-menu omni-format-menu--inline" data-export-menu="inline"><button type="button" data-demo-action="omni-format" data-export-format="txt">TXT</button><button type="button" data-demo-action="omni-format" data-export-format="pdf">PDF</button><button type="button" data-demo-action="omni-format" data-export-format="json">JSON</button><button class="omni-markdown-option" type="button" data-demo-action="omni-format" data-export-format="markdown">Markdown (MD)</button></div>
+              <span class="product-cursor omni-cursor"><svg viewBox="0 0 24 24"><path d="M5 3l13 9-6 1.4 3.4 5.5-2.8 1.7-3.2-5.5L5 19V3Z"></path></svg></span>
+            </div>
+          </div>
+          <div class="feature-body">
+            <div class="feature-top"><span class="feature-number">02</span><span class="project-type" data-i18n="projectUserscript">Userscript</span></div>
+            <h3>OmniChat Exporter</h3>
+            <p data-i18n="omnichatDesc">Des exports propres de ChatGPT, Claude, Gemini, Grok et DeepSeek en TXT, PDF, JSON ou Markdown, structure et blocs de code préservés.</p>
+            <div class="tag-list"><span class="tag">JavaScript</span><span class="tag" data-i18n="tagExport">Export</span><span class="tag" data-i18n="tagWorkflow">Workflow</span></div>
+            <div class="card-links"><a href="https://github.com/DREwX-code/omnichat-exporter" target="_blank" rel="noopener noreferrer"><span data-i18n="sourceCode">Code source</span> ↗</a><a href="https://greasyfork.org/scripts/567743-omnichat-exporter-export-any-ai-chat-instantly" target="_blank" rel="noopener noreferrer"><span data-i18n="liveProject">Ouvrir</span> ↗</a></div>
+          </div>
+        </article>
+
+        <article class="feature-card reveal" data-delay="0">
+          <div class="feature-visual translator-visual">
+            <div class="visual-aura"></div>
+            <div class="product-frame translator-frame" data-product-scene>
+              <div class="product-toolbar"><span class="window-dots"><i></i><i></i><i></i></span><span class="product-address">reading.page/article</span><span class="toolbar-action">Ctrl + L</span></div>
+              <div class="reader-page"><span class="reader-kicker">DESIGN NOTES · 06 MIN</span><strong>Interfaces should feel effortless.</strong><i></i><i></i><p>Good tools stay close to the task and <mark>never interrupt your flow.</mark></p><i class="short"></i>
+                <div class="utst-selection-bubble"><button class="utst-bubble-close" type="button" data-demo-action="utst-close" data-i18n-aria="demoClose" aria-label="Fermer">×</button><i></i><button class="utst-bubble-action" type="button" data-demo-action="utst-open" data-i18n-aria="demoTranslate" aria-label="Traduire"><svg viewBox="0 0 24 24"><path d="M5 8l6 6"></path><path d="M4 14l6-6 2-3"></path><path d="M2 5h12"></path><path d="M7 2h1"></path><path d="M22 22l-5-10-5 10"></path><path d="M14 18h6"></path></svg></button></div>
+              </div>
+              <div class="translator-popover"><div class="translator-handle"><img src="assets/images/products/ultimate-translator.png" width="144" height="144" alt=""><i></i><span>Ultimate Translator</span></div><span class="utst-close-button"><svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"></path></svg></span><div class="language-row"><span>English <b>▾</b></span><i>→</i><span>Français <b>▾</b></span></div><div class="translation-result">ne jamais interrompre votre flux.</div><div class="translation-tools"><span><svg viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4V5z"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></span><span class="utst-copy-button"><svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></span><span><svg viewBox="0 0 24 24"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></span><span><svg viewBox="0 0 24 24"><path d="M12 15.5C13.933 15.5 15.5 13.933 15.5 12C15.5 10.067 13.933 8.5 12 8.5C10.067 8.5 8.5 10.067 8.5 12C8.5 13.933 10.067 15.5 12 15.5Z"></path><path d="M19.4 15C19.2669 15.3016 19.2272 15.6362 19.286 15.9606C19.3448 16.285 19.4995 16.5843 19.73 16.82L19.79 16.88C19.976 17.0657 20.1235 17.2863 20.2241 17.5291C20.3248 17.7719 20.3766 18.0322 20.3766 18.295C20.3766 18.5578 20.3248 18.8181 20.2241 19.0609C20.1235 19.3037 19.976 19.5243 19.79 19.71C19.6043 19.896 19.3837 20.0435 19.1409 20.1441C18.8981 20.2448 18.6378 20.2966 18.375 20.2966C18.1122 20.2966 17.8519 20.2448 17.6091 20.1441C17.3663 20.0435 17.1457 19.896 16.96 19.71L16.9 19.65C16.6643 19.4195 16.365 19.2648 16.0406 19.206C15.7162 19.1472 15.3816 19.1869 15.08 19.32C14.7842 19.4468 14.532 19.6572 14.3543 19.9255C14.1766 20.1938 14.0813 20.5082 14.08 20.83V21C14.08 21.5304 13.8693 22.0391 13.4942 22.4142C13.1191 22.7893 12.6104 23 12.08 23C11.5496 23 11.0409 22.7893 10.6658 22.4142C10.2907 22.0391 10.08 21.5304 10.08 21V20.91C10.0723 20.579 9.96512 20.258 9.77251 19.9887C9.5799 19.7194 9.31074 19.5143 9 19.4C8.69838 19.2669 8.36381 19.2272 8.03941 19.286C7.71502 19.3448 7.41568 19.4995 7.18 19.73L7.12 19.79C6.93425 19.976 6.71368 20.1235 6.47088 20.2241C6.22808 20.3248 5.96783 20.3766 5.705 20.3766C5.44217 20.3766 5.18192 20.3248 4.93912 20.2241C4.69632 20.1235 4.47575 19.976 4.29 19.79C4.10405 19.6043 3.95653 19.3837 3.85588 19.1409C3.75523 18.8981 3.70343 18.6378 3.70343 18.375C3.70343 18.1122 3.75523 17.8519 3.85588 17.6091C3.95653 17.3663 4.10405 17.1457 4.29 16.96L4.35 16.9C4.58054 16.6643 4.73519 16.365 4.794 16.0406C4.85282 15.7162 4.81312 15.3816 4.68 15.08C4.55324 14.7842 4.34276 14.532 4.07447 14.3543C3.80618 14.1766 3.49179 14.0813 3.17 14.08H3C2.46957 14.08 1.96086 13.8693 1.58579 13.4942C1.21071 13.1191 1 12.6104 1 12.08C1 11.5496 1.21071 11.0409 1.58579 10.6658C1.96086 10.2907 2.46957 10.08 3 10.08H3.09C3.42099 10.0723 3.742 9.96512 4.0113 9.77251C4.28059 9.5799 4.48572 9.31074 4.6 9C4.73312 8.69838 4.77282 8.36381 4.714 8.03941C4.65519 7.71502 4.50054 7.41568 4.27 7.18L4.21 7.12C4.02405 6.93425 3.87653 6.71368 3.77588 6.47088C3.67523 6.22808 3.62343 5.96783 3.62343 5.705C3.62343 5.44217 3.67523 5.18192 3.77588 4.93912C3.87653 4.69632 4.02405 4.47575 4.21 4.29C4.39575 4.10405 4.61632 3.95653 4.85912 3.85588C5.10192 3.75523 5.36217 3.70343 5.625 3.70343C5.88783 3.70343 6.14808 3.75523 6.39088 3.85588C6.63368 3.95653 6.85425 4.10405 7.04 4.29L7.1 4.35C7.33568 4.58054 7.63502 4.73519 7.95941 4.794C8.28381 4.85282 8.61838 4.81312 8.92 4.68H9C9.29577 4.55324 9.54802 4.34276 9.72569 4.07447C9.90337 3.80618 9.99872 3.49179 10 3.17V3C10 2.46957 10.2107 1.96086 10.5858 1.58579C10.9609 1.21071 11.4696 1 12 1C12.5304 1 13.0391 1.21071 13.4142 1.58579C13.7893 1.96086 14 2.46957 14 3V3.09C14.0013 3.41179 14.0966 3.72618 14.2743 3.99447C14.452 4.26276 14.7042 4.47324 15 4.6C15.3016 4.73312 15.6362 4.77282 15.9606 4.714C16.285 4.65519 16.5843 4.50054 16.82 4.27L16.88 4.21C17.0657 4.02405 17.2863 3.87653 17.5291 3.77588C17.7719 3.67523 18.0322 3.62343 18.295 3.62343C18.5578 3.62343 18.8181 3.67523 19.0609 3.77588C19.3037 3.87653 19.5243 4.02405 19.71 4.21C19.896 4.39575 20.0435 4.61632 20.1441 4.85912C20.2448 5.10192 20.2966 5.36217 20.2966 5.625C20.2966 5.88783 20.2448 6.14808 20.1441 6.39088C20.0435 6.63368 19.896 6.85425 19.71 7.04L19.65 7.1C19.4195 7.33568 19.2648 7.63502 19.206 7.95941C19.1472 8.28381 19.1869 8.61838 19.32 8.92V9C19.4468 9.29577 19.6572 9.54802 19.9255 9.72569C20.1938 9.90337 20.5082 9.99872 20.83 10H21C21.5304 10 22.0391 10.2107 22.4142 10.5858C22.7893 10.9609 23 11.4696 23 12C23 12.5304 22.7893 13.0391 22.4142 13.4142C22.0391 13.7893 21.5304 14 21 14H20.91C20.5882 14.0013 20.2738 14.0966 20.0055 14.2743C19.7372 14.452 19.5268 14.7042 19.4 15Z"></path></svg></span></div></div>
+              <span class="product-cursor translator-cursor"><svg viewBox="0 0 24 24"><path d="M5 3l13 9-6 1.4 3.4 5.5-2.8 1.7-3.2-5.5L5 19V3Z"></path></svg></span>
+            </div>
+          </div>
+          <div class="feature-body">
+            <div class="feature-top"><span class="feature-number">03</span><span class="project-type" data-i18n="projectUserscript">Userscript</span></div>
+            <h3>Ultimate Translator</h3>
+            <p data-i18n="translatorDesc">Traduisez le texte sélectionné depuis n’importe quelle page grâce à une interface rapide, discrète et plusieurs fournisseurs de traduction.</p>
+            <div class="tag-list"><span class="tag" data-i18n="tagTranslation">Traduction</span><span class="tag" data-i18n="tagAccessibility">Accessibilité</span><span class="tag" data-i18n="tagMultilingual">Multilingue</span></div>
+            <div class="card-links"><a href="https://github.com/DREwX-code/Ultimate-Text-Selection-Translator" target="_blank" rel="noopener noreferrer"><span data-i18n="sourceCode">Code source</span> ↗</a><a href="https://greasyfork.org/scripts/536284-ultimate-text-selection-translator-instantly-translate-any-selected-text" target="_blank" rel="noopener noreferrer"><span data-i18n="liveProject">Ouvrir</span> ↗</a></div>
+          </div>
+        </article>
+
+        <article class="feature-card reveal" data-delay="80">
+          <div class="feature-visual stats-visual">
+            <div class="visual-aura" aria-hidden="true"></div>
+            <div class="product-frame stats-frame" data-product-scene>
+              <div class="product-toolbar" aria-hidden="true"><span class="window-dots"><i></i><i></i><i></i></span><span class="product-address">greasyfork-stats.vercel.app</span><span class="toolbar-action">API</span></div>
+              <svg class="stats-growth-arrow" viewBox="0 0 420 220" aria-hidden="true"><defs><linearGradient id="stats-growth-gradient" x1="30" y1="194" x2="372" y2="32" gradientUnits="userSpaceOnUse"><stop stop-color="#1f9d62"></stop><stop offset=".55" stop-color="#39d67a"></stop><stop offset="1" stop-color="#75e6a3"></stop></linearGradient></defs><path class="stats-growth-line" d="M30 194 C70 184 84 154 120 160 S174 113 210 127 S266 81 302 91 S338 48 372 32"></path><path class="stats-growth-head" d="M372 32 344 33 M372 32 366 59"></path></svg>
+              <div class="stats-site" aria-hidden="true"><strong>GreasyFork Stats</strong><p>Dynamic GreasyFork statistics cards for your online profiles.</p><svg class="stats-svg-card" viewBox="0 0 420 178"><defs><linearGradient id="stats-card-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0d1117" stop-opacity=".78"></stop><stop offset="100%" stop-color="#0d1117" stop-opacity=".7"></stop></linearGradient></defs><rect x=".5" y=".5" rx="10" width="419" height="177" fill="url(#stats-card-bg)" stroke="#30363d"></rect><rect x="24" y="23" width="4" height="22" rx="2" fill="#58a6ff"></rect><text x="38" y="40" class="stats-svg-title">Dℝ∃wX’s Userscript Stats</text><g class="stats-svg-rows"><text x="24" y="78" class="stats-svg-label">Total Installs</text><text x="396" y="78" text-anchor="end" class="stats-svg-value">3.7k</text><line x1="24" y1="89" x2="396" y2="89"></line><text x="24" y="105" class="stats-svg-label">Daily Installs</text><text x="396" y="105" text-anchor="end" class="stats-svg-value">22</text><line x1="24" y1="116" x2="396" y2="116"></line><text x="24" y="132" class="stats-svg-label">Scripts</text><text x="396" y="132" text-anchor="end" class="stats-svg-value">7</text><line x1="24" y1="143" x2="396" y2="143"></line><text x="24" y="159" class="stats-svg-label">Rating</text><text x="396" y="159" text-anchor="end" class="stats-svg-value">94%</text></g></svg></div>
+              <div class="stats-code-row"><a class="stats-test-link" href="https://greasyfork-stats.vercel.app" target="_blank" rel="noopener noreferrer" data-i18n-aria="statsTryLabel"><span data-i18n="statsTry">Tester</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"></path></svg></a></div>
+            </div>
+          </div>
+          <div class="feature-body">
+            <div class="feature-top"><span class="feature-number">04</span><span class="project-type" data-i18n="projectWebTool">Outil web</span></div>
+            <h3>GreasyFork Stats</h3>
+            <p data-i18n="statsDesc">Des cartes SVG légères et personnalisables pour afficher les statistiques publiques Greasy Fork dans les README et profils.</p>
+            <div class="tag-list"><span class="tag">SVG</span><span class="tag" data-i18n="tagServerless">Serverless</span><span class="tag">API</span></div>
+            <div class="card-links"><a href="https://github.com/DREwX-code/greasyfork-stats" target="_blank" rel="noopener noreferrer"><span data-i18n="sourceCode">Code source</span> ↗</a><a href="https://greasyfork-stats.vercel.app" target="_blank" rel="noopener noreferrer"><span data-i18n="liveProject">Ouvrir</span> ↗</a></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="section-action reveal"><a class="button secondary" href="projects.html"><span data-i18n="viewAllProjects">Découvrir tous les projets</span><span class="arrow" aria-hidden="true">→</span></a></div>
+    </section>
+
+    <section class="section approach-section" id="approach" aria-labelledby="approach-title">
+      <div class="wrap">
+        <div class="approach-heading reveal" data-anchor-focus>
+          <div><span class="eyebrow" data-i18n="approachEyebrow">Principes de conception</span><h2 class="display-title" id="approach-title" data-i18n-html="approachTitle">La qualité se joue<br>dans l’invisible.</h2></div>
+          <p data-i18n="approachIntro">La performance, la clarté et la compatibilité ne sont pas des options ajoutées à la fin. Elles structurent chaque décision dès le départ.</p>
+        </div>
+        <div class="principles-grid">
+          <article class="principle reveal"><span class="principle-number">01</span><h3 data-i18n="performanceTitle">Rapide par défaut</h3><p data-i18n="performanceCopy">JavaScript ciblé, chargement léger et interactions immédiates, même sur les pages complexes.</p></article>
+          <article class="principle reveal" data-delay="70"><span class="principle-number">02</span><h3 data-i18n="usabilityTitle">Naturel au premier clic</h3><p data-i18n="usabilityCopy">Des interfaces discrètes, lisibles et cohérentes avec la plateforme qu’elles améliorent.</p></article>
+          <article class="principle reveal" data-delay="140"><span class="principle-number">03</span><h3 data-i18n="utilityTitle">Pensé pour le réel</h3><p data-i18n="utilityCopy">Chaque fonction répond à une friction vécue, sans bruit ni options superflues.</p></article>
+          <article class="principle reveal" data-delay="210"><span class="principle-number">04</span><h3 data-i18n="compatibilityTitle">Partout, pour chacun</h3><p data-i18n="compatibilityCopy">Support multilingue, navigateurs variés et comportements fiables sur plusieurs plateformes.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap" id="about" aria-labelledby="about-title">
+      <div class="about-grid reveal" data-anchor-focus>
+        <div class="about-heading"><span class="eyebrow" data-i18n="aboutEyebrow">Derrière le code</span><h2 class="display-title" id="about-title" data-i18n-html="aboutTitle">Construire le web<br>que l’on veut utiliser.</h2><a class="profile-card" href="https://github.com/DREwX-code" target="_blank" rel="noopener noreferrer" aria-label="Voir le profil GitHub de DREwX" data-i18n-aria="profileLinkLabel"><span class="profile-image"><img src="assets/images/github-profile.png" width="1254" height="1254" loading="lazy" alt="Avatar illustré de DREwX" data-i18n-alt="profileImageAlt"></span><span class="profile-copy"><strong>DREwX</strong><small>@DREwX-code · France</small></span><span class="profile-arrow" aria-hidden="true">↗</span></a></div>
+        <div class="about-copy">
+          <p data-i18n="aboutCopy1">Je suis Andrew — DREwX en ligne. Je développe des userscripts et de petits outils web pour obtenir des interfaces plus propres, des workflows plus rapides et une navigation quotidienne plus agréable.</p>
+          <p data-i18n="aboutCopy2">Mon travail mêle JavaScript avancé, automatisation et design UI/UX. Je teste, optimise et maintiens chaque projet régulièrement, avec une attention particulière portée aux retours des utilisateurs.</p>
+          <div class="about-meta">
+            <div><span class="meta-title" data-i18n="focusLabel">Focus actuel</span><div class="chip-list"><span class="chip" data-i18n="focus1">Userscripts soignés</span><span class="chip" data-i18n="focus2">Productivité web</span><span class="chip" data-i18n="focus3">Open source</span><span class="chip" data-i18n="focus4">Intégrations IA</span></div></div>
+            <div><span class="meta-title" data-i18n="stackLabel">Stack principale</span><div class="stack-list"><span>JavaScript</span><span>HTML</span><span>CSS</span><span>Python</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section wrap">
+      <div class="cta-panel reveal">
+        <div><span class="eyebrow" data-i18n="ctaEyebrow">Une idée à améliorer ?</span><h2 class="display-title" data-i18n="ctaTitle">Les meilleurs outils commencent souvent par une petite friction.</h2><p data-i18n="ctaCopy">Proposez une fonctionnalité, signalez un bug ou contribuez directement à un projet existant.</p></div>
+        <div class="cta-actions"><a class="button on-dark" href="https://github.com/DREwX-code?tab=repositories" target="_blank" rel="noopener noreferrer"><span data-i18n="ctaPrimary">Voir les dépôts GitHub</span><span class="arrow" aria-hidden="true">↗</span></a><a class="text-link" href="https://greasyfork.org/users/1259433-d%E2%84%9D-wx" target="_blank" rel="noopener noreferrer" data-i18n="ctaSecondary">Partager un retour</a></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-main wrap">
+      <div class="footer-brand"><a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">D</span><span>DREwX</span></a><p class="footer-tagline" data-i18n-html="footerTagline">Des outils simples à adopter,<br>solides à garder.</p></div>
+      <div class="footer-column"><strong data-i18n="footerExplore">Explorer</strong><a href="#work" data-i18n="navWork">Projets</a><a href="#approach" data-i18n="navApproach">Approche</a><a href="#about" data-i18n="navAbout">À propos</a><a href="projects.html" data-i18n="navAllProjects">Tous les projets</a></div>
+      <div class="footer-column"><strong data-i18n="footerElsewhere">Ailleurs</strong><a href="https://github.com/DREwX-code" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://greasyfork.org/users/1259433-d%E2%84%9D-wx" target="_blank" rel="noopener noreferrer">Greasy Fork ↗</a><a href="https://www.reddit.com/user/DrewXDev/" target="_blank" rel="noopener noreferrer">Reddit ↗</a></div>
+    </div>
+    <div class="footer-bottom wrap"><span>© <span data-year></span> DREwX</span><span class="footer-status" data-i18n="footerStatus">Construit en France · Open source</span><a class="back-to-top" href="#top"><span data-i18n="footerTop">Retour en haut</span><span aria-hidden="true">↑</span></a></div>
+  </footer>
+
+  <script src="assets/js/translations.js"></script>
+  <script src="assets/js/main.js"></script>
 </body>
 </html>
