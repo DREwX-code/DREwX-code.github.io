@@ -1,7 +1,7 @@
 # DREwX Portfolio
 
-Personal portfolio showcasing DREwX’s projects, work, and development journey.
+Personal portfolio showcasing my projects, work, and development journey.
 
 Built with HTML, CSS, and JavaScript. Lightweight, responsive, bilingual, and dependency-free.
 
-Designed for GitHub Pages.
+### [Explore the portfolio →](https://drewx-code.github.io/)
