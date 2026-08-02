@@ -81,17 +81,6 @@
     finally { window.clearTimeout(timeout); }
   };
 
-  const releaseGrabCursor = () => root.classList.remove('is-grabbing');
-  document.addEventListener('pointerdown', (event) => {
-    if (event.button === 0 && event.target.closest('a[href], button, [role="button"]')) {
-      root.classList.add('is-grabbing');
-    }
-  });
-  document.addEventListener('pointerup', releaseGrabCursor);
-  document.addEventListener('pointercancel', releaseGrabCursor);
-  document.addEventListener('dragend', releaseGrabCursor);
-  window.addEventListener('blur', releaseGrabCursor);
-
   let currentLanguage = storage.get('drewx-language')
     || (navigator.language.toLowerCase().startsWith('fr') ? 'fr' : 'en');
 

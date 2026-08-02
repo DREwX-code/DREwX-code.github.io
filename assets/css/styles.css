@@ -80,10 +80,6 @@ body.menu-open { overflow: hidden; }
   body { cursor: url("../images/cursor-light.svg") 4 3, default; }
   :root[data-theme="dark"] body { cursor: url("../images/cursor-dark.svg") 4 3, default; }
   a[href], button, [role="button"], select, summary, label[for] { cursor: pointer; }
-  :root.is-grabbing body,
-  :root.is-grabbing a[href],
-  :root.is-grabbing button,
-  :root.is-grabbing [role="button"] { cursor: grabbing; }
   input, textarea, [contenteditable="true"] { cursor: text; }
 }
 a { color: inherit; }
