@@ -1,130 +1,14 @@
-<!DOCTYPE html>
-<html lang="fr">
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Découvrez les userscripts et outils open source de DREwX : productivité, export, traduction, IA et personnalisation du web.">
-  <meta name="theme-color" content="#f5f1e8">
-  <meta property="og:title" content="Userscripts et outils open source — DREwX">
-  <meta property="og:description" content="Userscripts, outils web et expériences open source conçus autour de la performance et de l’utilité.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://drewx-code.github.io/projects.html">
-  <link rel="canonical" href="https://drewx-code.github.io/projects.html">
-  <link rel="icon" href="/favicon.png" type="image/png" sizes="192x192">
-  <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
-  <title>Userscripts et outils open source — DREwX</title>
-  <script>
-    (() => {
-      try {
-        const saved = localStorage.getItem('drewx-theme');
-        document.documentElement.dataset.theme = saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-      } catch {
-        document.documentElement.dataset.theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      }
-    })();
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;520;600;650;720&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex">
+  <meta http-equiv="refresh" content="0; url=projects/">
+  <link rel="canonical" href="https://drewx-code.github.io/projects/">
+  <title>Redirecting to projects — DREwX</title>
+  <script>location.replace(`projects/${location.search}${location.hash}`);</script>
 </head>
-<body data-page="projects">
-  <a class="skip-link" href="#content" data-i18n="skipLink">Aller au contenu</a>
-  <div class="grain" aria-hidden="true"></div>
-  <div class="scroll-progress" data-scroll-progress aria-hidden="true"></div>
-
-  <header class="site-header" data-header>
-    <div class="nav wrap">
-      <a class="brand" href="index.html" aria-label="DREwX, accueil" data-i18n-aria="homeLabel"><span class="brand-mark" aria-hidden="true">D</span><span>DREwX</span></a>
-      <nav class="nav-desktop" aria-label="Navigation principale" data-i18n-aria="navLabel">
-        <a href="index.html" data-i18n="navHome">Accueil</a>
-        <a href="#directory" aria-current="page" data-i18n="navAllProjects">Tous les projets</a>
-        <a href="https://github.com/DREwX-code" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-      </nav>
-      <div class="nav-actions">
-        <div class="language-switch" role="group" aria-label="Choisir la langue" data-i18n-aria="languageLabel"><button type="button" data-language="fr" aria-pressed="true">FR</button><button type="button" data-language="en" aria-pressed="false">EN</button></div>
-        <button class="icon-button" type="button" data-theme-toggle aria-label="Passer au thème sombre">
-          <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"></path></svg>
-          <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.2A8.5 8.5 0 0 1 8.8 4a8.5 8.5 0 1 0 11.2 11.2Z"></path></svg>
-        </button>
-        <button class="icon-button menu-toggle" type="button" data-menu-toggle aria-controls="mobile-menu" aria-expanded="false" aria-label="Ouvrir le menu"><span class="menu-lines" aria-hidden="true"><i></i><i></i></span></button>
-      </div>
-    </div>
-  </header>
-
-  <div class="mobile-panel" id="mobile-menu" data-mobile-panel aria-hidden="true" inert>
-    <nav aria-label="Navigation mobile" data-i18n-aria="mobileNavLabel">
-      <a href="index.html"><span>01</span><b data-i18n="navHome">Accueil</b></a>
-      <a href="#directory"><span>02</span><b data-i18n="navAllProjects">Tous les projets</b></a>
-      <a href="https://github.com/DREwX-code" target="_blank" rel="noopener noreferrer"><span>03</span><b>GitHub ↗</b></a>
-    </nav>
-  </div>
-
-  <main id="content" tabindex="-1">
-    <section class="projects-hero wrap" id="top" aria-labelledby="projects-title">
-      <span class="eyebrow reveal visible" data-i18n="projectsEyebrow">Répertoire complet</span>
-      <h1 class="display-title reveal visible" id="projects-title" data-delay="60" data-i18n-html="projectsHeroTitle">Des projets construits<br>pour être <em>utilisés.</em></h1>
-      <p class="reveal visible" data-delay="120" data-i18n="projectsHeroCopy">Userscripts, outils web et expériences open source conçus autour de la performance, de l’utilité et d’une interface soignée.</p>
-    </section>
-
-    <section class="directory-section wrap" id="directory" aria-label="Liste des projets" data-i18n-aria="projectListLabel">
-      <div class="filter-bar reveal">
-        <div class="filter-group" role="group" aria-label="Filtrer les projets" data-i18n-aria="filterLabel">
-          <span class="filter-label" data-i18n="filterLabel">Filtrer les projets</span>
-          <button class="filter-button active" type="button" data-filter="all" aria-pressed="true" data-i18n="filterAll">Tous</button>
-          <button class="filter-button" type="button" data-filter="featured" aria-pressed="false" data-i18n="filterFeatured">Phares</button>
-          <button class="filter-button" type="button" data-filter="userscript" aria-pressed="false" data-i18n="filterUserscript">Userscripts</button>
-          <button class="filter-button" type="button" data-filter="tool" aria-pressed="false" data-i18n="filterTool">Outils web</button>
-        </div>
-        <span class="directory-count" data-project-count>8 projets</span>
-      </div>
-
-      <div class="directory-grid">
-        <article class="directory-card reveal" data-category="featured userscript">
-          <span class="directory-index">01</span><div><div class="directory-top"><h2>GreasyFork Premium</h2><a class="directory-arrow" href="https://github.com/DREwX-code/greasyfork-premium" target="_blank" rel="noopener noreferrer" aria-label="GreasyFork Premium ↗">↗</a></div><p data-i18n="premiumDesc">Une refonte complète de Greasy Fork et Sleazy Fork avec thèmes modernes, favoris, aperçu des scripts et outils de productivité.</p><div class="tag-list"><span class="tag">JavaScript</span><span class="tag">UI / UX</span><span class="tag" data-i18n="tagProductivity">Productivité</span></div><div class="card-links"><a href="https://github.com/DREwX-code/greasyfork-premium" target="_blank" rel="noopener noreferrer"><span data-i18n="sourceCode">Code source</span> ↗</a><a href="https://greasyfork.org/scripts/562938-greasyfork-premium" target="_blank" rel="noopener noreferrer"><span data-i18n="liveProject">Ouvrir</span> ↗</a></div></div>
-        </article>
-        <article class="directory-card reveal" data-category="featured userscript" data-delay="50">
-          <span class="directory-index">02</span><div><div class="directory-top"><h2>OmniChat Exporter</h2><a class="directory-arrow" href="https://github.com/DREwX-code/omnichat-exporter" target="_blank" rel="noopener noreferrer" aria-label="OmniChat Exporter ↗">↗</a></div><p data-i18n="omnichatDesc">Des exports propres de ChatGPT, Claude, Gemini, Grok et DeepSeek en TXT, PDF, JSON ou Markdown, structure et blocs de code préservés.</p><div class="tag-list"><span class="tag">JavaScript</span><span class="tag" data-i18n="tagExport">Export</span><span class="tag" data-i18n="tagWorkflow">Workflow</span></div><div class="card-links"><a href="https://github.com/DREwX-code/omnichat-exporter" target="_blank" rel="noopener noreferrer"><span data-i18n="sourceCode">Code source</span> ↗</a><a href="https://greasyfork.org/scripts/567743-omnichat-exporter-export-any-ai-chat-instantly" target="_blank" rel="noopener noreferrer"><span data-i18n="liveProject">Ouvrir</span> ↗</a></div></div>
-        </article>
-        <article class="directory-card reveal" data-category="featured userscript">
-          <span class="directory-index">03</span><div><div class="directory-top"><h2>Ultimate Translator</h2><a class="directory-arrow" href="https://github.com/DREwX-code/Ultimate-Text-Selection-Translator" target="_blank" rel="noopener noreferrer" aria-label="Ultimate Translator ↗">↗</a></div><p data-i18n="translatorDesc">Traduisez le texte sélectionné depuis n’importe quelle page grâce à une interface rapide, discrète et plusieurs fournisseurs de traduction.</p><div class="tag-list"><span class="tag" data-i18n="tagTranslation">Traduction</span><span class="tag" data-i18n="tagAccessibility">Accessibilité</span><span class="tag" data-i18n="tagMultilingual">Multilingue</span></div><div class="card-links"><a href="https://github.com/DREwX-code/Ultimate-Text-Selection-Translator" target="_blank" rel="noopener noreferrer"><span data-i18n="sourceCode">Code source</span> ↗</a><a href="https://greasyfork.org/scripts/536284-ultimate-text-selection-translator-instantly-translate-any-selected-text" target="_blank" rel="noopener noreferrer"><span data-i18n="liveProject">Ouvrir</span> ↗</a></div></div>
-        </article>
-        <article class="directory-card reveal" data-category="featured tool" data-delay="50">
-          <span class="directory-index">04</span><div><div class="directory-top"><h2>GreasyFork Stats</h2><a class="directory-arrow" href="https://github.com/DREwX-code/greasyfork-stats" target="_blank" rel="noopener noreferrer" aria-label="GreasyFork Stats ↗">↗</a></div><p data-i18n="statsDesc">Des cartes SVG légères et personnalisables pour afficher les statistiques publiques Greasy Fork dans les README et profils.</p><div class="tag-list"><span class="tag">SVG</span><span class="tag" data-i18n="tagServerless">Serverless</span><span class="tag">API</span></div><div class="card-links"><a href="https://github.com/DREwX-code/greasyfork-stats" target="_blank" rel="noopener noreferrer"><span data-i18n="sourceCode">Code source</span> ↗</a><a href="https://greasyfork-stats.vercel.app" target="_blank" rel="noopener noreferrer"><span data-i18n="liveProject">Ouvrir</span> ↗</a></div></div>
-        </article>
-        <article class="directory-card reveal" data-category="userscript">
-          <span class="directory-index">05</span><div><div class="directory-top"><h2>NeuraVeil</h2><a class="directory-arrow" href="https://github.com/DREwX-code/neuraveil" target="_blank" rel="noopener noreferrer" aria-label="NeuraVeil ↗">↗</a></div><p data-i18n="neuraveilDesc">Un panneau d’IA flottant pour discuter, raisonner et générer des images depuis n’importe quelle page, sans inscription.</p><div class="tag-list"><span class="tag" data-i18n="tagAI">IA</span><span class="tag">Pollinations</span><span class="tag" data-i18n="tagPrivacy">Confidentialité</span></div><div class="card-links"><a href="https://github.com/DREwX-code/neuraveil" target="_blank" rel="noopener noreferrer"><span data-i18n="sourceCode">Code source</span> ↗</a><a href="https://greasyfork.org/scripts/560252-neuraveil-ai-chat-in-your-browser" target="_blank" rel="noopener noreferrer"><span data-i18n="liveProject">Ouvrir</span> ↗</a></div></div>
-        </article>
-        <article class="directory-card reveal" data-category="userscript" data-delay="50">
-          <span class="directory-index">06</span><div><div class="directory-top"><h2>DINOcheat</h2><a class="directory-arrow" href="https://github.com/DREwX-code/DINOcheat" target="_blank" rel="noopener noreferrer" aria-label="DINOcheat ↗">↗</a></div><p data-i18n="dinoDesc">Une réinterprétation complète du jeu Dino avec contrôle de vitesse, auto-jump, personnalisation et interface modernisée.</p><div class="tag-list"><span class="tag">JavaScript</span><span class="tag" data-i18n="projectGame">Expérience web</span><span class="tag">UI / UX</span></div><div class="card-links"><a href="https://github.com/DREwX-code/DINOcheat" target="_blank" rel="noopener noreferrer"><span data-i18n="sourceCode">Code source</span> ↗</a><a href="https://greasyfork.org/scripts/486972-dinocheat-hack-cheat-dino-google-chrome" target="_blank" rel="noopener noreferrer"><span data-i18n="liveProject">Ouvrir</span> ↗</a></div></div>
-        </article>
-        <article class="directory-card reveal" data-category="userscript">
-          <span class="directory-index">07</span><div><div class="directory-top"><h2>SecurePass</h2><a class="directory-arrow" href="https://greasyfork.org/scripts/541200-securepass-robust-random-password-generator" target="_blank" rel="noopener noreferrer" aria-label="SecurePass ↗">↗</a></div><p data-i18n="securePassDesc">Un générateur de mots de passe robuste et multilingue, disponible sur chaque site avec personnalisation avancée et copie instantanée.</p><div class="tag-list"><span class="tag" data-i18n="tagSecurity">Sécurité</span><span class="tag" data-i18n="tagMultilingual">Multilingue</span><span class="tag" data-i18n="tagUtility">Utilitaire</span></div><div class="card-links"><a href="https://greasyfork.org/scripts/541200-securepass-robust-random-password-generator" target="_blank" rel="noopener noreferrer"><span data-i18n="liveProject">Ouvrir</span> ↗</a></div></div>
-        </article>
-        <article class="directory-card reveal" data-category="userscript" data-delay="50">
-          <span class="directory-index">08</span><div><div class="directory-top"><h2>YouTube New Tabs</h2><a class="directory-arrow" href="https://greasyfork.org/scripts/542455-youtube-open-clicked-videos-in-new-tabs" target="_blank" rel="noopener noreferrer" aria-label="YouTube New Tabs ↗">↗</a></div><p data-i18n="youtubeDesc">Ouvrez les vidéos YouTube dans de nouveaux onglets sans interrompre la lecture en cours.</p><div class="tag-list"><span class="tag">YouTube</span><span class="tag" data-i18n="tagProductivity">Productivité</span><span class="tag" data-i18n="tagWorkflow">Workflow</span></div><div class="card-links"><a href="https://greasyfork.org/scripts/542455-youtube-open-clicked-videos-in-new-tabs" target="_blank" rel="noopener noreferrer"><span data-i18n="liveProject">Ouvrir</span> ↗</a></div></div>
-        </article>
-      </div>
-    </section>
-
-    <section class="projects-outro narrow reveal">
-      <h2 class="display-title" data-i18n-html="projectsOutroTitle">Le code est ouvert.<br>Les idées aussi.</h2>
-      <p data-i18n="projectsOutroCopy">Chaque dépôt accueille les retours, suggestions et contributions.</p>
-      <a class="button" href="https://github.com/DREwX-code?tab=repositories" target="_blank" rel="noopener noreferrer"><span data-i18n="ctaPrimary">Voir les dépôts GitHub</span><span class="arrow" aria-hidden="true">↗</span></a>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="footer-main wrap">
-      <div class="footer-brand"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">D</span><span>DREwX</span></a><p class="footer-tagline" data-i18n-html="footerTagline">Des outils simples à adopter,<br>solides à garder.</p></div>
-      <div class="footer-column"><strong data-i18n="footerExplore">Explorer</strong><a href="index.html" data-i18n="navHome">Accueil</a><a href="#directory" data-i18n="navAllProjects">Tous les projets</a><a href="https://github.com/DREwX-code?tab=repositories" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
-      <div class="footer-column"><strong data-i18n="footerElsewhere">Ailleurs</strong><a href="https://github.com/DREwX-code" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://greasyfork.org/users/1259433-d%E2%84%9D-wx" target="_blank" rel="noopener noreferrer">Greasy Fork ↗</a><a href="https://www.reddit.com/user/DrewXDev/" target="_blank" rel="noopener noreferrer">Reddit ↗</a></div>
-    </div>
-    <div class="footer-bottom wrap"><span>© <span data-year></span> DREwX</span><span class="footer-status" data-i18n="footerStatus">Construit en France · Open source</span><a class="back-to-top" href="#top"><span data-i18n="footerTop">Retour en haut</span><span aria-hidden="true">↑</span></a></div>
-  </footer>
-
-  <script src="assets/js/translations.js"></script>
-  <script src="assets/js/main.js"></script>
+<body>
+  <p><a href="projects/">View DREwX projects</a></p>
 </body>
 </html>

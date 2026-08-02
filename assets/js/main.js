@@ -17,6 +17,81 @@
     }
   };
 
+  const greasyForkStats = {
+    cacheKey: 'drewx-greasyfork-stats-v1',
+    cacheDuration: 60 * 60 * 1000,
+    endpoint: 'https://greasyfork.org/en/users/1259433.json'
+  };
+
+  const formatCompactNumber = (value) => {
+    if (!Number.isFinite(value)) return '';
+    if (value < 1000) return String(value);
+    return `${(value / 1000).toFixed(1).replace(/\.0$/, '')}k`;
+  };
+
+  const applyGreasyForkStats = (payload) => {
+    const scripts = payload?.scripts?.filter((script) => !script.deleted) || [];
+    if (!scripts.length) return;
+
+    const scriptsById = new Map(scripts.map((script) => [String(script.id), script]));
+    document.querySelectorAll('[data-gf-script-id]').forEach((row) => {
+      const script = scriptsById.get(row.dataset.gfScriptId);
+      if (!script) return;
+
+      const ratings = Number(script.good_ratings) + Number(script.ok_ratings) + Number(script.bad_ratings);
+      const values = {
+        daily_installs: `Daily installs ${script.daily_installs}`,
+        total_installs: `Total installs ${formatCompactNumber(Number(script.total_installs))}`,
+        ratings: `Ratings ${ratings}`
+      };
+      row.querySelectorAll('[data-gf-stat]').forEach((element) => {
+        const value = values[element.dataset.gfStat];
+        if (value) element.textContent = value;
+        if (element.dataset.gfStat === 'ratings' && script.fan_score) {
+          element.title = `Fan score ${script.fan_score}%`;
+        }
+      });
+    });
+
+    const totalInstalls = scripts.reduce((total, script) => total + Number(script.total_installs || 0), 0);
+    const totalElement = document.querySelector('[data-gf-total-installs]');
+    const countElement = document.querySelector('[data-gf-script-count]');
+    if (totalElement) totalElement.textContent = `${formatCompactNumber(totalInstalls)}+`;
+    if (countElement) countElement.textContent = String(scripts.length);
+  };
+
+  const updateGreasyForkStats = async () => {
+    let cached = null;
+    try { cached = JSON.parse(storage.get(greasyForkStats.cacheKey)); } catch { /* Ignore an invalid cache. */ }
+    if (cached?.data) applyGreasyForkStats(cached.data);
+    if (cached?.savedAt && Date.now() - cached.savedAt < greasyForkStats.cacheDuration) return;
+
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 5000);
+    try {
+      const response = await fetch(greasyForkStats.endpoint, {
+        headers: { Accept: 'application/json' },
+        signal: controller.signal
+      });
+      if (!response.ok) throw new Error(`Greasy Fork returned ${response.status}`);
+      const data = await response.json();
+      applyGreasyForkStats(data);
+      storage.set(greasyForkStats.cacheKey, JSON.stringify({ savedAt: Date.now(), data }));
+    } catch { /* Keep the cached or static fallback values. */ }
+    finally { window.clearTimeout(timeout); }
+  };
+
+  const releaseGrabCursor = () => root.classList.remove('is-grabbing');
+  document.addEventListener('pointerdown', (event) => {
+    if (event.button === 0 && event.target.closest('a[href], button, [role="button"]')) {
+      root.classList.add('is-grabbing');
+    }
+  });
+  document.addEventListener('pointerup', releaseGrabCursor);
+  document.addEventListener('pointercancel', releaseGrabCursor);
+  document.addEventListener('dragend', releaseGrabCursor);
+  window.addEventListener('blur', releaseGrabCursor);
+
   let currentLanguage = storage.get('drewx-language')
     || (navigator.language.toLowerCase().startsWith('fr') ? 'fr' : 'en');
 
@@ -619,6 +694,7 @@
   });
   applyProjectFilter(activeFilter);
   translatePage(currentLanguage);
+  updateGreasyForkStats();
   updateHeaderGeometry();
   updateTranslatorMotionPath();
   updateScrollUI();

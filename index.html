@@ -13,13 +13,16 @@
   <meta property="og:url" content="https://drewx-code.github.io/">
 
   <link rel="canonical" href="https://drewx-code.github.io/">
-  <link rel="icon" href="/favicon.png" type="image/png" sizes="192x192">
-  <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+  <link rel="icon" href="favicon.png" type="image/png" sizes="192x192">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
 
   <title>DREwX — Userscripts soignés pour un web plus fluide</title>
   <script>
     (() => {
+      if (/^https?:$/.test(location.protocol) && location.pathname.endsWith('/index.html')) {
+        history.replaceState(history.state, '', `${location.pathname.slice(0, -10)}${location.search}${location.hash}`);
+      }
       try {
         const saved = localStorage.getItem('drewx-theme');
         document.documentElement.dataset.theme = saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
@@ -31,7 +34,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;520;600;650;720&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -85,7 +88,7 @@
       <a href="#work"><span>01</span><b data-i18n="navWork">Projets</b></a>
       <a href="#approach"><span>02</span><b data-i18n="navApproach">Approche</b></a>
       <a href="#about"><span>03</span><b data-i18n="navAbout">À propos</b></a>
-      <a href="projects.html"><span>04</span><b data-i18n="navAllProjects">Tous les projets</b></a>
+      <a href="projects/"><span>04</span><b data-i18n="navAllProjects">Tous les projets</b></a>
     </nav>
   </div>
 
@@ -129,8 +132,8 @@
     <section class="proof-strip" aria-label="Chiffres clés" data-i18n-aria="proofLabel">
       <div class="proof-grid wrap">
         <div class="proof-item" data-i18n="proofIntro">Conçus pour être adoptés en quelques secondes et gardés au quotidien.</div>
-        <div class="proof-item"><strong>7</strong><span data-i18n="publicScripts">Scripts publics</span></div>
-        <div class="proof-item"><strong>3.8k+</strong><span data-i18n="installs">Installations cumulées</span></div>
+        <div class="proof-item"><strong data-gf-script-count>7</strong><span data-i18n="publicScripts">Scripts publics</span></div>
+        <div class="proof-item"><strong data-gf-total-installs>3.8k+</strong><span data-i18n="installs">Installations cumulées</span></div>
         <div class="proof-item"><strong>4</strong><span data-i18n="flagshipProjects">Projets phares</span></div>
       </div>
     </section>
@@ -153,9 +156,9 @@
               <div class="premium-app" data-demo-theme="dark">
                 <div class="premium-topbar"><span class="gf-brand"><img src="assets/images/greasyfork.svg" width="96" height="96" alt="">Greasy Fork</span><span class="premium-nav">Scripts&nbsp;&nbsp; Forum&nbsp;&nbsp; Help</span><span class="premium-theme-controls"><button type="button" data-demo-action="gf-theme" data-demo-theme-value="light" aria-label="Light theme"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.5 1.5M17.6 17.6l1.5 1.5M2 12h2M20 12h2M4.9 19.1l1.5-1.5M17.6 6.4l1.5-1.5"></path></svg></button><button class="is-active" type="button" data-demo-action="gf-theme" data-demo-theme-value="system" aria-label="System theme"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"></rect><path d="M8 22h8M12 18v4"></path></svg></button><button type="button" data-demo-action="gf-theme" data-demo-theme-value="dark" aria-label="Dark theme"><svg viewBox="0 0 24 24"><path d="M20 15.2A8.5 8.5 0 0 1 8.8 4 8.5 8.5 0 1 0 20 15.2Z"></path></svg></button></span></div>
                 <div class="gf-script-list">
-                  <div class="gf-script-row gf-primary-row">
+                  <div class="gf-script-row gf-primary-row" data-gf-script-id="562938">
                     <div class="gf-script-heading"><img src="assets/images/products/greasyfork-premium.png" width="144" height="144" alt=""><span><strong>GreasyFork Premium</strong><small>Modern themes, favorites, notes and script previews</small></span></div>
-                    <div class="gf-script-meta"><span>Daily installs 22</span><span>Total installs 1.3k</span><span>Ratings 51</span></div>
+                    <div class="gf-script-meta"><span data-gf-stat="daily_installs">Daily installs 22</span><span data-gf-stat="total_installs">Total installs 1.3k</span><span data-gf-stat="ratings">Ratings 51</span></div>
                     <div class="gf-script-actions">
                       <button class="gf-install-button" type="button" data-demo-action="gf-install" aria-label="Install GreasyFork Premium"><svg viewBox="0 0 24 24"><path d="M12 3v11"></path><path d="m7 11 5 5 5-5"></path><path d="M5 20h14"></path></svg><span>Install</span></button>
                       <button class="gf-action-button gf-note-button" type="button" data-demo-action="gf-note" aria-label="Open note"><svg viewBox="0 0 24 24"><path d="M5 4.5h14v15H5z"></path><path d="M8 8h8"></path><path d="M8 12h5"></path><path d="M16 19.5v-4h3"></path></svg><span class="product-cursor premium-cursor"><svg viewBox="0 0 24 24"><path d="M5 3l13 9-6 1.4 3.4 5.5-2.8 1.7-3.2-5.5L5 19V3Z"></path></svg></span></button>
@@ -164,8 +167,8 @@
                     </div>
                     <div class="gf-note-panel"><div class="gf-note-editor"><span>Useful on every Greasy Fork visit.</span><div class="gf-note-controls"><button type="button" data-demo-action="gf-note-delete" data-i18n="noteDelete">Supprimer</button><button type="button" data-demo-action="gf-note-done" data-i18n="noteDone">Terminé</button></div></div></div>
                   </div>
-                  <div class="gf-script-row gf-secondary-row"><div class="gf-script-heading"><img src="assets/images/products/omnichat-exporter.png" width="144" height="144" alt=""><span><strong>OmniChat Exporter</strong><small>Export any AI conversation instantly</small></span></div><div class="gf-script-meta"><span>Daily installs 9</span><span>Total installs 729</span><span>Ratings 8</span></div><div class="gf-script-actions"><button class="gf-install-button" type="button" data-demo-action="gf-install" aria-label="Install OmniChat Exporter"><svg viewBox="0 0 24 24"><path d="M12 3v11"></path><path d="m7 11 5 5 5-5"></path><path d="M5 20h14"></path></svg><span>Install</span></button><button class="gf-action-button gf-note-button" type="button" data-demo-action="gf-note" aria-label="Open note"><svg viewBox="0 0 24 24"><path d="M5 4.5h14v15H5z"></path><path d="M8 8h8"></path><path d="M8 12h5"></path><path d="M16 19.5v-4h3"></path></svg></button><button class="gf-action-button gf-detail-button" type="button" data-demo-action="gf-detail" aria-label="Show details"><svg viewBox="0 0 24 24"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg></button><button class="gf-star-button" type="button" data-demo-action="gf-favorite" aria-label="Add to favorites"><svg viewBox="0 0 24 24"><path d="m12 3.6 2.55 5.17 5.7.83-4.12 4.01.97 5.67L12 16.6l-5.1 2.68.97-5.67L3.75 9.6l5.7-.83L12 3.6Z"></path></svg></button></div></div>
-                  <div class="gf-script-row gf-tertiary-row"><div class="gf-script-heading"><img src="assets/images/products/ultimate-translator.png" width="144" height="144" alt=""><span><strong>Ultimate Translator</strong><small>Translate selected text instantly</small></span></div><div class="gf-script-meta"><span>Daily installs 7</span><span>Total installs 408</span><span>Ratings 2</span></div><div class="gf-script-actions"><button class="gf-install-button" type="button" data-demo-action="gf-install" aria-label="Install Ultimate Translator"><svg viewBox="0 0 24 24"><path d="M12 3v11"></path><path d="m7 11 5 5 5-5"></path><path d="M5 20h14"></path></svg><span>Install</span></button><button class="gf-action-button gf-note-button" type="button" data-demo-action="gf-note" aria-label="Open note"><svg viewBox="0 0 24 24"><path d="M5 4.5h14v15H5z"></path><path d="M8 8h8"></path><path d="M8 12h5"></path><path d="M16 19.5v-4h3"></path></svg></button><button class="gf-action-button gf-detail-button" type="button" data-demo-action="gf-detail" aria-label="Show details"><svg viewBox="0 0 24 24"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg></button><button class="gf-star-button" type="button" data-demo-action="gf-favorite" aria-label="Add to favorites"><svg viewBox="0 0 24 24"><path d="m12 3.6 2.55 5.17 5.7.83-4.12 4.01.97 5.67L12 16.6l-5.1 2.68.97-5.67L3.75 9.6l5.7-.83L12 3.6Z"></path></svg></button></div></div>
+                  <div class="gf-script-row gf-secondary-row" data-gf-script-id="567743"><div class="gf-script-heading"><img src="assets/images/products/omnichat-exporter.png" width="144" height="144" alt=""><span><strong>OmniChat Exporter</strong><small>Export any AI conversation instantly</small></span></div><div class="gf-script-meta"><span data-gf-stat="daily_installs">Daily installs 9</span><span data-gf-stat="total_installs">Total installs 729</span><span data-gf-stat="ratings">Ratings 8</span></div><div class="gf-script-actions"><button class="gf-install-button" type="button" data-demo-action="gf-install" aria-label="Install OmniChat Exporter"><svg viewBox="0 0 24 24"><path d="M12 3v11"></path><path d="m7 11 5 5 5-5"></path><path d="M5 20h14"></path></svg><span>Install</span></button><button class="gf-action-button gf-note-button" type="button" data-demo-action="gf-note" aria-label="Open note"><svg viewBox="0 0 24 24"><path d="M5 4.5h14v15H5z"></path><path d="M8 8h8"></path><path d="M8 12h5"></path><path d="M16 19.5v-4h3"></path></svg></button><button class="gf-action-button gf-detail-button" type="button" data-demo-action="gf-detail" aria-label="Show details"><svg viewBox="0 0 24 24"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg></button><button class="gf-star-button" type="button" data-demo-action="gf-favorite" aria-label="Add to favorites"><svg viewBox="0 0 24 24"><path d="m12 3.6 2.55 5.17 5.7.83-4.12 4.01.97 5.67L12 16.6l-5.1 2.68.97-5.67L3.75 9.6l5.7-.83L12 3.6Z"></path></svg></button></div></div>
+                  <div class="gf-script-row gf-tertiary-row" data-gf-script-id="536284"><div class="gf-script-heading"><img src="assets/images/products/ultimate-translator.png" width="144" height="144" alt=""><span><strong>Ultimate Translator</strong><small>Translate selected text instantly</small></span></div><div class="gf-script-meta"><span data-gf-stat="daily_installs">Daily installs 7</span><span data-gf-stat="total_installs">Total installs 408</span><span data-gf-stat="ratings">Ratings 2</span></div><div class="gf-script-actions"><button class="gf-install-button" type="button" data-demo-action="gf-install" aria-label="Install Ultimate Translator"><svg viewBox="0 0 24 24"><path d="M12 3v11"></path><path d="m7 11 5 5 5-5"></path><path d="M5 20h14"></path></svg><span>Install</span></button><button class="gf-action-button gf-note-button" type="button" data-demo-action="gf-note" aria-label="Open note"><svg viewBox="0 0 24 24"><path d="M5 4.5h14v15H5z"></path><path d="M8 8h8"></path><path d="M8 12h5"></path><path d="M16 19.5v-4h3"></path></svg></button><button class="gf-action-button gf-detail-button" type="button" data-demo-action="gf-detail" aria-label="Show details"><svg viewBox="0 0 24 24"><path d="M12 5v14"></path><path d="M5 12h14"></path></svg></button><button class="gf-star-button" type="button" data-demo-action="gf-favorite" aria-label="Add to favorites"><svg viewBox="0 0 24 24"><path d="m12 3.6 2.55 5.17 5.7.83-4.12 4.01.97 5.67L12 16.6l-5.1 2.68.97-5.67L3.75 9.6l5.7-.83L12 3.6Z"></path></svg></button></div></div>
                 </div>
               </div>
             </div>
@@ -243,7 +246,7 @@
         </article>
       </div>
 
-      <div class="section-action reveal"><a class="button secondary" href="projects.html"><span data-i18n="viewAllProjects">Découvrir tous les projets</span><span class="arrow" aria-hidden="true">→</span></a></div>
+      <div class="section-action reveal"><a class="button secondary" href="projects/"><span data-i18n="viewAllProjects">Découvrir tous les projets</span><span class="arrow" aria-hidden="true">→</span></a></div>
     </section>
 
     <section class="section approach-section" id="approach" aria-labelledby="approach-title">
@@ -286,13 +289,13 @@
   <footer class="site-footer">
     <div class="footer-main wrap">
       <div class="footer-brand"><a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">D</span><span>DREwX</span></a><p class="footer-tagline" data-i18n-html="footerTagline">Des outils simples à adopter,<br>solides à garder.</p></div>
-      <div class="footer-column"><strong data-i18n="footerExplore">Explorer</strong><a href="#work" data-i18n="navWork">Projets</a><a href="#approach" data-i18n="navApproach">Approche</a><a href="#about" data-i18n="navAbout">À propos</a><a href="projects.html" data-i18n="navAllProjects">Tous les projets</a></div>
+      <div class="footer-column"><strong data-i18n="footerExplore">Explorer</strong><a href="#work" data-i18n="navWork">Projets</a><a href="#approach" data-i18n="navApproach">Approche</a><a href="#about" data-i18n="navAbout">À propos</a><a href="projects/" data-i18n="navAllProjects">Tous les projets</a></div>
       <div class="footer-column"><strong data-i18n="footerElsewhere">Ailleurs</strong><a href="https://github.com/DREwX-code" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://greasyfork.org/users/1259433-d%E2%84%9D-wx" target="_blank" rel="noopener noreferrer">Greasy Fork ↗</a><a href="https://www.reddit.com/user/DrewXDev/" target="_blank" rel="noopener noreferrer">Reddit ↗</a></div>
     </div>
     <div class="footer-bottom wrap"><span>© <span data-year></span> DREwX</span><span class="footer-status" data-i18n="footerStatus">Construit en France · Open source</span><a class="back-to-top" href="#top"><span data-i18n="footerTop">Retour en haut</span><span aria-hidden="true">↑</span></a></div>
   </footer>
 
-  <script src="assets/js/translations.js"></script>
-  <script src="assets/js/main.js"></script>
+  <script defer src="assets/js/translations.js"></script>
+  <script defer src="assets/js/main.js"></script>
 </body>
 </html>
