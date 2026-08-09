@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://drewx-code.github.io/sitemap.xml
+Sitemap: https://drewx.dev/sitemap.xml

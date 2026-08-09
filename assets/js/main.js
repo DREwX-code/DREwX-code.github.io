@@ -18,9 +18,9 @@
   };
 
   const greasyForkStats = {
-    cacheKey: 'drewx-greasyfork-stats-v1',
+    cacheKey: 'drewx-greasyfork-stats-v2',
     cacheDuration: 60 * 60 * 1000,
-    endpoint: 'https://greasyfork.org/en/users/1259433.json'
+    endpoint: 'https://api.greasyfork.org/en/users/1259433.json'
   };
 
   const formatCompactNumber = (value) => {
@@ -54,10 +54,27 @@
     });
 
     const totalInstalls = scripts.reduce((total, script) => total + Number(script.total_installs || 0), 0);
+    const dailyInstalls = scripts.reduce((total, script) => total + Number(script.daily_installs || 0), 0);
+    const goodRatings = scripts.reduce((total, script) => total + Number(script.good_ratings || 0), 0);
+    const okRatings = scripts.reduce((total, script) => total + Number(script.ok_ratings || 0), 0);
+    const badRatings = scripts.reduce((total, script) => total + Number(script.bad_ratings || 0), 0);
+    const ratingCount = goodRatings + okRatings + badRatings;
+    const rating = ratingCount > 0 ? `${Math.round((goodRatings / ratingCount) * 100)}%` : '';
     const totalElement = document.querySelector('[data-gf-total-installs]');
     const countElement = document.querySelector('[data-gf-script-count]');
     if (totalElement) totalElement.textContent = `${formatCompactNumber(totalInstalls)}+`;
     if (countElement) countElement.textContent = String(scripts.length);
+
+    const cardValues = {
+      total_installs: formatCompactNumber(totalInstalls),
+      daily_installs: formatCompactNumber(dailyInstalls),
+      scripts: String(scripts.length),
+      rating
+    };
+    document.querySelectorAll('[data-gf-card-stat]').forEach((element) => {
+      const value = cardValues[element.dataset.gfCardStat];
+      if (value) element.textContent = value;
+    });
   };
 
   const updateGreasyForkStats = async () => {
