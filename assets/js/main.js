@@ -62,7 +62,7 @@
     const rating = ratingCount > 0 ? `${Math.round((goodRatings / ratingCount) * 100)}%` : '';
     const totalElement = document.querySelector('[data-gf-total-installs]');
     const countElement = document.querySelector('[data-gf-script-count]');
-    if (totalElement) totalElement.textContent = `${formatCompactNumber(totalInstalls)}+`;
+    if (totalElement) totalElement.textContent = formatCompactNumber(totalInstalls);
     if (countElement) countElement.textContent = String(scripts.length);
 
     const cardValues = {
@@ -98,11 +98,67 @@
     finally { window.clearTimeout(timeout); }
   };
 
-  let currentLanguage = storage.get('drewx-language')
-    || (navigator.language.toLowerCase().startsWith('fr') ? 'fr' : 'en');
+  const preferredLanguage = (navigator.language || 'en').toLowerCase().split('-')[0];
+  const savedLanguage = storage.get('drewx-language');
+  let currentLanguage = dictionary[savedLanguage] ? savedLanguage : (dictionary[preferredLanguage] ? preferredLanguage : 'en');
 
   const themeButton = document.querySelector('[data-theme-toggle]');
-  const languageButtons = document.querySelectorAll('[data-language]');
+  const languageSelect = document.querySelector('[data-language-select]');
+  let languageTrigger = null;
+  let languageMenu = null;
+  const languageFlags = { fr: 'fr', en: 'gb', es: 'es', pt: 'pt', zh: 'cn', hi: 'in' };
+  const flagBase = new URL('../images/flags/', document.currentScript.src);
+  const flagImage = (language) => `<img class="language-flag" src="${new URL(`${languageFlags[language]}.svg`, flagBase)}" alt="" width="20" height="15">`;
+  if (languageSelect) {
+    const container = document.createElement('div');
+    container.className = 'language-picker';
+    languageTrigger = document.createElement('button');
+    languageTrigger.type = 'button';
+    languageTrigger.className = 'language-trigger';
+    languageTrigger.setAttribute('aria-expanded', 'false');
+    languageTrigger.setAttribute('aria-controls', 'language-menu');
+    languageMenu = document.createElement('div');
+    languageMenu.id = 'language-menu';
+    languageMenu.className = 'language-menu';
+    languageMenu.hidden = true;
+    Array.from(languageSelect.options).forEach((option) => {
+      const item = document.createElement('button');
+      item.type = 'button';
+      item.className = 'language-option';
+      item.dataset.language = option.value;
+      item.lang = option.lang;
+      item.innerHTML = `${flagImage(option.value)}<span>${option.textContent}</span><span class="language-check" aria-hidden="true">✓</span>`;
+      languageMenu.append(item);
+    });
+    languageSelect.before(container);
+    container.append(languageTrigger, languageMenu);
+    languageSelect.hidden = true;
+    const closeLanguageMenu = (returnFocus = false) => {
+      languageMenu.hidden = true;
+      languageTrigger.setAttribute('aria-expanded', 'false');
+      if (returnFocus) languageTrigger.focus();
+    };
+    languageTrigger.addEventListener('click', () => {
+      const open = languageMenu.hidden;
+      languageMenu.hidden = !open;
+      languageTrigger.setAttribute('aria-expanded', String(open));
+    });
+    languageMenu.addEventListener('click', (event) => {
+      const item = event.target.closest('[data-language]');
+      if (!item) return;
+      translatePage(item.dataset.language);
+      closeLanguageMenu(true);
+    });
+    document.addEventListener('click', (event) => {
+      if (!container.contains(event.target)) closeLanguageMenu();
+    });
+    container.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !languageMenu.hidden) {
+        event.preventDefault();
+        closeLanguageMenu(true);
+      }
+    });
+  }
   const menuButton = document.querySelector('[data-menu-toggle]');
   const mobilePanel = document.querySelector('[data-mobile-panel]');
   const header = document.querySelector('[data-header]');
@@ -184,15 +240,19 @@
       if (value !== undefined) element.setAttribute('alt', value);
     });
 
-    languageButtons.forEach((button) => {
-      const active = button.dataset.language === language;
-      button.classList.toggle('active', active);
-      button.setAttribute('aria-pressed', String(active));
-    });
+    if (languageSelect) languageSelect.value = language;
+    if (languageTrigger && languageMenu) {
+      const selected = languageSelect.selectedOptions[0];
+      languageTrigger.innerHTML = `${flagImage(language)}<span lang="${language}">${selected.textContent}</span><svg aria-hidden="true" viewBox="0 0 16 16"><path d="m4 6 4 4 4-4"/></svg>`;
+      languageTrigger.setAttribute('aria-label', `${copy.languageLabel}: ${selected.textContent}`);
+      languageMenu.querySelectorAll('[data-language]').forEach((item) => {
+        item.setAttribute('aria-pressed', String(item.dataset.language === language));
+      });
+    }
 
     const meta = copy.meta;
-    document.title = pageName === 'projects' ? meta.projectsTitle : meta.homeTitle;
-    const description = pageName === 'projects' ? meta.projectsDescription : meta.homeDescription;
+    document.title = pageName === 'guides' ? copy.guideMetaTitle : (pageName === 'projects' ? meta.projectsTitle : meta.homeTitle);
+    const description = pageName === 'guides' ? copy.guideMetaDescription : (pageName === 'projects' ? meta.projectsDescription : meta.homeDescription);
     const descriptionMeta = document.querySelector('meta[name="description"]');
     const ogDescription = document.querySelector('meta[property="og:description"]');
     const ogTitle = document.querySelector('meta[property="og:title"]');
@@ -335,9 +395,7 @@
   const updateProjectCount = () => {
     if (!directoryCount) return;
     const visible = Array.from(projectCards).filter((card) => !card.classList.contains('is-hidden')).length;
-    directoryCount.textContent = currentLanguage === 'fr'
-      ? `${visible} projet${visible > 1 ? 's' : ''}`
-      : `${visible} project${visible > 1 ? 's' : ''}`;
+    directoryCount.textContent = dictionary[currentLanguage].projectCount.replace('{count}', visible);
   };
 
   const applyProjectFilter = (filter) => {
@@ -354,17 +412,7 @@
     updateProjectCount();
   };
 
-  languageButtons.forEach((button) => {
-    button.addEventListener('click', () => translatePage(button.dataset.language));
-  });
-
-  document.querySelectorAll('.language-switch').forEach((languageSwitch) => {
-    languageSwitch.addEventListener('click', (event) => {
-      if (event.target.closest('button')) return;
-      const bounds = languageSwitch.getBoundingClientRect();
-      translatePage(event.clientX < bounds.left + bounds.width / 2 ? 'fr' : 'en');
-    });
-  });
+  languageSelect?.addEventListener('change', () => translatePage(languageSelect.value));
 
   themeButton?.addEventListener('click', () => {
     setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark');
@@ -467,6 +515,9 @@
     .map((id) => document.getElementById(id))
     .filter(Boolean);
 
+  const guideLinks = Array.from(document.querySelectorAll('.guide-aside a[href^="#"]'));
+  const guideSections = guideLinks.map(link => document.querySelector(link.getAttribute('href'))).filter(Boolean);
+
   const updateActiveSection = () => {
     const threshold = (headerGeometry.headerHeight || 0) + (window.innerWidth <= 760 ? 34 : 58);
     let activeId = '';
@@ -479,6 +530,16 @@
       if (active) link.setAttribute('aria-current', 'location');
       else link.removeAttribute('aria-current');
     });
+    if (guideSections.length) {
+      const guideThreshold = (headerGeometry.headerHeight || 0) + Math.min(window.innerHeight * .22, 160);
+      let guideActive = guideSections[0].id;
+      guideSections.forEach(section => { if (section.getBoundingClientRect().top <= guideThreshold) guideActive = section.id; });
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 3) guideActive = guideSections[guideSections.length - 1].id;
+      guideLinks.forEach(link => {
+        if (link.getAttribute('href') === `#${guideActive}`) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    }
   };
 
   let scrollTicking = false;
@@ -520,17 +581,55 @@
     document.querySelectorAll('.reveal').forEach((element) => element.classList.add('visible'));
   }
 
+  const noteStorageKey = 'drewx-premium-preview-note';
+  const noteRow = document.querySelector('.gf-primary-row');
+  const noteInput = noteRow?.querySelector('.gf-note-input');
+  const notePreview = noteRow?.querySelector('.gf-note-preview');
+  const updateNotePreview = () => {
+    if (!noteInput || !notePreview) return;
+    const value = noteInput.value.trim();
+    notePreview.textContent = value;
+    notePreview.hidden = !value || noteRow.querySelector('.gf-note-panel').classList.contains('is-open');
+    noteRow.querySelector('.gf-note-button')?.setAttribute('data-has-note', String(Boolean(value)));
+  };
+  if (noteInput) {
+    noteInput.value = storage.get(noteStorageKey) || '';
+    updateNotePreview();
+    noteInput.addEventListener('input', () => {
+      storage.set(noteStorageKey, noteInput.value);
+      updateNotePreview();
+    });
+  }
+
   const resetProductDemo = (card) => {
+    if (card.contains(noteRow)) { noteRow?.querySelector('.gf-note-button')?.setAttribute('aria-expanded', 'false'); }
     card.classList.remove('has-manual-state');
     card.querySelectorAll('.is-installed, .is-favorite, .is-expanded, .is-open, .is-active, .is-copied, .is-restarting, .is-pressed, .is-selected')
       .forEach((element) => element.classList.remove('is-installed', 'is-favorite', 'is-expanded', 'is-open', 'is-active', 'is-copied', 'is-restarting', 'is-pressed', 'is-selected'));
     card.querySelectorAll('.has-favorite, .is-manual-open, .is-manual-closed, .is-manual-downloaded')
       .forEach((element) => element.classList.remove('has-favorite', 'is-manual-open', 'is-manual-closed', 'is-manual-downloaded'));
     card.querySelectorAll('.gf-install-button span').forEach((label) => { label.textContent = 'Install'; });
+    card.querySelectorAll('.omni-format-menu').forEach((menu) => { menu.inert = true; });
+    card.querySelectorAll('[data-demo-action="omni-export"]').forEach((button) => button.setAttribute('aria-expanded', 'false'));
+    const variantMenu = card.querySelector('.gf-variant-menu');
+    if (variantMenu) {
+      variantMenu.inert = true;
+      variantMenu.querySelectorAll('[data-demo-variant]').forEach((button) => {
+        const selected = button.dataset.demoVariant === 'full-dark';
+        button.classList.toggle('is-selected', selected);
+        button.setAttribute('aria-pressed', String(selected));
+      });
+      card.querySelector('.gf-variant-toggle')?.setAttribute('aria-expanded', 'false');
+    }
+    card.querySelectorAll('.gf-density-demo [data-density]').forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.density === 'comfortable')));
+    card.querySelector('.gf-density-demo [data-demo-action="gf-wide"]')?.setAttribute('aria-pressed', 'false');
+    const densityApp = card.querySelector('.premium-app');
+    if (densityApp) { densityApp.dataset.demoDensity = 'comfortable'; densityApp.classList.remove('is-demo-wide'); }
+    if (card.contains(noteRow)) updateNotePreview();
     const systemThemeControl = card.querySelector('.premium-theme-controls button:nth-child(2)');
     systemThemeControl?.classList.add('is-active');
     const premiumApp = card.querySelector('.premium-app');
-    if (premiumApp) premiumApp.dataset.demoTheme = root.dataset.theme === 'light' ? 'light' : 'dark';
+    if (premiumApp) { premiumApp.dataset.demoTheme = root.dataset.theme === 'light' ? 'light' : 'dark'; premiumApp.dataset.demoVariant = 'full-dark'; }
   };
 
   const translatorActions = ['utst-speak', 'utst-copy', 'utst-expand', 'utst-settings'];
@@ -564,13 +663,42 @@
     const row = control.closest('.gf-script-row');
 
     if (action === 'gf-theme') {
-      control.parentElement.querySelectorAll('button').forEach((button) => button.classList.toggle('is-active', button === control));
+      control.parentElement.querySelectorAll(':scope > [data-demo-theme-value]').forEach((button) => button.classList.toggle('is-active', button === control));
       const preference = control.dataset.demoThemeValue;
       const resolvedTheme = preference === 'system'
         ? (root.dataset.theme === 'light' ? 'light' : 'dark')
         : preference;
       const premiumApp = control.closest('.premium-app');
       if (premiumApp && resolvedTheme) premiumApp.dataset.demoTheme = resolvedTheme;
+    } else if (action === 'gf-variant-toggle') {
+      const menu = control.parentElement.querySelector('.gf-variant-menu');
+      const open = menu.classList.toggle('is-open');
+      menu.inert = !open;
+      control.setAttribute('aria-expanded', String(open));
+    } else if (action === 'gf-variant') {
+      const premiumApp = control.closest('.premium-app');
+      if (premiumApp) {
+        premiumApp.dataset.demoVariant = control.dataset.demoVariant;
+        if (control.dataset.demoVariant === 'full-dark') {
+          premiumApp.dataset.demoTheme = 'dark';
+          premiumApp.querySelectorAll('[data-demo-theme-value]').forEach((button) => button.classList.toggle('is-active', button.dataset.demoThemeValue === 'dark'));
+        }
+      }
+      control.parentElement.querySelectorAll('[data-demo-variant]').forEach((button) => {
+        button.classList.toggle('is-selected', button === control);
+        button.setAttribute('aria-pressed', String(button === control));
+      });
+      control.parentElement.classList.remove('is-open');
+      control.parentElement.inert = true;
+      control.parentElement.parentElement.querySelector('.gf-variant-toggle')?.setAttribute('aria-expanded', 'false');
+    } else if (action === 'gf-density') {
+      const app = control.closest('.premium-app');
+      if (app) app.dataset.demoDensity = control.dataset.density;
+      control.parentElement.querySelectorAll('[data-density]').forEach((button) => button.setAttribute('aria-pressed', String(button === control)));
+    } else if (action === 'gf-wide') {
+      const app = control.closest('.premium-app');
+      const active = app?.classList.toggle('is-demo-wide');
+      control.setAttribute('aria-pressed', String(Boolean(active)));
     } else if (action === 'gf-install') {
       flashProductControl(control);
     } else if (action === 'gf-favorite') {
@@ -583,43 +711,56 @@
       if (panel) {
         const open = panel.classList.toggle('is-open');
         control.classList.toggle('is-active', open);
+        control.setAttribute('aria-expanded', String(open));
+        if (row === noteRow) notePreview.hidden = open || !noteInput.value.trim();
+        if (open) panel.querySelector('.gf-note-input')?.focus({ preventScroll: true });
       } else {
         flashProductControl(control);
       }
     } else if (action === 'gf-note-delete' || action === 'gf-note-done') {
+      if (row === noteRow) {
+        if (action === 'gf-note-delete') noteInput.value = '';
+        storage.set(noteStorageKey, noteInput.value);
+        updateNotePreview();
+      }
       row?.querySelector('.gf-note-panel')?.classList.remove('is-open');
-      row?.querySelector('.gf-note-button')?.classList.remove('is-active');
+      if (row === noteRow) updateNotePreview();
+      const noteButton = row?.querySelector('.gf-note-button');
+      noteButton?.classList.remove('is-active');
+      noteButton?.setAttribute('aria-expanded', 'false');
     } else if (action === 'omni-export') {
       const frame = control.closest('.omni-frame');
       const menuKey = control.classList.contains('omni-inline-export') ? 'inline' : 'header';
       const menu = frame?.querySelector(`[data-export-menu="${menuKey}"]`);
-      if (menuKey === 'inline' && frame && menu) {
-        const actions = control.closest('.omni-message-actions');
-        if (actions) {
-          const frameBounds = frame.getBoundingClientRect();
-          const actionsBounds = actions.getBoundingClientRect();
-          const menuLeft = actionsBounds.left - frameBounds.left;
-          const maxLeft = Math.max(8, frame.clientWidth - menu.offsetWidth - 8);
-          menu.style.left = `${Math.min(maxLeft, Math.max(8, menuLeft))}px`;
-          menu.style.top = `${actionsBounds.top - frameBounds.top - menu.offsetHeight - 7}px`;
-          menu.style.right = 'auto';
-          menu.style.bottom = 'auto';
-        }
-      }
       const open = !menu?.classList.contains('is-manual-open');
-      frame?.querySelectorAll('.omni-format-menu').forEach((candidate) => candidate.classList.remove('is-manual-open'));
-      frame?.querySelectorAll('[data-demo-action="omni-export"]').forEach((button) => button.classList.remove('is-active'));
-      menu?.classList.toggle('is-manual-open', open);
+      frame?.querySelectorAll('.omni-format-menu').forEach((candidate) => { candidate.classList.remove('is-manual-open'); candidate.inert = true; });
+      frame?.querySelectorAll('[data-demo-action="omni-export"]').forEach((button) => { button.classList.remove('is-active'); button.setAttribute('aria-expanded', 'false'); });
+      if (menu) { menu.classList.toggle('is-manual-open', open); menu.inert = !open; }
       control.classList.toggle('is-active', open);
+      control.setAttribute('aria-expanded', String(open));
+      if (open && frame && menu) {
+        const frameBounds = frame.getBoundingClientRect();
+        const buttonBounds = control.getBoundingClientRect();
+        const scaleX = frameBounds.width / frame.offsetWidth;
+        const scaleY = frameBounds.height / frame.offsetHeight;
+        const buttonLeft = (buttonBounds.left - frameBounds.left) / scaleX;
+        const buttonRight = (buttonBounds.right - frameBounds.left) / scaleX;
+        const buttonTop = (buttonBounds.top - frameBounds.top) / scaleY;
+        const buttonBottom = (buttonBounds.bottom - frameBounds.top) / scaleY;
+        const left = Math.max(6, Math.min(frame.clientWidth - menu.offsetWidth - 6, buttonRight - menu.offsetWidth));
+        const desiredTop = menuKey === 'header' ? buttonBottom + 5 : buttonTop - menu.offsetHeight - 5;
+        menu.style.left = `${left}px`;
+        menu.style.top = `${Math.max(6, Math.min(frame.clientHeight - menu.offsetHeight - 6, desiredTop))}px`;
+        menu.style.right = 'auto';
+        menu.style.bottom = 'auto';
+      }
     } else if (action === 'omni-format') {
       const frame = control.closest('.omni-frame');
       const menu = control.closest('.omni-format-menu');
       menu?.querySelectorAll('[data-export-format]').forEach((option) => option.classList.toggle('is-selected', option === control));
-      frame?.classList.add('is-manual-downloaded');
-      window.setTimeout(() => {
-        menu?.classList.remove('is-manual-open');
-        frame?.querySelectorAll('[data-demo-action="omni-export"]').forEach((button) => button.classList.remove('is-active'));
-      }, 140);
+      if (menu) { menu.classList.remove('is-manual-open'); menu.inert = true; }
+      frame?.querySelectorAll('[data-demo-action="omni-export"]').forEach((button) => { button.classList.remove('is-active'); button.setAttribute('aria-expanded', 'false'); });
+      window.dispatchEvent(new CustomEvent('drewx-omni-export', { detail: { format: control.dataset.exportFormat, scope: menu?.dataset.exportMenu } }));
     } else if (action === 'omni-copy') {
       flashProductControl(control);
       navigator.clipboard?.writeText('# Project review\n\n- Reusable workflow').catch(() => {});
@@ -655,7 +796,7 @@
   });
   document.addEventListener('keydown', (event) => {
     const control = event.target.closest('[data-demo-action]');
-    if (!control || (event.key !== 'Enter' && event.key !== ' ')) return;
+    if (!control || control.matches('button, a') || (event.key !== 'Enter' && event.key !== ' ')) return;
     event.preventDefault();
     activateProductControl(control);
   });
@@ -667,27 +808,6 @@
   });
 
   const mobileCardMotion = window.matchMedia('(hover: none) and (pointer: coarse)');
-  if (!reducedMotion && 'IntersectionObserver' in window) {
-    const featureCards = document.querySelectorAll('.feature-card');
-    const cardAnimationObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!mobileCardMotion.matches || entry.intersectionRatio <= .08) {
-          entry.target.classList.remove('is-animated');
-          if (entry.intersectionRatio <= .08) resetProductDemo(entry.target);
-          return;
-        }
-        if (entry.isIntersecting && entry.intersectionRatio >= .42) {
-          entry.target.classList.add('is-animated');
-        }
-      });
-    }, { threshold: [0, .08, .42], rootMargin: '0px 0px -8% 0px' });
-    featureCards.forEach((card) => cardAnimationObserver.observe(card));
-
-    const resetCardAnimations = () => {
-      featureCards.forEach((card) => card.classList.remove('is-animated'));
-    };
-    mobileCardMotion.addEventListener?.('change', resetCardAnimations);
-  }
 
   const savedTheme = storage.get('drewx-theme');
   document.querySelectorAll('[data-year]').forEach((element) => {
@@ -696,7 +816,7 @@
   if (!savedTheme) setTheme(systemTheme.matches ? 'dark' : 'light', false);
   document.querySelectorAll('.premium-theme-controls [data-demo-theme-value="system"].is-active').forEach((control) => {
     const premiumApp = control.closest('.premium-app');
-    if (premiumApp) premiumApp.dataset.demoTheme = root.dataset.theme === 'light' ? 'light' : 'dark';
+    if (premiumApp) { premiumApp.dataset.demoTheme = root.dataset.theme === 'light' ? 'light' : 'dark'; premiumApp.dataset.demoVariant = 'full-dark'; }
   });
   applyProjectFilter(activeFilter);
   translatePage(currentLanguage);

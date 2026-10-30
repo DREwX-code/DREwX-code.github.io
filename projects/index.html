@@ -39,14 +39,17 @@
 
   <header class="site-header" data-header>
     <div class="nav wrap">
-      <a class="brand" href="../" aria-label="DREwX, accueil" data-i18n-aria="homeLabel"><span class="brand-mark" aria-hidden="true">D</span><span>DREwX</span></a>
+      <a class="brand" href="../index.html" aria-label="DREwX, accueil" data-i18n-aria="homeLabel"><span class="brand-mark" aria-hidden="true">D</span><span>DREwX</span></a>
       <nav class="nav-desktop" aria-label="Navigation principale" data-i18n-aria="navLabel">
-        <a href="../" data-i18n="navHome">Accueil</a>
+        <a href="../index.html" data-i18n="navHome">Accueil</a>
         <a href="#directory" aria-current="page" data-i18n="navAllProjects">Tous les projets</a>
+        <a href="../guides/index.html" data-i18n="navGuides">Guides</a>
         <a href="https://github.com/DREwX-code" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
       </nav>
       <div class="nav-actions">
-        <div class="language-switch" role="group" aria-label="Choisir la langue" data-i18n-aria="languageLabel"><button type="button" data-language="fr" aria-pressed="true">FR</button><button type="button" data-language="en" aria-pressed="false">EN</button></div>
+        <select class="language-select" data-language-select aria-label="Choisir la langue" data-i18n-aria="languageLabel">
+          <option value="fr" lang="fr">Français</option><option value="en" lang="en">English</option><option value="es" lang="es">Español</option><option value="pt" lang="pt">Português</option><option value="zh" lang="zh">中文</option><option value="hi" lang="hi">हिन्दी</option>
+        </select>
         <button class="icon-button" type="button" data-theme-toggle aria-label="Passer au thème sombre">
           <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"></path></svg>
           <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.2A8.5 8.5 0 0 1 8.8 4a8.5 8.5 0 1 0 11.2 11.2Z"></path></svg>
@@ -58,8 +61,9 @@
 
   <div class="mobile-panel" id="mobile-menu" data-mobile-panel aria-hidden="true" inert>
     <nav aria-label="Navigation mobile" data-i18n-aria="mobileNavLabel">
-      <a href="../"><span>01</span><b data-i18n="navHome">Accueil</b></a>
+      <a href="../index.html"><span>01</span><b data-i18n="navHome">Accueil</b></a>
       <a href="#directory"><span>02</span><b data-i18n="navAllProjects">Tous les projets</b></a>
+      <a href="../guides/index.html"><span>03</span><b data-i18n="navGuides">Guides</b></a>
       <a href="https://github.com/DREwX-code" target="_blank" rel="noopener noreferrer"><span>03</span><b>GitHub ↗</b></a>
     </nav>
   </div>
@@ -202,17 +206,18 @@
           <span class="directory-index">07</span>
           <div>
             <div class="directory-top">
-              <h2>SecurePass</h2>
-              <a class="directory-arrow" href="https://greasyfork.org/scripts/541200-securepass-robust-random-password-generator" target="_blank" rel="noopener noreferrer" aria-label="SecurePass ↗">↗</a>
+              <h2>SigilPass</h2>
+              <a class="directory-arrow" href="https://github.com/DREwX-code/SigilPass" target="_blank" rel="noopener noreferrer" aria-label="SigilPass ↗">↗</a>
             </div>
-            <p data-i18n="securePassDesc">Un générateur de mots de passe robuste et multilingue, disponible sur chaque site avec personnalisation avancée et copie instantanée.</p>
+            <p data-i18n="securePassDesc">Un générateur de mots de passe local, avec réglages personnalisables et mode Safer pour remplir les champs sans afficher le mot de passe.</p>
             <div class="tag-list">
               <span class="tag" data-i18n="tagSecurity">Sécurité</span>
               <span class="tag" data-i18n="tagMultilingual">Multilingue</span>
               <span class="tag" data-i18n="tagUtility">Utilitaire</span>
             </div>
             <div class="card-links">
-              <a href="https://greasyfork.org/scripts/541200-securepass-robust-random-password-generator" target="_blank" rel="noopener noreferrer"><span data-i18n="liveProject">Ouvrir</span> ↗</a>
+              <a href="https://github.com/DREwX-code/SigilPass" target="_blank" rel="noopener noreferrer"><span data-i18n="sourceCode">Code source</span> ↗</a>
+              <a href="https://greasyfork.org/scripts/541200-sigilpass-robust-random-password-generator" target="_blank" rel="noopener noreferrer"><span data-i18n="liveProject">Ouvrir</span> ↗</a>
             </div>
           </div>
         </article>
@@ -246,8 +251,8 @@
 
   <footer class="site-footer">
     <div class="footer-main wrap">
-      <div class="footer-brand"><a class="brand" href="../"><span class="brand-mark" aria-hidden="true">D</span><span>DREwX</span></a><p class="footer-tagline" data-i18n-html="footerTagline">Des outils simples à adopter,<br>solides à garder.</p></div>
-      <div class="footer-column"><strong data-i18n="footerExplore">Explorer</strong><a href="../" data-i18n="navHome">Accueil</a><a href="#directory" data-i18n="navAllProjects">Tous les projets</a><a href="https://github.com/DREwX-code?tab=repositories" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
+      <div class="footer-brand"><a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">D</span><span>DREwX</span></a><p class="footer-tagline" data-i18n-html="footerTagline">Des outils simples à adopter,<br>solides à garder.</p></div>
+      <div class="footer-column"><strong data-i18n="footerExplore">Explorer</strong><a href="../index.html" data-i18n="navHome">Accueil</a><a href="#directory" data-i18n="navAllProjects">Tous les projets</a><a href="../guides/index.html" data-i18n="navGuides">Guides</a><a href="../index.html#about" data-i18n="navAbout">À propos</a></div>
       <div class="footer-column"><strong data-i18n="footerElsewhere">Ailleurs</strong><a href="https://github.com/DREwX-code" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://greasyfork.org/users/1259433-d%E2%84%9D-wx" target="_blank" rel="noopener noreferrer">Greasy Fork ↗</a><a href="https://www.reddit.com/user/DrewXDev/" target="_blank" rel="noopener noreferrer">Reddit ↗</a></div>
     </div>
     <div class="footer-bottom wrap"><span>© <span data-year></span> DREwX</span><span class="footer-status" data-i18n="footerStatus">Construit en France · Open source</span><a class="back-to-top" href="#top"><span data-i18n="footerTop">Retour en haut</span><span aria-hidden="true">↑</span></a></div>

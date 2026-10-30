@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Comprendre les userscripts, les installer et les gérer en toute confiance.">
+  <meta name="theme-color" content="#f5f1e8">
+  <meta property="og:title" content="Les userscripts : guide pour débuter — DREwX">
+  <meta property="og:description" content="Comprendre les userscripts, les installer et les gérer en toute confiance.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://drewx.dev/guides/">
+  <link rel="canonical" href="https://drewx.dev/guides/">
+  <link rel="icon" href="../favicon.png" type="image/png" sizes="192x192">
+  <link rel="shortcut icon" href="../favicon.ico">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png" sizes="180x180">
+  <title>Les userscripts : guide pour débuter — DREwX</title>
+  <script>
+    (() => {
+      if (/^https?:$/.test(location.protocol) && location.pathname.endsWith('/index.html')) {
+        history.replaceState(history.state, '', `${location.pathname.slice(0, -10)}${location.search}${location.hash}`);
+      }
+      try {
+        const saved = localStorage.getItem('drewx-theme');
+        document.documentElement.dataset.theme = saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      } catch {
+        document.documentElement.dataset.theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;520;600;650;720&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body data-page="guides">
+  <a class="skip-link" href="#content" data-i18n="skipLink">Aller au contenu</a>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="scroll-progress" data-scroll-progress aria-hidden="true"></div>
+
+  <header class="site-header" data-header>
+    <div class="nav wrap">
+      <a class="brand" href="../index.html" aria-label="DREwX, accueil" data-i18n-aria="homeLabel"><span class="brand-mark" aria-hidden="true">D</span><span>DREwX</span></a>
+      <nav class="nav-desktop" aria-label="Navigation principale" data-i18n-aria="navLabel">
+        <a href="../index.html" data-i18n="navHome">Accueil</a>
+        <a href="../projects/index.html" data-i18n="navAllProjects">Tous les projets</a>
+        <a href="index.html" aria-current="page" data-i18n="navGuides">Guides</a>
+        <a href="https://github.com/DREwX-code" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      </nav>
+      <div class="nav-actions">
+        <select class="language-select" data-language-select aria-label="Choisir la langue" data-i18n-aria="languageLabel">
+          <option value="fr" lang="fr">Français</option><option value="en" lang="en">English</option><option value="es" lang="es">Español</option><option value="pt" lang="pt">Português</option><option value="zh" lang="zh">中文</option><option value="hi" lang="hi">हिन्दी</option>
+        </select>
+        <button class="icon-button" type="button" data-theme-toggle aria-label="Passer au thème sombre">
+          <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"></path></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.2A8.5 8.5 0 0 1 8.8 4a8.5 8.5 0 1 0 11.2 11.2Z"></path></svg>
+        </button>
+        <button class="icon-button menu-toggle" type="button" data-menu-toggle aria-controls="mobile-menu" aria-expanded="false" aria-label="Ouvrir le menu"><span class="menu-lines" aria-hidden="true"><i></i><i></i></span></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-panel" id="mobile-menu" data-mobile-panel aria-hidden="true" inert>
+    <nav aria-label="Navigation mobile" data-i18n-aria="mobileNavLabel">
+      <a href="../index.html"><span>01</span><b data-i18n="navHome">Accueil</b></a>
+      <a href="../projects/index.html"><span>02</span><b data-i18n="navAllProjects">Tous les projets</b></a>
+      <a href="./"><span>03</span><b data-i18n="navGuides">Guides</b></a>
+      <a href="https://github.com/DREwX-code" target="_blank" rel="noopener noreferrer"><span>03</span><b>GitHub ↗</b></a>
+    </nav>
+  </div>
+
+  <main id="content" tabindex="-1">
+    <article class="guide-article" id="top">
+      <header class="guide-hero wrap"><div><span class="guide-kicker" data-i18n="guideKicker">Guide pour débuter</span><h1 data-i18n="guideTitle">Les userscripts, simplement.</h1><p data-i18n="guideLead">De petits programmes qui adaptent les sites à vos besoins. Voici comment ils fonctionnent et comment commencer.</p></div><div class="guide-hero-art" aria-hidden="true"><div class="guide-art-bar"><i></i><i></i><i></i></div><div class="guide-art-code"><span>// ==UserScript==</span><span>// @name <b>Make the web yours</b></span><span>// @match <b>https://example.com/*</b></span><span>// ==/UserScript==</span></div></div></header>
+      <div class="guide-layout wrap"><aside class="guide-aside"><span data-i18n="navGuides">Guides</span><a href="#introduction" data-i18n="guideIntroTitle">Un navigateur qui travaille pour vous</a><a href="#commencer" data-i18n="guideStepsTitle">Commencer en trois étapes</a><a href="#confiance" data-i18n="guideNoteTitle">Un mot sur la confiance</a><a href="#depannage" data-i18n="guideTroubleshoot">Si le script ne fonctionne pas</a><a href="#ressources" data-i18n="guideSources">Pour aller plus loin</a></aside>
+      <div class="guide-content"><section id="introduction"><h2 data-i18n="guideIntroTitle">Un navigateur qui travaille pour vous</h2><p data-i18n="guideIntro">Un userscript est un programme JavaScript qui s’exécute sur les pages prévues par son auteur. Il peut ajouter un bouton, traduire un texte ou améliorer une interface. Un gestionnaire de scripts se charge de les installer et de les lancer.</p><div class="guide-example"><strong data-i18n="guideExampleTitle">Un exemple concret</strong><p data-i18n="guideExample">Sur une conversation avec une IA, un userscript peut ajouter un bouton d’export pour enregistrer le contenu dans un format choisi. Sur une autre page, il peut traduire une sélection de texte.</p></div></section>
+      <section id="commencer"><h2 data-i18n="guideStepsTitle">Commencer en trois étapes</h2><ol class="guide-steps"><li><span class="guide-step-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11m0 0 4-4m-4 4-4-4M4 17v3h16v-3"></path></svg></span><h3 data-i18n="guideStep1Title">Installer un gestionnaire</h3><p data-i18n="guideStep1">Choisissez un gestionnaire compatible avec votre navigateur, par exemple Tampermonkey ou Violentmonkey, depuis sa source officielle.</p><div class="guide-inline-links"><a href="https://www.tampermonkey.net/" target="_blank" rel="noopener noreferrer">Tampermonkey ↗</a><a href="https://violentmonkey.github.io/" target="_blank" rel="noopener noreferrer">Violentmonkey ↗</a></div></li><li><span class="guide-step-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 4 4"></path></svg></span><h3 data-i18n="guideStep2Title">Choisir un script</h3><p data-i18n="guideStep2">Lisez la description, les sites concernés et les avis. Sur Greasy Fork, ouvrez la page du script, puis cliquez sur le bouton d’installation.</p><div class="guide-inline-links"><a href="https://greasyfork.org/" target="_blank" rel="noopener noreferrer">Greasy Fork ↗</a><a href="../projects/index.html" data-i18n="guideExplore">Découvrir mes projets</a></div></li><li><span class="guide-step-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"></path><circle cx="12" cy="12" r="9"></circle></svg></span><h3 data-i18n="guideStep3Title">Confirmer et utiliser</h3><p data-i18n="guideStep3">Vérifiez les informations présentées par votre gestionnaire et confirmez. Rechargez la page concernée si nécessaire ; vous pouvez ensuite désactiver ou supprimer le script depuis le gestionnaire.</p></li></ol><p class="guide-note" data-i18n="guideChrome">Selon le navigateur et le gestionnaire, une autorisation supplémentaire peut être nécessaire pour exécuter les scripts. Consultez les instructions de votre gestionnaire.</p></section>
+      <section id="confiance" class="guide-trust"><div class="guide-trust-intro"><span class="guide-trust-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5 3.4 8.6 8 11 4.6-2.4 8-6 8-11V5z"></path><path d="m8 12 3 3 5-6"></path></svg></span><div><h2 data-i18n="guideNoteTitle">Un mot sur la confiance</h2><p data-i18n="guideNote">Un userscript peut accéder au contenu des pages sur lesquelles il s’exécute. Installez seulement des scripts dont vous comprenez l’usage et dont vous faites confiance à la source ; examinez les autorisations et le code si vous le pouvez.</p></div></div><div class="guide-checklist"><div><strong data-i18n="guideCheckSource">La source</strong><span data-i18n="guideCheckSourceCopy">Qui publie le script et où se trouve son code ?</span></div><div><strong data-i18n="guideCheckSites">Les sites concernés</strong><span data-i18n="guideCheckSitesCopy">Sur quelles pages le script est-il autorisé à s’exécuter ?</span></div><div><strong data-i18n="guideCheckPermissions">Les autorisations</strong><span data-i18n="guideCheckPermissionsCopy">Les accès demandés correspondent-ils à son usage ?</span></div></div></section>
+      <section id="depannage" class="guide-help"><h2 data-i18n="guideTroubleshoot">Si le script ne fonctionne pas</h2><p data-i18n="guideTroubleshootCopy">Vérifiez que le script est activé dans votre gestionnaire, que la page correspond aux sites pris en charge, puis rechargez-la. Certains navigateurs demandent une autorisation supplémentaire.</p><a href="https://www.tampermonkey.net/faq.php#Q209" target="_blank" rel="noopener noreferrer" data-i18n="guidePermissionLink">Consulter les instructions pour Tampermonkey ↗</a></section>
+      <section id="ressources" class="guide-sources"><h2 data-i18n="guideSources">Pour aller plus loin</h2><div class="guide-resource-grid"><a href="https://greasyfork.org/fr/help/installing-user-scripts" target="_blank" rel="noopener noreferrer"><span class="guide-resource-icon" aria-hidden="true">↗</span><span><strong>Greasy Fork</strong><small data-i18n="guideResourceInstall">Guide d’installation</small></span><b aria-hidden="true">↗</b></a><a href="https://www.tampermonkey.net/faq.php#Q209" target="_blank" rel="noopener noreferrer"><span class="guide-resource-icon" aria-hidden="true">?</span><span><strong>Tampermonkey</strong><small data-i18n="guideResourcePermission">Autorisations et dépannage</small></span><b aria-hidden="true">↗</b></a><a href="https://violentmonkey.github.io/" target="_blank" rel="noopener noreferrer"><span class="guide-resource-icon" aria-hidden="true">⌘</span><span><strong>Violentmonkey</strong><small data-i18n="guideResourceOfficial">Site officiel</small></span><b aria-hidden="true">↗</b></a></div><a class="button" href="../projects/index.html" data-i18n="guideExplore">Découvrir mes projets</a></section></div></div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-main wrap">
+      <div class="footer-brand"><a class="brand" href="../index.html"><span class="brand-mark" aria-hidden="true">D</span><span>DREwX</span></a><p class="footer-tagline" data-i18n-html="footerTagline">Des outils simples à adopter,<br>solides à garder.</p></div>
+      <div class="footer-column"><strong data-i18n="footerExplore">Explorer</strong><a href="../index.html" data-i18n="navHome">Accueil</a><a href="../projects/index.html" data-i18n="navAllProjects">Tous les projets</a><a href="../index.html#about" data-i18n="navAbout">À propos</a></div>
+      <div class="footer-column"><strong data-i18n="footerElsewhere">Ailleurs</strong><a href="https://github.com/DREwX-code" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://greasyfork.org/users/1259433-d%E2%84%9D-wx" target="_blank" rel="noopener noreferrer">Greasy Fork ↗</a><a href="https://www.reddit.com/user/DrewXDev/" target="_blank" rel="noopener noreferrer">Reddit ↗</a></div>
+    </div>
+    <div class="footer-bottom wrap"><span>© <span data-year></span> DREwX</span><span class="footer-status" data-i18n="footerStatus">Construit en France · Open source</span><a class="back-to-top" href="#top"><span data-i18n="footerTop">Retour en haut</span><span aria-hidden="true">↑</span></a></div>
+  </footer>
+
+  <script defer src="../assets/js/translations.js"></script>
+  <script defer src="../assets/js/main.js"></script>
+</body>
+</html>
