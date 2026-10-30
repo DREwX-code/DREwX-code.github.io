@@ -29,7 +29,7 @@
 
   function start(card, visual, kind) {
     stop(card);
-    if (!canHover.matches || reduced.matches || (kind === 'omni' && !visual.querySelector('.omni-manual-view')?.hidden)) return;
+    if (!canHover.matches || reduced.matches || card.classList.contains('has-utst-interaction') || (kind === 'omni' && !visual.querySelector('.omni-manual-view')?.hidden)) return;
     const frame = visual.querySelector('.product-frame');
     const cursor = frame?.querySelector('.product-cursor');
     if (!frame || !cursor) return;
@@ -185,7 +185,7 @@
     if (!card) return;
     card.addEventListener('pointerenter', (event) => { if (event.pointerType === 'mouse') start(card, visual, kind); });
     card.addEventListener('pointerleave', () => stop(card));
-    card.addEventListener('pointerdown', (event) => { if (event.target.closest('[data-demo-action]')) stop(card); });
+    card.addEventListener('pointerdown', (event) => { if (event.target.closest('[data-demo-action]') || (kind === 'translator' && event.target.closest('.reader-page'))) stop(card); });
   });
   const statsLayout = document.querySelector('.stats-layouts');
   let statsTimer = 0;

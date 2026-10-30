@@ -632,6 +632,75 @@
     if (premiumApp) { premiumApp.dataset.demoTheme = root.dataset.theme === 'light' ? 'light' : 'dark'; premiumApp.dataset.demoVariant = 'full-dark'; }
   };
 
+  const translatorFrame = document.querySelector('.translator-frame');
+  const readerPage = translatorFrame?.querySelector('.reader-page');
+  const translatorBubble = readerPage?.querySelector('.utst-selection-bubble');
+  const translationResult = translatorFrame?.querySelector('.translation-result');
+  let selectedDemoText = '';
+  let translationRequest = null;
+
+  const captureDemoSelection = () => {
+    const selection = window.getSelection();
+    if (!selection || selection.isCollapsed || !selection.rangeCount) return;
+    const range = selection.getRangeAt(0);
+    if (!readerPage?.contains(range.startContainer) || !readerPage.contains(range.endContainer)
+      || translatorBubble.contains(range.commonAncestorContainer)) return;
+    const text = selection.toString().trim();
+    if (!text) return;
+    selectedDemoText = text;
+    translationRequest?.abort();
+    const bounds = range.getBoundingClientRect();
+    const pageBounds = readerPage.getBoundingClientRect();
+    const scaleX = pageBounds.width / readerPage.offsetWidth || 1;
+    const scaleY = pageBounds.height / readerPage.offsetHeight || 1;
+    const bubbleLeft = (bounds.left - pageBounds.left + bounds.width / 2) / scaleX - translatorBubble.offsetWidth / 2;
+    translatorBubble.style.left = `${Math.max(4, Math.min(readerPage.clientWidth - translatorBubble.offsetWidth - 4, bubbleLeft))}px`;
+    translatorBubble.style.top = `${(bounds.bottom - pageBounds.top) / scaleY + 7}px`;
+    translatorFrame.closest('.feature-card')?.classList.add('has-utst-interaction', 'has-manual-state');
+    translatorFrame.classList.add('has-user-selection');
+    translatorFrame.classList.remove('is-bubble-closed', 'is-manual-open');
+    translatorFrame.classList.add('is-manual-closed', 'is-bubble-open');
+  };
+  translatorBubble?.addEventListener('pointerdown', (event) => {
+    if (event.target.closest('button')) event.preventDefault();
+  });
+  document.addEventListener('selectionchange', () => {
+    if (!translatorFrame?.classList.contains('is-bubble-open')) return;
+    const selection = window.getSelection();
+    if (!selection || selection.isCollapsed || !selection.toString().trim()
+      || !readerPage.contains(selection.anchorNode) || !readerPage.contains(selection.focusNode)) {
+      translatorFrame.classList.remove('is-bubble-open');
+      translatorFrame.classList.add('is-bubble-closed');
+      selectedDemoText = '';
+    }
+  });
+  readerPage?.addEventListener('pointerup', (event) => {
+    if (!event.target.closest('.utst-selection-bubble')) requestAnimationFrame(captureDemoSelection);
+  });
+  readerPage?.addEventListener('keyup', (event) => {
+    if (event.key === 'Shift' || event.key.startsWith('Arrow')) requestAnimationFrame(captureDemoSelection);
+  });
+
+  const translateDemoSelection = async () => {
+    if (!translationResult || !selectedDemoText) return;
+    translationRequest?.abort();
+    const controller = new AbortController();
+    translationRequest = controller;
+    const labels = dictionary[currentLanguage] || dictionary.en;
+    translationResult.textContent = labels.demoTranslating;
+    const params = new URLSearchParams({ client: 'gtx', sl: 'auto', tl: 'fr', dt: 't', q: selectedDemoText });
+    try {
+      const response = await fetch(`https://translate.googleapis.com/translate_a/single?${params}`, { signal: controller.signal, credentials: 'omit' });
+      if (!response.ok) throw new Error('Translation request failed');
+      const data = await response.json();
+      const text = Array.isArray(data[0]) ? data[0].map(part => part?.[0] || '').join('') : '';
+      if (!text.trim()) throw new Error('Empty translation');
+      if (!controller.signal.aborted) translationResult.textContent = text;
+    } catch (error) {
+      if (error.name !== 'AbortError') translationResult.textContent = labels.demoTranslationError;
+    }
+  };
+
   const translatorActions = ['utst-speak', 'utst-copy', 'utst-expand', 'utst-settings'];
   const translatorLabels = ['demoListen', 'demoCopy', 'demoExpand', 'demoSettings'];
   document.querySelectorAll('.translation-tools span').forEach((control, index) => {
@@ -777,14 +846,23 @@
       const frame = control.closest('.translator-frame');
       frame?.classList.remove('is-manual-closed');
       frame?.classList.add('is-manual-open');
+      frame?.classList.remove('is-bubble-open');
+      frame?.classList.add('is-bubble-closed');
+      if (selectedDemoText) void translateDemoSelection();
+    } else if (action === 'utst-bubble-close') {
+      translationRequest?.abort();
+      card.classList.add('has-utst-interaction');
+      translatorFrame?.classList.remove('is-bubble-open');
+      translatorFrame?.classList.add('is-bubble-closed');
     } else if (action === 'utst-close') {
       flashProductControl(control);
+      translationRequest?.abort();
       const frame = control.closest('.translator-frame');
       frame?.classList.remove('is-manual-open');
       frame?.classList.add('is-manual-closed');
     } else if (action === 'utst-copy') {
       flashProductControl(control);
-      navigator.clipboard?.writeText('ne jamais interrompre votre flux.').catch(() => {});
+      navigator.clipboard?.writeText(translationResult?.textContent || '').catch(() => {});
     } else if (action?.startsWith('utst-')) {
       flashProductControl(control);
     }
@@ -803,7 +881,7 @@
 
   document.querySelectorAll('.feature-card').forEach((card) => {
     card.addEventListener('mouseleave', () => {
-      if (!mobileCardMotion.matches) resetProductDemo(card);
+      if (!mobileCardMotion.matches && !card.classList.contains('has-utst-interaction')) resetProductDemo(card);
     });
   });
 

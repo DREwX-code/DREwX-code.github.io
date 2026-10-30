@@ -1046,3 +1046,10 @@ Object.assign(window.DREWX_I18N.es, { demoNoteLabel: 'Nota personal' });
 Object.assign(window.DREWX_I18N.pt, { demoNoteLabel: 'Nota pessoal' });
 Object.assign(window.DREWX_I18N.zh, { demoNoteLabel: '个人备注' });
 Object.assign(window.DREWX_I18N.hi, { demoNoteLabel: 'व्यक्तिगत नोट' });
+
+Object.assign(window.DREWX_I18N.fr, { demoTranslating: 'Traduction…', demoTranslationError: 'Traduction indisponible. Réessayez.' });
+Object.assign(window.DREWX_I18N.en, { demoTranslating: 'Translating…', demoTranslationError: 'Translation unavailable. Please try again.' });
+Object.assign(window.DREWX_I18N.es, { demoTranslating: 'Traduciendo…', demoTranslationError: 'Traducción no disponible. Inténtalo de nuevo.' });
+Object.assign(window.DREWX_I18N.pt, { demoTranslating: 'Traduzindo…', demoTranslationError: 'Tradução indisponível. Tente novamente.' });
+Object.assign(window.DREWX_I18N.zh, { demoTranslating: '正在翻译…', demoTranslationError: '翻译不可用，请重试。' });
+Object.assign(window.DREWX_I18N.hi, { demoTranslating: 'अनुवाद हो रहा है…', demoTranslationError: 'अनुवाद उपलब्ध नहीं है। फिर से प्रयास करें।' });
