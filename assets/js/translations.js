@@ -1264,3 +1264,31 @@ Object.entries({
     window.DREWX_I18N[language].projectFeatures[project].push(...features);
   });
 });
+
+Object.assign(window.DREWX_I18N.fr, { motionCopy: 'Copier la traduction', utstThemeLabel: 'Thème', utstThemeBlue: 'Bleu', utstThemeDark: 'Sombre', utstThemeLight: 'Clair', utstCopied: 'Copié', utstCopyError: 'Copie indisponible' });
+Object.assign(window.DREWX_I18N.en, { motionCopy: 'Copy the translation', utstThemeLabel: 'Theme', utstThemeBlue: 'Blue', utstThemeDark: 'Dark', utstThemeLight: 'Light', utstCopied: 'Copied', utstCopyError: 'Copy unavailable' });
+Object.assign(window.DREWX_I18N.es, { motionCopy: 'Copiar la traducción', utstThemeLabel: 'Tema', utstThemeBlue: 'Azul', utstThemeDark: 'Oscuro', utstThemeLight: 'Claro', utstCopied: 'Copiado', utstCopyError: 'No se pudo copiar' });
+Object.assign(window.DREWX_I18N.pt, { motionCopy: 'Copiar a tradução', utstThemeLabel: 'Tema', utstThemeBlue: 'Azul', utstThemeDark: 'Escuro', utstThemeLight: 'Claro', utstCopied: 'Copiado', utstCopyError: 'Não foi possível copiar' });
+Object.assign(window.DREWX_I18N.zh, { motionCopy: '复制翻译', utstThemeLabel: '主题', utstThemeBlue: '蓝色', utstThemeDark: '深色', utstThemeLight: '浅色', utstCopied: '已复制', utstCopyError: '无法复制' });
+Object.assign(window.DREWX_I18N.hi, { motionCopy: 'अनुवाद कॉपी करें', utstThemeLabel: 'थीम', utstThemeBlue: 'नीला', utstThemeDark: 'गहरा', utstThemeLight: 'हल्का', utstCopied: 'कॉपी हो गया', utstCopyError: 'कॉपी नहीं हो सका' });
+
+Object.assign(window.DREWX_I18N.fr, { utstExampleSource:'Good tools stay close to the task and <mark>never interrupt your flow.</mark>', utstExampleTranslation:'ne jamais interrompre votre flux.', utstDetect:'Détecter', utstBack:'Retour', utstLanguages:'Langues', utstTargetLanguage:'Langue de traduction', utstInterfaceLanguage:'Langue de l’interface', utstAppearance:'Apparence', utstShortcut:'Raccourci', utstBubble:'Bulle de sélection', utstBubbleEnabled:'Afficher la bulle', utstSourceText:'Texte original', utstTranslatedText:'Traduction', motionPanel:'Ouvrir le panneau' });
+Object.assign(window.DREWX_I18N.en, { utstExampleSource:'Les bons outils vous accompagnent et <mark>respectent votre concentration.</mark>', utstExampleTranslation:'respect your focus.', utstDetect:'Detect', utstBack:'Back', utstLanguages:'Languages', utstTargetLanguage:'Translation language', utstInterfaceLanguage:'Interface language', utstAppearance:'Appearance', utstShortcut:'Shortcut', utstBubble:'Selection bubble', utstBubbleEnabled:'Show selection bubble', utstSourceText:'Original text', utstTranslatedText:'Translation', motionPanel:'Open the side panel' });
+Object.assign(window.DREWX_I18N.es, { utstExampleSource:'Good tools stay close to the task and <mark>never interrupt your flow.</mark>', utstExampleTranslation:'nunca interrumpen tu concentración.', utstDetect:'Detectar', utstBack:'Volver', utstLanguages:'Idiomas', utstTargetLanguage:'Idioma de traducción', utstInterfaceLanguage:'Idioma de la interfaz', utstAppearance:'Apariencia', utstShortcut:'Atajo', utstBubble:'Burbuja de selección', utstBubbleEnabled:'Mostrar la burbuja', utstSourceText:'Texto original', utstTranslatedText:'Traducción', motionPanel:'Abrir el panel lateral' });
+Object.assign(window.DREWX_I18N.pt, { utstExampleSource:'Good tools stay close to the task and <mark>never interrupt your flow.</mark>', utstExampleTranslation:'nunca interrompem seu fluxo.', utstDetect:'Detectar', utstBack:'Voltar', utstLanguages:'Idiomas', utstTargetLanguage:'Idioma da tradução', utstInterfaceLanguage:'Idioma da interface', utstAppearance:'Aparência', utstShortcut:'Atalho', utstBubble:'Bolha de seleção', utstBubbleEnabled:'Mostrar a bolha', utstSourceText:'Texto original', utstTranslatedText:'Tradução', motionPanel:'Abrir o painel lateral' });
+Object.assign(window.DREWX_I18N.zh, { utstExampleSource:'Good tools stay close to the task and <mark>never interrupt your flow.</mark>', utstExampleTranslation:'不会打断你的思路。', utstDetect:'检测', utstBack:'返回', utstLanguages:'语言', utstTargetLanguage:'翻译语言', utstInterfaceLanguage:'界面语言', utstAppearance:'外观', utstShortcut:'快捷键', utstBubble:'选择气泡', utstBubbleEnabled:'显示气泡', utstSourceText:'原文', utstTranslatedText:'译文', motionPanel:'打开侧边栏' });
+Object.assign(window.DREWX_I18N.hi, { utstExampleSource:'Good tools stay close to the task and <mark>never interrupt your flow.</mark>', utstExampleTranslation:'आपका ध्यान कभी नहीं भटकाते।', utstDetect:'पहचानें', utstBack:'वापस', utstLanguages:'भाषाएँ', utstTargetLanguage:'अनुवाद की भाषा', utstInterfaceLanguage:'इंटरफ़ेस की भाषा', utstAppearance:'दिखावट', utstShortcut:'शॉर्टकट', utstBubble:'चयन बबल', utstBubbleEnabled:'बबल दिखाएँ', utstSourceText:'मूल पाठ', utstTranslatedText:'अनुवाद', motionPanel:'साइड पैनल खोलें' });
+
+window.DREWX_I18N.fr.utstOpenPanel = 'Ouvrir le panneau';
+window.DREWX_I18N.en.utstOpenPanel = 'Open side panel';
+window.DREWX_I18N.es.utstOpenPanel = 'Abrir panel lateral';
+window.DREWX_I18N.pt.utstOpenPanel = 'Abrir painel lateral';
+window.DREWX_I18N.zh.utstOpenPanel = '打开侧边栏';
+window.DREWX_I18N.hi.utstOpenPanel = 'साइड पैनल खोलें';
+
+window.DREWX_I18N.fr.utstDictate = 'Dicter';
+window.DREWX_I18N.en.utstDictate = 'Dictate';
+window.DREWX_I18N.es.utstDictate = 'Dictar';
+window.DREWX_I18N.pt.utstDictate = 'Ditar';
+window.DREWX_I18N.zh.utstDictate = '听写';
+window.DREWX_I18N.hi.utstDictate = 'बोलकर लिखें';

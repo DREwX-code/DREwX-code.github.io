@@ -268,6 +268,8 @@
       button.setAttribute('aria-label', `${copy.projectOpenDetails} : ${name}`);
     });
 
+    updateTranslatorLanguage(language);
+
     const guideCurrent = document.querySelector('.guide-aside [data-guide-current]');
     const activeGuideLink = document.querySelector('.guide-aside a[aria-current]') || document.querySelector('.guide-aside a');
     if (guideCurrent && activeGuideLink) guideCurrent.textContent = activeGuideLink.textContent;
@@ -717,11 +719,29 @@
     if (premiumApp) { premiumApp.dataset.demoTheme = root.dataset.theme === 'light' ? 'light' : 'dark'; premiumApp.dataset.demoVariant = 'full-dark'; }
   };
 
+  function updateTranslatorLanguage(language) {
+    const frame = document.querySelector('.translator-frame');
+    if (!frame) return;
+    const names = new Intl.DisplayNames([language], { type: 'language' });
+    const source = language === 'en' ? 'fr' : 'en';
+    const sourceName = names.of(source) || source;
+    const targetName = names.of(language) || language;
+    const label = dictionary[language]?.utstDetect || 'Detect';
+    frame.querySelector('[data-utst-source-label]').textContent = `${label} (${sourceName})`;
+    frame.querySelector('[data-utst-target-label]').textContent = targetName;
+    frame.querySelector('[data-utst-settings-target]').textContent = targetName;
+    frame.querySelector('[data-utst-settings-interface]').textContent = targetName;
+    const activeTheme = frame.querySelector('.translator-popover').dataset.utstTheme || 'blue';
+    const themeKeys = { blue: 'utstThemeBlue', dark: 'utstThemeDark', light: 'utstThemeLight' };
+    frame.querySelector('[data-utst-theme-current]').textContent = dictionary[language][themeKeys[activeTheme]];
+  }
+
   const translatorFrame = document.querySelector('.translator-frame');
   const readerPage = translatorFrame?.querySelector('.reader-page');
   const translatorBubble = readerPage?.querySelector('.utst-selection-bubble');
   const translationResult = translatorFrame?.querySelector('.translation-result');
   let selectedDemoText = '';
+  let translatedDemoSource = '';
   let translationRequest = null;
 
   const captureDemoSelection = () => {
@@ -743,20 +763,28 @@
     translatorBubble.style.top = `${(bounds.bottom - pageBounds.top) / scaleY + 7}px`;
     translatorFrame.closest('.feature-card')?.classList.add('has-utst-interaction', 'has-manual-state');
     translatorFrame.classList.add('has-user-selection');
-    translatorFrame.classList.remove('is-bubble-closed', 'is-manual-open');
+    translatorFrame.classList.remove('is-bubble-closed', 'is-manual-open', 'is-settings-open');
     translatorFrame.classList.add('is-manual-closed', 'is-bubble-open');
+    translatorSettings.hidden = true;
+    themeMenu.hidden = true;
+    themeTrigger.setAttribute('aria-expanded', 'false');
   };
   translatorBubble?.addEventListener('pointerdown', (event) => {
     if (event.target.closest('button')) event.preventDefault();
   });
   document.addEventListener('selectionchange', () => {
-    if (!translatorFrame?.classList.contains('is-bubble-open')) return;
+    if (!translatorFrame) return;
     const selection = window.getSelection();
-    if (!selection || selection.isCollapsed || !selection.toString().trim()
-      || !readerPage.contains(selection.anchorNode) || !readerPage.contains(selection.focusNode)) {
+    const selectedHere = selection && !selection.isCollapsed && selection.toString().trim()
+      && readerPage.contains(selection.anchorNode) && readerPage.contains(selection.focusNode);
+    if (selectedHere) return;
+    if (translatorFrame.classList.contains('is-bubble-open')) {
       translatorFrame.classList.remove('is-bubble-open');
       translatorFrame.classList.add('is-bubble-closed');
       selectedDemoText = '';
+    }
+    if (!translatorFrame.classList.contains('is-manual-open') && !translatorFrame.classList.contains('is-side-open')) {
+      translatorFrame.closest('.feature-card')?.classList.remove('has-utst-interaction', 'has-manual-state');
     }
   });
   readerPage?.addEventListener('pointerup', (event) => {
@@ -771,28 +799,102 @@
     translationRequest?.abort();
     const controller = new AbortController();
     translationRequest = controller;
-    const labels = dictionary[currentLanguage] || dictionary.en;
+    const targetLanguage = currentLanguage;
+    const sourceText = selectedDemoText;
+    translatedDemoSource = sourceText;
+    translatorFrame.querySelector('.utst-side-source').textContent = sourceText;
+    const labels = dictionary[targetLanguage] || dictionary.en;
     translationResult.textContent = labels.demoTranslating;
-    const params = new URLSearchParams({ client: 'gtx', sl: 'auto', tl: 'fr', dt: 't', q: selectedDemoText });
+    const params = new URLSearchParams({ client: 'gtx', sl: 'auto', tl: targetLanguage, dt: 't', q: sourceText });
     try {
       const response = await fetch(`https://translate.googleapis.com/translate_a/single?${params}`, { signal: controller.signal, credentials: 'omit' });
       if (!response.ok) throw new Error('Translation request failed');
       const data = await response.json();
       const text = Array.isArray(data[0]) ? data[0].map(part => part?.[0] || '').join('') : '';
       if (!text.trim()) throw new Error('Empty translation');
-      if (!controller.signal.aborted) translationResult.textContent = text;
+      if (!controller.signal.aborted && currentLanguage === targetLanguage) {
+        translationResult.textContent = text;
+        translatorFrame.querySelector('.utst-side-result').textContent = text;
+        if (typeof data[2] === 'string') {
+          try {
+            const names = new Intl.DisplayNames([currentLanguage], { type: 'language' });
+            const detected = names.of(data[2]) || data[2];
+            translatorFrame.querySelector('[data-utst-source-label]').textContent = `${labels.utstDetect} (${detected})`;
+          } catch { /* Keep the existing source label if the language code is unsupported. */ }
+        }
+      }
     } catch (error) {
-      if (error.name !== 'AbortError') translationResult.textContent = labels.demoTranslationError;
+      if (error.name !== 'AbortError' && currentLanguage === targetLanguage) translationResult.textContent = labels.demoTranslationError;
     }
   };
 
   const translatorActions = ['utst-speak', 'utst-copy', 'utst-expand', 'utst-settings'];
-  const translatorLabels = ['demoListen', 'demoCopy', 'demoExpand', 'demoSettings'];
+  const translatorLabels = ['demoListen', 'demoCopy', 'utstOpenPanel', 'demoSettings'];
   document.querySelectorAll('.translation-tools span').forEach((control, index) => {
-    control.dataset.demoAction = translatorActions[index];
     control.dataset.i18nAria = translatorLabels[index];
     control.setAttribute('role', 'button');
-    control.setAttribute('tabindex', '0');
+    if (index === 1 || index === 2 || index === 3) {
+      control.dataset.demoAction = translatorActions[index];
+      control.setAttribute('tabindex', '0');
+      if (index === 3) control.setAttribute('aria-expanded', 'false');
+    } else {
+      control.setAttribute('aria-disabled', 'true');
+    }
+  });
+
+  const translatorPanel = translatorFrame?.querySelector('.translator-popover');
+  const translatorHandle = translatorFrame?.querySelector('.translator-handle');
+  const translatorSettings = translatorFrame?.querySelector('.utst-settings-panel');
+  const sidePanel = translatorFrame?.querySelector('.utst-side-panel');
+  const themeMenu = translatorFrame?.querySelector('.utst-theme-menu');
+  const themeTrigger = translatorFrame?.querySelector('.utst-theme-trigger');
+  const copyTimers = new WeakMap();
+  const showCopyFeedback = control => {
+    const original = control.querySelector('svg');
+    if (!original) return;
+    let state = copyTimers.get(control);
+    if (!state) state = { svg: original.outerHTML, timer: 0 };
+    window.clearTimeout(state.timer);
+    original.outerHTML = '<svg class="utst-copy-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg>';
+    control.classList.add('utst-copy-success');
+    state.timer = window.setTimeout(() => {
+      const check = control.querySelector('.utst-copy-check');
+      if (check) check.outerHTML = state.svg;
+      control.classList.remove('utst-copy-success');
+      copyTimers.delete(control);
+    }, 900);
+    copyTimers.set(control, state);
+  };
+  translatorHandle?.addEventListener('pointerdown', event => {
+    if (event.button !== 0 || !translatorFrame.classList.contains('is-manual-open')) return;
+    const frameBounds = translatorFrame.getBoundingClientRect();
+    const panelBounds = translatorPanel.getBoundingClientRect();
+    const scaleX = frameBounds.width / translatorFrame.offsetWidth || 1;
+    const scaleY = frameBounds.height / translatorFrame.offsetHeight || 1;
+    const startX = event.clientX, startY = event.clientY;
+    const left = (panelBounds.left - frameBounds.left) / scaleX;
+    const top = (panelBounds.top - frameBounds.top) / scaleY;
+    const maxLeft = Math.max(0, translatorFrame.clientWidth - translatorPanel.offsetWidth);
+    const minTop = translatorFrame.querySelector('.product-toolbar')?.offsetHeight || 0;
+    const maxTop = Math.max(minTop, translatorFrame.clientHeight - translatorPanel.offsetHeight);
+    translatorHandle.setPointerCapture(event.pointerId);
+    const move = moveEvent => {
+      if (moveEvent.pointerId !== event.pointerId) return;
+      translatorPanel.style.left = `${Math.max(0, Math.min(maxLeft, left + (moveEvent.clientX - startX) / scaleX))}px`;
+      translatorPanel.style.top = `${Math.max(minTop, Math.min(maxTop, top + (moveEvent.clientY - startY) / scaleY))}px`;
+      translatorPanel.style.right = 'auto';
+      translatorPanel.style.bottom = 'auto';
+    };
+    const end = endEvent => {
+      if (endEvent.pointerId !== event.pointerId) return;
+      translatorHandle.removeEventListener('pointermove', move);
+      translatorHandle.removeEventListener('pointerup', end);
+      translatorHandle.removeEventListener('pointercancel', end);
+    };
+    translatorHandle.addEventListener('pointermove', move);
+    translatorHandle.addEventListener('pointerup', end);
+    translatorHandle.addEventListener('pointercancel', end);
+    event.preventDefault();
   });
   document.querySelectorAll('.utst-close-button').forEach((control) => {
     control.dataset.demoAction = 'utst-close';
@@ -945,11 +1047,49 @@
       const frame = control.closest('.translator-frame');
       frame?.classList.remove('is-manual-open');
       frame?.classList.add('is-manual-closed');
-    } else if (action === 'utst-copy') {
-      flashProductControl(control);
-      navigator.clipboard?.writeText(translationResult?.textContent || '').catch(() => {});
-    } else if (action?.startsWith('utst-')) {
-      flashProductControl(control);
+      card.classList.remove('has-utst-interaction', 'has-manual-state');
+      translatorSettings.hidden = true;
+      themeMenu.hidden = true;
+      themeTrigger.setAttribute('aria-expanded', 'false');
+      frame?.classList.remove('is-settings-open');
+      frame?.querySelector('[data-demo-action=utst-settings]')?.setAttribute('aria-expanded', 'false');
+    } else if (action === 'utst-copy' || action === 'utst-side-copy-source' || action === 'utst-side-copy-result') {
+      const text = action === 'utst-side-copy-source' ? sidePanel.querySelector('.utst-side-source').textContent
+        : action === 'utst-side-copy-result' ? sidePanel.querySelector('.utst-side-result').textContent
+        : translationResult?.textContent || '';
+      if (navigator.clipboard?.writeText && text) {
+        navigator.clipboard.writeText(text).then(() => showCopyFeedback(control)).catch(() => {});
+      }
+    } else if (action === 'utst-theme-toggle') {
+      const open = themeMenu.hidden;
+      themeMenu.hidden = !open;
+      themeTrigger.setAttribute('aria-expanded', String(open));
+    } else if (action === 'utst-theme') {
+      const theme = control.dataset.utstTheme;
+      if (!['blue', 'dark', 'light'].includes(theme)) return;
+      translatorPanel.dataset.utstTheme = theme;
+      sidePanel.dataset.utstTheme = theme;
+      themeMenu.querySelectorAll('[data-utst-theme]').forEach(button => button.setAttribute('aria-selected', String(button === control)));
+      themeTrigger.querySelector('[data-swatch]').dataset.swatch = theme;
+      themeTrigger.querySelector('[data-utst-theme-current]').textContent = control.querySelector('[data-i18n]').textContent;
+      themeMenu.hidden = true;
+      themeTrigger.setAttribute('aria-expanded', 'false');
+    } else if (action === 'utst-expand') {
+      translatorFrame.querySelector('.utst-side-source').textContent = translatedDemoSource || selectedDemoText || readerPage.querySelector('mark')?.textContent || '';
+      translatorFrame.querySelector('.utst-side-result').textContent = translationResult?.textContent || '';
+      sidePanel.inert = false;
+      sidePanel.setAttribute('aria-hidden', 'false');
+      translatorFrame.classList.add('is-side-open', 'is-manual-open');
+    } else if (action === 'utst-panel-close') {
+      translatorFrame.classList.remove('is-side-open');
+      sidePanel.inert = true;
+      sidePanel.setAttribute('aria-hidden', 'true');
+    } else if (action === 'utst-settings' || action === 'utst-settings-close') {
+      const open = action === 'utst-settings' && translatorSettings.hidden;
+      translatorSettings.hidden = !open;
+      if (!open) { themeMenu.hidden = true; themeTrigger.setAttribute('aria-expanded', 'false'); }
+      translatorFrame.classList.toggle('is-settings-open', open);
+      translatorFrame.querySelector('[data-demo-action="utst-settings"]')?.setAttribute('aria-expanded', String(open));
     }
   };
 

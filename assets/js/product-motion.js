@@ -30,7 +30,11 @@
 
   function start(card, visual, kind, mobile = false) {
     stop(card);
-    if ((!mobile && !canHover.matches) || reduced.matches || card.classList.contains('has-utst-interaction') || (kind === 'omni' && !visual.querySelector('.omni-manual-view')?.hidden)) return;
+    if ((!mobile && !canHover.matches) || reduced.matches || (kind === 'translator' && visual.querySelector('.translator-frame:is(.is-manual-open, .is-bubble-open)')) || (kind === 'omni' && !visual.querySelector('.omni-manual-view')?.hidden)) return;
+    if (kind === 'translator') {
+      card.classList.remove('has-utst-interaction', 'has-manual-state');
+      visual.querySelector('.translator-frame')?.classList.remove('has-user-selection', 'is-bubble-closed', 'is-manual-closed', 'is-side-open');
+    }
     const frame = visual.querySelector('.product-frame');
     const cursor = frame?.querySelector('.product-cursor');
     if (!frame || !cursor) return;
@@ -55,7 +59,7 @@
     const cursorAt = (point, scale = 1) => `translate(${point.x - 4}px, ${point.y - 2}px) scale(${scale})`;
     const inFrame = (selector) => position(frame.querySelector(selector), frame);
     const animations = [];
-    const duration = kind === 'omni' ? 18000 : kind === 'premium' ? 18000 : 11500;
+    const duration = kind === 'omni' ? 18000 : kind === 'premium' ? 18000 : 12500;
     const animate = (element, frames) => {
       if (!element) return null;
       const animation = element.animate(frames, { duration, fill: 'both', easing: 'linear' });
@@ -76,14 +80,14 @@
       const download = inFrame('.omni-download-card');
       const near = { x: button.x - 55, y: button.y + 45 };
       caption('motionExport', .01, .49);
-      caption('motionPdf', .78, .99);
-      animate(frame, [at(0,{transform:home}), at(.15,{transform:home}), at(.25,{transform:zoom(menu, 1.9)}), at(.43,{transform:zoom(menu, 1.9)}), at(.54,{transform:home}), at(1,{transform:home})]);
-      animate(cursor, [at(0,{opacity:0,transform:cursorAt(near)}),at(.05,{opacity:1,transform:cursorAt(near)}),at(.12,{opacity:1,transform:cursorAt(button)}),at(.145,{opacity:1,transform:cursorAt(button,.82)}),at(.16,{opacity:1,transform:cursorAt(button)}),at(.30,{opacity:1,transform:cursorAt(button)}),at(.37,{opacity:1,transform:cursorAt(option)}),at(.40,{opacity:1,transform:cursorAt(option,.82)}),at(.43,{opacity:1,transform:cursorAt(option)}),at(.60,{opacity:1,transform:cursorAt(option)}),at(.70,{opacity:1,transform:cursorAt(download)}),at(.73,{opacity:1,transform:cursorAt(download,.82)}),at(.76,{opacity:0,transform:cursorAt(download)}),at(1,{opacity:0,transform:cursorAt(download)})]);
-      animate(frame.querySelector('.omni-format-menu--header'),[at(0,{opacity:0,transform:'translateY(-4px)'}),at(.15,{opacity:0,transform:'translateY(-4px)'}),at(.19,{opacity:1,transform:'none'}),at(.43,{opacity:1,transform:'none'}),at(.48,{opacity:0,transform:'translateY(-4px)'}),at(1,{opacity:0,transform:'translateY(-4px)'})]);
-      animate(frame.querySelector('.omni-format-menu--header [data-export-format="pdf"]'),[at(0,{backgroundColor:'transparent'}),at(.37,{backgroundColor:'transparent'}),at(.40,{backgroundColor:'rgba(148,163,184,.22)'}),at(.46,{backgroundColor:'rgba(148,163,184,.22)'}),at(.48,{backgroundColor:'transparent'}),at(1,{backgroundColor:'transparent'})]);
-      animate(frame.querySelector('.omni-download-card'),[at(0,{opacity:0}),at(.53,{opacity:0}),at(.57,{opacity:1}),at(.76,{opacity:1}),at(.79,{opacity:0}),at(1,{opacity:0})]);
+      caption('motionPdf', .77, .99);
+      animate(frame, [at(0,{transform:home}), at(.15,{transform:home}), at(.25,{transform:zoom(menu, 1.9)}), at(.37,{transform:zoom(menu, 1.9)}), at(.50,{transform:home}), at(1,{transform:home})]);
+      animate(cursor, [at(0,{opacity:0,transform:cursorAt(near)}),at(.05,{opacity:1,transform:cursorAt(near)}),at(.10,{opacity:1,transform:cursorAt(button)}),at(.12,{opacity:1,transform:cursorAt(button,.82)}),at(.14,{opacity:1,transform:cursorAt(button)}),at(.25,{opacity:1,transform:cursorAt(button)}),at(.30,{opacity:1,transform:cursorAt(option)}),at(.32,{opacity:1,transform:cursorAt(option,.82)}),at(.34,{opacity:1,transform:cursorAt(option)}),at(.52,{opacity:1,transform:cursorAt(option)}),at(.64,{opacity:1,transform:cursorAt(download)}),at(.69,{opacity:1,transform:cursorAt(download)}),at(.71,{opacity:1,transform:cursorAt(download,.82)}),at(.735,{opacity:1,transform:cursorAt(download)}),at(.76,{opacity:0,transform:cursorAt(download)}),at(1,{opacity:0,transform:cursorAt(download)})]);
+      animate(frame.querySelector('.omni-format-menu--header'),[at(0,{opacity:0,transform:'translateY(-4px)'}),at(.15,{opacity:0,transform:'translateY(-4px)'}),at(.19,{opacity:1,transform:'none'}),at(.35,{opacity:1,transform:'none'}),at(.40,{opacity:0,transform:'translateY(-4px)'}),at(1,{opacity:0,transform:'translateY(-4px)'})]);
+      animate(frame.querySelector('.omni-format-menu--header [data-export-format="pdf"]'),[at(0,{backgroundColor:'transparent'}),at(.285,{backgroundColor:'transparent'}),at(.30,{backgroundColor:'rgba(148,163,184,.22)'}),at(.35,{backgroundColor:'rgba(148,163,184,.22)'}),at(.40,{backgroundColor:'transparent'}),at(1,{backgroundColor:'transparent'})]);
+      animate(frame.querySelector('.omni-download-card'),[at(0,{opacity:0}),at(.53,{opacity:0}),at(.57,{opacity:1}),at(.71,{opacity:1}),at(.75,{opacity:0}),at(1,{opacity:0})]);
       animate(frame.querySelector('.omni-download-bar'),[at(0,{transform:'scaleX(0)'}),at(.56,{transform:'scaleX(0)'}),at(.68,{transform:'scaleX(1)'}),at(1,{transform:'scaleX(1)'})]);
-      animate(frame.querySelector('.omni-pdf-view'),[at(0,{opacity:0}),at(.75,{opacity:0}),at(.80,{opacity:1}),at(1,{opacity:1})]);
+      animate(frame.querySelector('.omni-pdf-view'),[at(0,{opacity:0}),at(.72,{opacity:0}),at(.76,{opacity:1}),at(1,{opacity:1})]);
       const paper = frame.querySelector('.omni-pdf-paper');
       const viewport = frame.querySelector('.omni-pdf-scroll');
       const scrollDistance = Math.max(0, paper.offsetHeight + 12 - viewport.clientHeight);
@@ -149,6 +153,13 @@
       const markElement = frame.querySelector('.reader-page mark');
       const bubble = inFrame('.utst-bubble-action');
       const panel = inFrame('.translator-popover');
+      const panelButton = inFrame('.utst-panel-button');
+      const side = frame.querySelector('.utst-side-panel');
+      const result = frame.querySelector('.translation-result');
+      const example = window.DREWX_I18N?.[document.documentElement.lang]?.utstExampleTranslation;
+      if (example) result.textContent = example;
+      side.querySelector('.utst-side-source').textContent = markElement.textContent;
+      side.querySelector('.utst-side-result').textContent = result.textContent;
       const lines = Array.from(markElement.getClientRects()).filter(rect => rect.width && rect.height).map(rect => ({
         left: rect.left - frameRect.left,
         right: rect.right - frameRect.left,
@@ -161,25 +172,41 @@
       const near = { x: markStart.x - 25, y: markStart.y + 25 };
       const selectionPath = [at(0,{opacity:0,transform:cursorAt(near)}),at(.04,{opacity:1,transform:cursorAt(near)})];
       lines.forEach((line, index) => {
-        const from = .08 + .08 * index / lines.length;
-        const to = .08 + .08 * (index + 1) / lines.length;
+        const from = .07 + .10 * index / lines.length;
+        const to = .07 + .10 * (index + 1) / lines.length;
         selectionPath.push(at(from,{opacity:1,transform:cursorAt({x:line.left,y:line.y})}));
         selectionPath.push(at(to - (index < lines.length - 1 ? .002 : 0),{opacity:1,transform:cursorAt({x:line.right,y:line.y})}));
       });
-      selectionPath.push(at(.18,{opacity:0,transform:cursorAt(markEnd)}),at(1,{opacity:0,transform:cursorAt(markEnd)}));
+      selectionPath.push(at(.19,{opacity:0,transform:cursorAt(markEnd)}),at(1,{opacity:0,transform:cursorAt(markEnd)}));
       caption('motionSelect', .01, .30);
-      caption('motionTranslate', .34, .98);
-      animate(frame,[at(0,{transform:home}),at(.30,{transform:home}),at(.43,{transform:zoom(panel,1.65)}),at(.69,{transform:zoom(panel,1.65)}),at(.82,{transform:home}),at(1,{transform:home})]);
-      animate(cursor,[at(0,{opacity:0,transform:cursorAt(near)}),at(.17,{opacity:0,transform:cursorAt(markEnd)}),at(.19,{opacity:1,transform:cursorAt(markEnd)}),at(.23,{opacity:1,transform:cursorAt(bubble)}),at(.26,{opacity:1,transform:cursorAt(bubble,.8)}),at(.30,{opacity:1,transform:cursorAt(bubble)}),at(.39,{opacity:0,transform:cursorAt(bubble)}),at(1,{opacity:0,transform:cursorAt(bubble)})]);
+      caption('motionTranslate', .34, .53);
+      caption('motionPanel', .66, .96);
+      animate(frame,[at(0,{transform:home}),at(.30,{transform:home}),at(.42,{transform:zoom(panel,1.55)}),at(.57,{transform:zoom(panel,1.55)}),at(.68,{transform:home}),at(.78,{transform:zoom({x:frame.offsetWidth * .80,y:frame.offsetHeight * .52},1.18)}),at(.92,{transform:zoom({x:frame.offsetWidth * .80,y:frame.offsetHeight * .52},1.18)}),at(1,{transform:home})]);
+      animate(cursor,[at(0,{opacity:0,transform:cursorAt(near)}),at(.17,{opacity:0,transform:cursorAt(markEnd)}),at(.19,{opacity:1,transform:cursorAt(markEnd)}),at(.23,{opacity:1,transform:cursorAt(bubble)}),at(.26,{opacity:1,transform:cursorAt(bubble,.8)}),at(.30,{opacity:1,transform:cursorAt(bubble)}),at(.38,{opacity:1,transform:cursorAt(bubble)}),at(.51,{opacity:1,transform:cursorAt(panelButton)}),at(.57,{opacity:1,transform:cursorAt(panelButton,.8)}),at(.60,{opacity:1,transform:cursorAt(panelButton)}),at(.73,{opacity:1,transform:cursorAt({x:frame.offsetWidth * .72,y:frame.offsetHeight * .30})}),at(.92,{opacity:1,transform:cursorAt({x:frame.offsetWidth * .72,y:frame.offsetHeight * .30})}),at(.98,{opacity:0,transform:cursorAt({x:frame.offsetWidth * .72,y:frame.offsetHeight * .30})}),at(1,{opacity:0,transform:cursorAt({x:frame.offsetWidth * .72,y:frame.offsetHeight * .30})})]);
       animate(frame.querySelector('.utst-text-cursor'), selectionPath);
       animate(frame.querySelector('mark'),[at(0,{backgroundSize:'0% 100%'}),at(.08,{backgroundSize:'0% 100%'}),at(.16,{backgroundSize:'100% 100%'}),at(1,{backgroundSize:'100% 100%'})]);
       animate(frame.querySelector('.utst-selection-bubble'),[at(0,{opacity:0,transform:'translateY(4px)'}),at(.16,{opacity:0,transform:'translateY(4px)'}),at(.20,{opacity:1,transform:'none'}),at(.27,{opacity:1,transform:'none'}),at(.33,{opacity:0,transform:'translateY(-4px)'}),at(1,{opacity:0,transform:'translateY(-4px)'})]);
-      animate(frame.querySelector('.translator-popover'),[at(0,{opacity:0,transform:'translateY(8px) scale(.98)'}),at(.29,{opacity:0,transform:'translateY(8px) scale(.98)'}),at(.37,{opacity:1,transform:'none'}),at(1,{opacity:1,transform:'none'})]);
+      animate(frame.querySelector('.translator-popover'),[at(0,{opacity:0,transform:'translateY(8px) scale(.98)'}),at(.29,{opacity:0,transform:'translateY(8px) scale(.98)'}),at(.37,{opacity:1,transform:'none'}),at(.60,{opacity:1,transform:'none'}),at(.65,{opacity:0,transform:'translateY(4px)'}),at(1,{opacity:0,transform:'translateY(4px)'})]);
+      const sideMotion = animate(side,[at(0,{opacity:0,transform:'translateX(12px)'}),at(.60,{opacity:0,transform:'translateX(12px)'}),at(.68,{opacity:1,transform:'none'}),at(1,{opacity:1,transform:'none'})]);
+      sideMotion.onfinish = () => {
+        if (!running.has(card)) return;
+        frame.classList.add('is-demo-ready');
+        frame.classList.add('is-side-open');
+        side.inert = false;
+        side.setAttribute('aria-hidden', 'false');
+      };
     }
     running.set(card, animations);
   }
 
   function stop(card) {
+    const translatorFrame = card.querySelector('.translator-frame');
+    translatorFrame?.classList.remove('is-demo-ready');
+    if (translatorFrame && !translatorFrame.classList.contains('is-side-open')) {
+      const side = translatorFrame.querySelector('.utst-side-panel');
+      side.inert = true;
+      side.setAttribute('aria-hidden', 'true');
+    }
     const pdfView = card.querySelector('.omni-pdf-view');
     if (pdfView) {
       pdfView.classList.remove('is-browsable');
@@ -200,7 +227,15 @@
     if (!card) return;
     card.addEventListener('pointerenter', (event) => { if (event.pointerType === 'mouse') start(card, visual, kind); });
     card.addEventListener('pointerleave', (event) => { if (event.pointerType === 'mouse') stop(card); });
-    card.addEventListener('pointerdown', (event) => { if ((event.pointerType === 'mouse' && visual.contains(event.target)) || event.target.closest('[data-demo-action]') || (kind === 'translator' && event.target.closest('.reader-page'))) stop(card); });
+    card.addEventListener('pointerdown', (event) => {
+      if (kind === 'translator' && event.target.closest('.translator-popover, .utst-side-panel') && visual.querySelector('.translator-frame')?.classList.contains('is-demo-ready')) {
+        const frame = visual.querySelector('.translator-frame');
+        frame.classList.add('is-manual-open');
+        if (event.target.closest('.utst-side-panel')) frame.classList.add('is-side-open');
+        card.classList.add('has-utst-interaction', 'has-manual-state');
+      }
+      if ((event.pointerType === 'mouse' && visual.contains(event.target)) || event.target.closest('[data-demo-action]') || (kind === 'translator' && event.target.closest('.reader-page'))) stop(card);
+    });
   });
   // Touch devices have no hover: play one visible demonstration at a time.
   if ('IntersectionObserver' in window) {
@@ -251,7 +286,7 @@
     if (statsVisible && !reduced.matches) {
       statsTimer = window.setInterval(() => {
         statsLayout.dataset.layout = statsLayout.dataset.layout === 'grid' ? 'compact' : 'grid';
-      }, 5000);
+      }, 4000);
     }
   }
   if (statsLayout && 'IntersectionObserver' in window) {
