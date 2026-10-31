@@ -3,6 +3,7 @@
 
   const canHover = window.matchMedia('(hover: hover) and (pointer: fine)');
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const touchOnly = window.matchMedia('(hover: none) and (pointer: coarse)');
   const scenes = [
     ['.premium-visual', 'premium'],
     ['.chat-visual', 'omni'],
@@ -27,9 +28,9 @@
     return { x: a.left - b.left + a.width / 2, y: a.top - b.top + a.height / 2 };
   }
 
-  function start(card, visual, kind) {
+  function start(card, visual, kind, mobile = false) {
     stop(card);
-    if (!canHover.matches || reduced.matches || card.classList.contains('has-utst-interaction') || (kind === 'omni' && !visual.querySelector('.omni-manual-view')?.hidden)) return;
+    if ((!mobile && !canHover.matches) || reduced.matches || card.classList.contains('has-utst-interaction') || (kind === 'omni' && !visual.querySelector('.omni-manual-view')?.hidden)) return;
     const frame = visual.querySelector('.product-frame');
     const cursor = frame?.querySelector('.product-cursor');
     if (!frame || !cursor) return;
@@ -145,18 +146,32 @@
       };
       session.frameId = requestAnimationFrame(syncTheme);
     } else {
-      const mark = inFrame('.reader-page mark');
+      const markElement = frame.querySelector('.reader-page mark');
       const bubble = inFrame('.utst-bubble-action');
       const panel = inFrame('.translator-popover');
-      const markWidth = frame.querySelector('mark').offsetWidth;
-      const markStart = { x: mark.x - markWidth / 2, y: mark.y };
-      const markEnd = { x: mark.x + markWidth / 2, y: mark.y };
+      const lines = Array.from(markElement.getClientRects()).filter(rect => rect.width && rect.height).map(rect => ({
+        left: rect.left - frameRect.left,
+        right: rect.right - frameRect.left,
+        y: rect.top - frameRect.top + rect.height / 2
+      }));
+      const firstLine = lines[0];
+      const lastLine = lines[lines.length - 1];
+      const markStart = { x: firstLine.left, y: firstLine.y };
+      const markEnd = { x: lastLine.right, y: lastLine.y };
       const near = { x: markStart.x - 25, y: markStart.y + 25 };
+      const selectionPath = [at(0,{opacity:0,transform:cursorAt(near)}),at(.04,{opacity:1,transform:cursorAt(near)})];
+      lines.forEach((line, index) => {
+        const from = .08 + .08 * index / lines.length;
+        const to = .08 + .08 * (index + 1) / lines.length;
+        selectionPath.push(at(from,{opacity:1,transform:cursorAt({x:line.left,y:line.y})}));
+        selectionPath.push(at(to - (index < lines.length - 1 ? .002 : 0),{opacity:1,transform:cursorAt({x:line.right,y:line.y})}));
+      });
+      selectionPath.push(at(.18,{opacity:0,transform:cursorAt(markEnd)}),at(1,{opacity:0,transform:cursorAt(markEnd)}));
       caption('motionSelect', .01, .30);
       caption('motionTranslate', .34, .98);
       animate(frame,[at(0,{transform:home}),at(.30,{transform:home}),at(.43,{transform:zoom(panel,1.65)}),at(.69,{transform:zoom(panel,1.65)}),at(.82,{transform:home}),at(1,{transform:home})]);
       animate(cursor,[at(0,{opacity:0,transform:cursorAt(near)}),at(.17,{opacity:0,transform:cursorAt(markEnd)}),at(.19,{opacity:1,transform:cursorAt(markEnd)}),at(.23,{opacity:1,transform:cursorAt(bubble)}),at(.26,{opacity:1,transform:cursorAt(bubble,.8)}),at(.30,{opacity:1,transform:cursorAt(bubble)}),at(.39,{opacity:0,transform:cursorAt(bubble)}),at(1,{opacity:0,transform:cursorAt(bubble)})]);
-      animate(frame.querySelector('.utst-text-cursor'),[at(0,{opacity:0,transform:cursorAt(near)}),at(.04,{opacity:1,transform:cursorAt(near)}),at(.08,{opacity:1,transform:cursorAt(markStart)}),at(.16,{opacity:1,transform:cursorAt(markEnd)}),at(.18,{opacity:0,transform:cursorAt(markEnd)}),at(1,{opacity:0,transform:cursorAt(markEnd)})]);
+      animate(frame.querySelector('.utst-text-cursor'), selectionPath);
       animate(frame.querySelector('mark'),[at(0,{backgroundSize:'0% 100%'}),at(.08,{backgroundSize:'0% 100%'}),at(.16,{backgroundSize:'100% 100%'}),at(1,{backgroundSize:'100% 100%'})]);
       animate(frame.querySelector('.utst-selection-bubble'),[at(0,{opacity:0,transform:'translateY(4px)'}),at(.16,{opacity:0,transform:'translateY(4px)'}),at(.20,{opacity:1,transform:'none'}),at(.27,{opacity:1,transform:'none'}),at(.33,{opacity:0,transform:'translateY(-4px)'}),at(1,{opacity:0,transform:'translateY(-4px)'})]);
       animate(frame.querySelector('.translator-popover'),[at(0,{opacity:0,transform:'translateY(8px) scale(.98)'}),at(.29,{opacity:0,transform:'translateY(8px) scale(.98)'}),at(.37,{opacity:1,transform:'none'}),at(1,{opacity:1,transform:'none'})]);
@@ -184,9 +199,47 @@
     const card = visual?.closest('.feature-card');
     if (!card) return;
     card.addEventListener('pointerenter', (event) => { if (event.pointerType === 'mouse') start(card, visual, kind); });
-    card.addEventListener('pointerleave', () => stop(card));
-    card.addEventListener('pointerdown', (event) => { if (event.target.closest('[data-demo-action]') || (kind === 'translator' && event.target.closest('.reader-page'))) stop(card); });
+    card.addEventListener('pointerleave', (event) => { if (event.pointerType === 'mouse') stop(card); });
+    card.addEventListener('pointerdown', (event) => { if ((event.pointerType === 'mouse' && visual.contains(event.target)) || event.target.closest('[data-demo-action]') || (kind === 'translator' && event.target.closest('.reader-page'))) stop(card); });
   });
+  // Touch devices have no hover: play one visible demonstration at a time.
+  if ('IntersectionObserver' in window) {
+    const visible = new Map();
+    const played = new WeakSet();
+    let activeCard = null;
+    const observer = new IntersectionObserver((entries) => {
+      if (!touchOnly.matches) return;
+      entries.forEach((entry) => {
+        const card = entry.target.closest('.feature-card');
+        if (!entry.isIntersecting) {
+          visible.delete(entry.target);
+          played.delete(card);
+        } else {
+          visible.set(entry.target, entry.intersectionRatio);
+        }
+      });
+      const candidates = [...visible].filter(([, ratio]) => ratio >= .5).sort((a, b) => b[1] - a[1]);
+      const visual = candidates[0]?.[0];
+      const card = visual?.closest('.feature-card');
+      if (activeCard && activeCard !== card) {
+        stop(activeCard);
+        activeCard = null;
+      }
+      if (card && !played.has(card) && !reduced.matches && !card.classList.contains('has-manual-state')) {
+        const kind = scenes.find(([selector]) => visual.matches(selector))?.[1];
+        if (kind) {
+          played.add(card);
+          activeCard = card;
+          start(card, visual, kind, true);
+        }
+      }
+    }, { threshold: [0, .25, .5, .75, 1] });
+    scenes.forEach(([selector]) => {
+      const visual = document.querySelector(selector);
+      if (visual) observer.observe(visual);
+    });
+  }
+
   const statsLayout = document.querySelector('.stats-layouts');
   let statsTimer = 0;
   let statsVisible = false;

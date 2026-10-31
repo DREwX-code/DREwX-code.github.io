@@ -25,7 +25,7 @@ window.DREWX_I18N = {
     externalLabel: 'Ouvre un nouvel onglet',
 
     heroEyebrow: 'French Developer · Userscript Engineer',
-    heroTitle: 'Des userscripts <em>soignés</em> pour un web plus fluide.',
+    heroTitle: 'Des <em class="hero-word">userscripts</em> pour un web plus fluide.',
     heroCopy: 'Je transforme les petites frictions du navigateur en outils rapides, intuitifs et profondément intégrés à vos habitudes.',
     heroPrimary: 'Explorer les projets',
     heroSecondary: 'Profil Greasy Fork',
@@ -171,7 +171,7 @@ window.DREWX_I18N = {
     externalLabel: 'Opens in a new tab',
 
     heroEyebrow: 'French Developer · Userscript Engineer',
-    heroTitle: 'Polished <em>userscripts</em> for a cleaner, faster web.',
+    heroTitle: '<em class="hero-word">Userscripts</em> for a cleaner, faster web.',
     heroCopy: 'I turn small browser frustrations into fast, intuitive tools that feel deeply integrated into the way you work.',
     heroPrimary: 'Explore the projects',
     heroSecondary: 'Greasy Fork profile',
@@ -319,7 +319,7 @@ Object.assign(window.DREWX_I18N, {
     "themeToLight": "Cambiar al tema claro",
     "externalLabel": "Se abre en una nueva pestaña",
     "heroEyebrow": "Desarrollador francés · Ingeniero de Userscript",
-    "heroTitle": "<em>scripts de usuario</em> pulidos para una web más limpia y rápida.",
+    "heroTitle": "<em class=\"hero-word\">Scripts de usuario</em> para una web más limpia y rápida.",
     "heroCopy": "Convierto las pequeñas frustraciones del navegador en herramientas rápidas e intuitivas que se sienten profundamente integradas en su forma de trabajar.",
     "heroPrimary": "Explora los proyectos",
     "heroSecondary": "Perfil de horquilla grasienta",
@@ -456,7 +456,7 @@ Object.assign(window.DREWX_I18N, {
     "themeToLight": "Mudar para tema claro",
     "externalLabel": "Abre em uma nova aba",
     "heroEyebrow": "Desenvolvedor Francês · Engenheiro de Userscript",
-    "heroTitle": "<em>userscripts</em> aprimorados para uma web mais limpa e rápida.",
+    "heroTitle": "<em class=\"hero-word\">Userscripts</em> para uma web mais limpa e rápida.",
     "heroCopy": "Eu transformo pequenas frustrações do navegador em ferramentas rápidas e intuitivas que se sentem profundamente integradas à sua maneira de trabalhar.",
     "heroPrimary": "Explorar os projetos",
     "heroSecondary": "Perfil do Greasy Fork",
@@ -593,7 +593,7 @@ Object.assign(window.DREWX_I18N, {
     "themeToLight": "切换到浅色主题",
     "externalLabel": "在新选项卡中打开",
     "heroEyebrow": "法国开发者·用户脚本工程师",
-    "heroTitle": "精心打造的<em>用户脚本</em>，让浏览更流畅。",
+    "heroTitle": "<em class=\"hero-word\">用户脚本</em>，让浏览更流畅。",
     "heroCopy": "我将浏览器中的小问题转化为快速、直观的工具，让您感觉深深融入到您的工作方式中。",
     "heroPrimary": "探索项目",
     "heroSecondary": "油叉轮廓",
@@ -730,7 +730,7 @@ Object.assign(window.DREWX_I18N, {
     "themeToLight": "लाइट थीम पर स्विच करें",
     "externalLabel": "एक नए टैब में खुलता है",
     "heroEyebrow": "फ़्रेंच डेवलपर · यूज़रस्क्रिप्ट इंजीनियर",
-    "heroTitle": "साफ़-सुथरी, तेज़ वेब के लिए पॉलिश की गई <em>उपयोगकर्तास्क्रिप्ट</em>।",
+    "heroTitle": "साफ़-सुथरी, तेज़ वेब के लिए <em class=\"hero-word\">उपयोगकर्तास्क्रिप्ट</em>।",
     "heroCopy": "मैं छोटी ब्राउज़र निराशाओं को तेज़, सहज टूल में बदल देता हूं जो आपके काम करने के तरीके में गहराई से एकीकृत महसूस करते हैं।",
     "heroPrimary": "परियोजनाओं का अन्वेषण करें",
     "heroSecondary": "चिकना कांटा प्रोफ़ाइल",
@@ -1053,3 +1053,214 @@ Object.assign(window.DREWX_I18N.es, { demoTranslating: 'Traduciendo…', demoTra
 Object.assign(window.DREWX_I18N.pt, { demoTranslating: 'Traduzindo…', demoTranslationError: 'Tradução indisponível. Tente novamente.' });
 Object.assign(window.DREWX_I18N.zh, { demoTranslating: '正在翻译…', demoTranslationError: '翻译不可用，请重试。' });
 Object.assign(window.DREWX_I18N.hi, { demoTranslating: 'अनुवाद हो रहा है…', demoTranslationError: 'अनुवाद उपलब्ध नहीं है। फिर से प्रयास करें।' });
+
+Object.assign(window.DREWX_I18N.fr, { heroWindowTitle: 'Un navigateur à votre image.', heroWindowCopy: 'Des outils pensés pour vos habitudes.', heroWindowStatus: 'Outils pour le web', heroWindowCustomize: 'Personnaliser son expérience', heroWindowExport: 'Garder ses conversations', heroWindowTranslate: 'Traduire en un instant' });
+Object.assign(window.DREWX_I18N.en, { heroWindowTitle: 'A browser that feels like yours.', heroWindowCopy: 'Tools built around your everyday needs.', heroWindowStatus: 'Tools for the web', heroWindowCustomize: 'Make it your own', heroWindowExport: 'Keep your conversations', heroWindowTranslate: 'Translate in an instant' });
+Object.assign(window.DREWX_I18N.es, { heroWindowTitle: 'Un navegador a tu medida.', heroWindowCopy: 'Herramientas pensadas para tus hábitos.', heroWindowStatus: 'Herramientas para la web', heroWindowCustomize: 'Personaliza tu experiencia', heroWindowExport: 'Conserva tus conversaciones', heroWindowTranslate: 'Traduce al instante' });
+Object.assign(window.DREWX_I18N.pt, { heroWindowTitle: 'Um navegador do seu jeito.', heroWindowCopy: 'Ferramentas pensadas para sua rotina.', heroWindowStatus: 'Ferramentas para a web', heroWindowCustomize: 'Personalize sua experiência', heroWindowExport: 'Guarde suas conversas', heroWindowTranslate: 'Traduza em instantes' });
+Object.assign(window.DREWX_I18N.zh, { heroWindowTitle: '打造属于你的浏览器。', heroWindowCopy: '为你的日常习惯设计的工具。', heroWindowStatus: '网页工具', heroWindowCustomize: '定制浏览体验', heroWindowExport: '保存对话', heroWindowTranslate: '即时翻译' });
+Object.assign(window.DREWX_I18N.hi, { heroWindowTitle: 'आपके अनुसार आपका ब्राउज़र।', heroWindowCopy: 'आपकी रोज़मर्रा की ज़रूरतों के लिए टूल।', heroWindowStatus: 'वेब के लिए टूल', heroWindowCustomize: 'अनुभव को अपना बनाएं', heroWindowExport: 'अपनी बातचीत सहेजें', heroWindowTranslate: 'तुरंत अनुवाद करें' });
+
+window.DREWX_I18N.fr.heroWords = ['userscripts', 'extensions', 'outils'];
+window.DREWX_I18N.en.heroWords = ['Userscripts', 'Extensions', 'Tools'];
+window.DREWX_I18N.es.heroWords = ['Scripts de usuario', 'Extensiones', 'Herramientas'];
+window.DREWX_I18N.pt.heroWords = ['Userscripts', 'Extensões', 'Ferramentas'];
+window.DREWX_I18N.zh.heroWords = ['用户脚本', '浏览器扩展', '工具'];
+window.DREWX_I18N.hi.heroWords = ['उपयोगकर्तास्क्रिप्ट', 'एक्सटेंशन', 'टूल'];
+
+Object.assign(window.DREWX_I18N.fr, {
+  projectWebsite: 'Site web',
+  translatorDesc: 'Traduisez du texte sélectionné directement sur la page grâce à une fenêtre rapide et discrète.',
+  omnichatDetail: 'Exportez toute la conversation ou un seul message, avec des options pour choisir le contenu à inclure.',
+  translatorDetail: 'Sélectionnez un texte, puis traduisez-le depuis la bulle ou avec un raccourci clavier personnalisable.',
+  statsDetail: 'Choisissez un thème, une langue et une mise en page, puis copiez le code pour votre profil.',
+  neuraveilDetail: 'Discutez et générez des images via AI Horde, avec un mode sans historique local.',
+  dinoDetail: 'Ajustez la vitesse et les options de jeu directement depuis une interface intégrée.',
+  securePassDetail: 'Choisissez la longueur et les caractères, ou remplissez un champ directement avec le mode Safer.',
+  youtubeDetail: 'Gardez la page actuelle ouverte tout en ouvrant les vidéos sélectionnées dans de nouveaux onglets.'
+});
+Object.assign(window.DREWX_I18N.en, {
+  projectWebsite: 'Website', translatorDesc: 'Translate selected text directly on the page with a fast, unobtrusive popup.',
+  omnichatDetail: 'Export a full conversation or a single message, and choose which content to include.',
+  translatorDetail: 'Select text and translate it from the floating button or with a customizable keyboard shortcut.',
+  statsDetail: 'Choose a theme, language and layout, then copy the code for your profile.',
+  neuraveilDetail: 'Chat and generate images through AI Horde, with a mode that keeps no local history.',
+  dinoDetail: 'Adjust the speed and game options from an integrated interface.',
+  securePassDetail: 'Choose the length and character types, or fill a field directly with Safer mode.',
+  youtubeDetail: 'Keep the current page open while selected videos open in new tabs.'
+});
+Object.assign(window.DREWX_I18N.es, {
+  projectWebsite: 'Sitio web', translatorDesc: 'Traduce el texto seleccionado en la página con una ventana rápida y discreta.',
+  omnichatDetail: 'Exporta toda la conversación o un solo mensaje y elige el contenido que quieres incluir.',
+  translatorDetail: 'Selecciona texto y tradúcelo desde el botón flotante o con un atajo de teclado personalizable.',
+  statsDetail: 'Elige un tema, un idioma y un diseño; después copia el código para tu perfil.',
+  neuraveilDetail: 'Chatea y genera imágenes con AI Horde, con un modo sin historial local.',
+  dinoDetail: 'Ajusta la velocidad y las opciones del juego desde una interfaz integrada.',
+  securePassDetail: 'Elige la longitud y los caracteres, o rellena un campo directamente con el modo Safer.',
+  youtubeDetail: 'Mantén la página actual abierta mientras los vídeos seleccionados se abren en nuevas pestañas.'
+});
+Object.assign(window.DREWX_I18N.pt, {
+  projectWebsite: 'Site', translatorDesc: 'Traduza o texto selecionado na própria página com uma janela rápida e discreta.',
+  omnichatDetail: 'Exporte toda a conversa ou uma mensagem e escolha o conteúdo a incluir.',
+  translatorDetail: 'Selecione o texto e traduza pelo botão flutuante ou por um atalho de teclado personalizável.',
+  statsDetail: 'Escolha um tema, idioma e layout e copie o código para seu perfil.',
+  neuraveilDetail: 'Converse e gere imagens com AI Horde, com um modo sem histórico local.',
+  dinoDetail: 'Ajuste a velocidade e as opções do jogo em uma interface integrada.',
+  securePassDetail: 'Escolha o comprimento e os caracteres ou preencha um campo diretamente com o modo Safer.',
+  youtubeDetail: 'Mantenha a página atual aberta enquanto os vídeos selecionados abrem em novas abas.'
+});
+Object.assign(window.DREWX_I18N.zh, {
+  projectWebsite: '网站', translatorDesc: '通过快速、简洁的弹窗直接翻译页面中选中的文字。',
+  omnichatDetail: '导出完整对话或单条消息，并选择要包含的内容。',
+  translatorDetail: '选中文字后，通过浮动按钮或自定义键盘快捷键翻译。',
+  statsDetail: '选择主题、语言和布局，然后复制代码到你的个人资料。',
+  neuraveilDetail: '通过 AI Horde 聊天和生成图片，并可使用不保存本地历史的模式。',
+  dinoDetail: '通过集成界面调整速度和游戏选项。',
+  securePassDetail: '选择长度和字符类型，或使用 Safer 模式直接填入字段。',
+  youtubeDetail: '在新标签页中打开选定视频，同时保留当前页面。'
+});
+Object.assign(window.DREWX_I18N.hi, {
+  projectWebsite: 'वेबसाइट', translatorDesc: 'तेज़ और सरल पॉपअप से पेज पर चुने गए पाठ का अनुवाद करें।',
+  omnichatDetail: 'पूरी बातचीत या एक संदेश निर्यात करें और शामिल की जाने वाली सामग्री चुनें।',
+  translatorDetail: 'पाठ चुनें और फ़्लोटिंग बटन या अपने कीबोर्ड शॉर्टकट से अनुवाद करें।',
+  statsDetail: 'थीम, भाषा और लेआउट चुनकर अपनी प्रोफ़ाइल के लिए कोड कॉपी करें।',
+  neuraveilDetail: 'AI Horde से चैट करें और चित्र बनाएं; बिना स्थानीय इतिहास वाला मोड भी उपलब्ध है।',
+  dinoDetail: 'एकीकृत इंटरफ़ेस से गति और गेम के विकल्प बदलें।',
+  securePassDetail: 'लंबाई और वर्ण चुनें या Safer मोड से सीधे फ़ील्ड भरें।',
+  youtubeDetail: 'चुने हुए वीडियो नए टैब में खोलते समय मौजूदा पेज खुला रखें।'
+});
+
+Object.assign(window.DREWX_I18N.fr, { projectOpenDetails: 'Voir les détails du projet', projectDetailsKicker: 'Projet', projectHighlights: 'Fonctionnalités', projectFeatures: {
+  premium: ['Thèmes Classic, Full Dark et Chalkboard, avec densité et largeur réglables.', 'Favoris, notes personnelles, installation directe et outils pour l’éditeur.'],
+  omnichat: ['Export complet ou par message en PDF, Markdown, TXT et JSON.', 'Conserve la structure des échanges et les blocs de code sur les plateformes compatibles.'],
+  translator: ['Détection automatique de la langue, bulle de sélection et raccourci personnalisable.', 'Lecture vocale, dictée et interface adaptée aux écrans tactiles compatibles.'],
+  stats: ['Cartes SVG personnalisables en thème, langue et disposition.', 'Code Markdown, HTML ou URL à copier pour un profil ou un README.'],
+  neuraveil: ['Panneau flottant pour les conversations et les images via AI Horde.', 'Mode Ghost sans sauvegarde locale des conversations.'],
+  dino: ['Contrôle de la vitesse, saut automatique et options de score.', 'Commandes intégrées à l’interface du jeu.'],
+  securePass: ['Longueur et catégories de caractères configurables.', 'Mode Safer pour remplir directement un champ sans afficher le mot de passe.'],
+  youtube: ['Ouvre les vidéos sélectionnées dans de nouveaux onglets.', 'Permet de conserver la page et la lecture en cours.']
+} });
+Object.assign(window.DREWX_I18N.en, { projectOpenDetails: 'View project details', projectDetailsKicker: 'Project', projectHighlights: 'Features', projectFeatures: {
+  premium: ['Classic, Full Dark and Chalkboard themes with adjustable density and width.', 'Favorites, personal notes, direct installation and editor tools.'],
+  omnichat: ['Export full conversations or individual messages as PDF, Markdown, TXT or JSON.', 'Preserves conversation structure and code blocks on supported platforms.'],
+  translator: ['Automatic language detection, a selection button and a customizable shortcut.', 'Speech playback, dictation and a touch-friendly interface on supported devices.'],
+  stats: ['Customizable SVG cards with themes, languages and layouts.', 'Copy Markdown, HTML or a URL for a profile or README.'],
+  neuraveil: ['Floating panel for conversations and images through AI Horde.', 'Ghost mode keeps conversations out of local storage.'],
+  dino: ['Speed control, automatic jumping and score options.', 'Controls integrated into the game interface.'],
+  securePass: ['Configurable length and character categories.', 'Safer mode fills a field directly without showing the password.'],
+  youtube: ['Open selected videos in new tabs.', 'Keep the current page and playback in place.']
+} });
+Object.assign(window.DREWX_I18N.es, { projectOpenDetails: 'Ver detalles del proyecto', projectDetailsKicker: 'Proyecto', projectHighlights: 'Funciones', projectFeatures: {
+  premium: ['Temas Classic, Full Dark y Chalkboard con densidad y anchura ajustables.', 'Favoritos, notas personales, instalación directa y herramientas de edición.'], omnichat: ['Exporta conversaciones completas o mensajes en PDF, Markdown, TXT o JSON.', 'Conserva la estructura y los bloques de código en plataformas compatibles.'], translator: ['Detección de idioma, botón de selección y atajo personalizable.', 'Lectura de voz, dictado e interfaz táctil en dispositivos compatibles.'], stats: ['Tarjetas SVG con temas, idiomas y diseños personalizables.', 'Copia Markdown, HTML o una URL para tu perfil o README.'], neuraveil: ['Panel flotante para conversaciones e imágenes mediante AI Horde.', 'El modo Ghost evita guardar conversaciones localmente.'], dino: ['Control de velocidad, salto automático y opciones de puntuación.', 'Controles integrados en la interfaz del juego.'], securePass: ['Longitud y tipos de caracteres configurables.', 'El modo Safer rellena un campo sin mostrar la contraseña.'], youtube: ['Abre los vídeos seleccionados en nuevas pestañas.', 'Conserva la página y la reproducción actuales.']
+} });
+Object.assign(window.DREWX_I18N.pt, { projectOpenDetails: 'Ver detalhes do projeto', projectDetailsKicker: 'Projeto', projectHighlights: 'Funcionalidades', projectFeatures: {
+  premium: ['Temas Classic, Full Dark e Chalkboard com densidade e largura ajustáveis.', 'Favoritos, notas pessoais, instalação direta e ferramentas de edição.'], omnichat: ['Exporte conversas ou mensagens em PDF, Markdown, TXT ou JSON.', 'Preserva a estrutura e blocos de código nas plataformas compatíveis.'], translator: ['Detecção de idioma, botão de seleção e atalho personalizável.', 'Leitura em voz alta, ditado e interface tátil em dispositivos compatíveis.'], stats: ['Cartões SVG com temas, idiomas e layouts personalizáveis.', 'Copie Markdown, HTML ou uma URL para seu perfil ou README.'], neuraveil: ['Painel flutuante para conversas e imagens pelo AI Horde.', 'O modo Ghost evita salvar conversas localmente.'], dino: ['Controle de velocidade, salto automático e opções de pontuação.', 'Controles integrados à interface do jogo.'], securePass: ['Comprimento e tipos de caracteres configuráveis.', 'O modo Safer preenche um campo sem mostrar a senha.'], youtube: ['Abra vídeos selecionados em novas abas.', 'Mantenha a página e a reprodução atuais.']
+} });
+Object.assign(window.DREWX_I18N.zh, { projectOpenDetails: '查看项目详情', projectDetailsKicker: '项目', projectHighlights: '功能', projectFeatures: {
+  premium: ['Classic、Full Dark 和 Chalkboard 主题，支持调整密度与宽度。', '收藏、个人备注、直接安装和编辑器工具。'], omnichat: ['将完整对话或单条消息导出为 PDF、Markdown、TXT 或 JSON。', '在支持的平台保留对话结构和代码块。'], translator: ['自动检测语言、选中文本按钮和自定义快捷键。', '在兼容设备上支持语音朗读、听写和触控界面。'], stats: ['可自定义主题、语言和布局的 SVG 卡片。', '复制 Markdown、HTML 或网址用于个人资料或 README。'], neuraveil: ['通过 AI Horde 在浮动面板中聊天和生成图片。', 'Ghost 模式不在本地保存对话。'], dino: ['速度控制、自动跳跃和分数选项。', '控制项集成在游戏界面中。'], securePass: ['可配置密码长度和字符类型。', 'Safer 模式可直接填入字段而不显示密码。'], youtube: ['在新标签页打开选中的视频。', '保留当前页面和播放状态。']
+} });
+Object.assign(window.DREWX_I18N.hi, { projectOpenDetails: 'प्रोजेक्ट का विवरण देखें', projectDetailsKicker: 'प्रोजेक्ट', projectHighlights: 'सुविधाएँ', projectFeatures: {
+  premium: ['Classic, Full Dark और Chalkboard थीम; घनत्व और चौड़ाई समायोजित करें।', 'पसंदीदा, निजी नोट, सीधे इंस्टॉल और संपादक टूल।'], omnichat: ['पूरी बातचीत या एक संदेश PDF, Markdown, TXT या JSON में निर्यात करें।', 'समर्थित प्लेटफ़ॉर्म पर बातचीत की संरचना और कोड ब्लॉक सुरक्षित रहते हैं।'], translator: ['भाषा की पहचान, चयन बटन और अनुकूलन योग्य शॉर्टकट।', 'संगत उपकरणों पर आवाज़ में पढ़ना, डिक्टेशन और टच इंटरफ़ेस।'], stats: ['थीम, भाषा और लेआउट वाले अनुकूलन योग्य SVG कार्ड।', 'प्रोफ़ाइल या README के लिए Markdown, HTML या URL कॉपी करें।'], neuraveil: ['AI Horde से बातचीत और चित्रों के लिए फ़्लोटिंग पैनल।', 'Ghost मोड बातचीत स्थानीय रूप से नहीं सहेजता।'], dino: ['गति नियंत्रण, स्वचालित छलांग और स्कोर विकल्प।', 'गेम इंटरफ़ेस में एकीकृत नियंत्रण।'], securePass: ['लंबाई और वर्णों की श्रेणियाँ चुनें।', 'Safer मोड पासवर्ड दिखाए बिना सीधे फ़ील्ड भरता है।'], youtube: ['चुने वीडियो नए टैब में खोलें।', 'मौजूदा पेज और प्लेबैक बनाए रखें।']
+} });
+
+window.DREWX_I18N.fr.projectPreviewLabel = 'Aperçu';
+window.DREWX_I18N.en.projectPreviewLabel = 'Preview';
+window.DREWX_I18N.es.projectPreviewLabel = 'Vista previa';
+window.DREWX_I18N.pt.projectPreviewLabel = 'Prévia';
+window.DREWX_I18N.zh.projectPreviewLabel = '预览';
+window.DREWX_I18N.hi.projectPreviewLabel = 'पूर्वावलोकन';
+
+window.DREWX_I18N.fr.projectIntro = {
+  premium: 'Une interface plus personnelle et pratique pour parcourir Greasy Fork et Sleazy Fork.',
+  omnichat: 'Gardez une trace de vos échanges avec les principaux assistants IA, dans un format adapté à votre usage.',
+  translator: 'Comprenez le contenu des pages que vous consultez, sans interrompre votre lecture.',
+  stats: 'Présentez votre activité Greasy Fork sur vos profils et dans vos projets.',
+  neuraveil: 'Un espace de discussion avec une IA accessible depuis les pages que vous consultez.',
+  dino: 'Explorez le jeu Dino de Chrome avec de nouvelles possibilités de personnalisation.',
+  securePass: 'Un générateur de mots de passe utilisable directement depuis votre navigateur.',
+  youtube: 'Une navigation plus souple pour découvrir des vidéos sans perdre votre place.'
+};
+window.DREWX_I18N.en.projectIntro = {
+  premium: 'A more personal and practical way to browse Greasy Fork and Sleazy Fork.',
+  omnichat: 'Keep your conversations with major AI assistants in a format that suits your needs.',
+  translator: 'Understand the pages you visit without interrupting your reading.',
+  stats: 'Showcase your Greasy Fork activity on your profiles and projects.',
+  neuraveil: 'An AI conversation space available from the pages you visit.',
+  dino: 'Explore Chrome’s Dino game with new ways to customize your experience.',
+  securePass: 'A password generator available directly from your browser.',
+  youtube: 'Browse videos more freely without losing your place.'
+};
+window.DREWX_I18N.es.projectIntro = {
+  premium: 'Una forma más personal y práctica de navegar por Greasy Fork y Sleazy Fork.', omnichat: 'Guarda tus conversaciones con los principales asistentes de IA en el formato que necesites.', translator: 'Comprende las páginas que visitas sin interrumpir la lectura.', stats: 'Muestra tu actividad de Greasy Fork en tus perfiles y proyectos.', neuraveil: 'Un espacio para conversar con IA desde las páginas que visitas.', dino: 'Explora el juego Dino de Chrome con nuevas posibilidades de personalización.', securePass: 'Un generador de contraseñas disponible directamente en tu navegador.', youtube: 'Descubre vídeos con más libertad sin perder tu lugar.'
+};
+window.DREWX_I18N.pt.projectIntro = {
+  premium: 'Uma forma mais pessoal e prática de navegar no Greasy Fork e no Sleazy Fork.', omnichat: 'Guarde suas conversas com os principais assistentes de IA no formato que precisar.', translator: 'Entenda as páginas que visita sem interromper a leitura.', stats: 'Mostre sua atividade no Greasy Fork em seus perfis e projetos.', neuraveil: 'Um espaço para conversar com IA nas páginas que você visita.', dino: 'Explore o jogo Dino do Chrome com novas opções de personalização.', securePass: 'Um gerador de senhas disponível diretamente no navegador.', youtube: 'Descubra vídeos com mais liberdade sem perder seu lugar.'
+};
+window.DREWX_I18N.zh.projectIntro = {
+  premium: '以更个性化、更便捷的方式浏览 Greasy Fork 和 Sleazy Fork。', omnichat: '以适合你的格式保存与主流 AI 助手的对话。', translator: '不打断阅读，即可理解浏览页面的内容。', stats: '在个人资料和项目中展示你的 Greasy Fork 活动。', neuraveil: '在浏览的页面上使用 AI 对话空间。', dino: '通过更多个性化选项探索 Chrome 小恐龙游戏。', securePass: '可直接在浏览器中使用的密码生成器。', youtube: '更自由地发现视频，同时保留当前浏览位置。'
+};
+window.DREWX_I18N.hi.projectIntro = {
+  premium: 'Greasy Fork और Sleazy Fork को अपने अनुसार, आसानी से ब्राउज़ करें।', omnichat: 'प्रमुख AI असिस्टेंट के साथ अपनी बातचीत को अपनी ज़रूरत के प्रारूप में रखें।', translator: 'पढ़ना रोके बिना देखे जा रहे पेज की सामग्री समझें।', stats: 'अपनी प्रोफ़ाइल और प्रोजेक्ट में Greasy Fork गतिविधि दिखाएँ।', neuraveil: 'देखे जा रहे पेज से AI से बातचीत करने की जगह।', dino: 'नए अनुकूलन विकल्पों के साथ Chrome का Dino गेम देखें।', securePass: 'सीधे ब्राउज़र में उपलब्ध पासवर्ड जनरेटर।', youtube: 'अपनी जगह खोए बिना आसानी से नए वीडियो खोजें।'
+};
+
+// Additional details are based on each project's documented features.
+Object.entries({
+  fr: {
+    premium: ['Synchronisation du mode clair ou sombre avec le système.', 'Affichage des autorisations, aperçu des détails et notes enregistrées automatiquement.', 'Barre de mise en forme, coloration du code et visionneuse d’images avec zoom.'],
+    omnichat: ['Choix des instructions et réponses à inclure dans l’export.', 'PDF multilingue avec métadonnées, tableaux et formules mathématiques.'],
+    translator: ['Traduction vers la langue définie dans le navigateur.', 'Panneau latéral redimensionnable sur ordinateur et fenêtre adaptée au mobile.', 'Thèmes Blue, Dark et Light, avec exclusion configurable de certains sites.'],
+    stats: ['Prévisualisation et téléchargement du SVG depuis le générateur.', 'Lien de configuration partageable et données publiques récupérées sans connexion.'],
+    neuraveil: ['Panneau latéral déplaçable et redimensionnable, avec historique local.', 'Choix du style de réponse et du niveau de raisonnement.'],
+    dino: ['Modes immortalité et déplacement dans les airs.', 'Personnalisation du score et contrôles accessibles dans le menu.'],
+    securePass: ['Génération avec Web Crypto API, de 12 à 64 caractères.', 'Boutons de remplissage pour les champs de mot de passe détectés en contexte sécurisé.', 'Estimation de l’entropie, thèmes et changement de langue sans recharger la page.']
+  },
+  en: {
+    premium: ['Automatic light or dark mode based on the system.', 'Permission viewer, expandable details and automatically saved notes.', 'Formatting toolbar, code highlighting and a zoomable image viewer.'],
+    omnichat: ['Choose whether instructions and AI responses are included.', 'Multilingual PDF with metadata, tables and mathematical formulas.'],
+    translator: ['Translation into the browser’s default language.', 'Resizable desktop side panel and a mobile-friendly popup.', 'Blue, Dark and Light themes with a configurable site blacklist.'],
+    stats: ['Preview and download an SVG in the generator.', 'Shareable configuration link and public data without signing in.'],
+    neuraveil: ['Movable, resizable side panel with local conversation history.', 'Choose a response style and reasoning level.'],
+    dino: ['Immortality and air-walk modes.', 'Custom score options and accessible menu controls.'],
+    securePass: ['Web Crypto API generation, from 12 to 64 characters.', 'Fill buttons for detected password fields in secure contexts.', 'Entropy estimate, themes and language switching without a reload.']
+  },
+  es: {
+    premium: ['Modo claro u oscuro automático según el sistema.', 'Permisos, detalles ampliables y notas guardadas automáticamente.', 'Barra de formato, resaltado de código y visor de imágenes con zoom.'],
+    omnichat: ['Elige si incluir instrucciones y respuestas de la IA.', 'PDF multilingüe con metadatos, tablas y fórmulas matemáticas.'],
+    translator: ['Traducción al idioma predeterminado del navegador.', 'Panel lateral ajustable en escritorio y ventana adaptada a móviles.', 'Temas Blue, Dark y Light, con exclusión configurable por sitio.'],
+    stats: ['Previsualiza y descarga SVG desde el generador.', 'Enlace de configuración compartible y datos públicos sin iniciar sesión.'],
+    neuraveil: ['Panel lateral móvil y ajustable con historial local.', 'Elige el estilo de respuesta y el nivel de razonamiento.'],
+    dino: ['Modos de inmortalidad y desplazamiento por el aire.', 'Puntuación personalizable y controles en el menú.'],
+    securePass: ['Generación con Web Crypto API, de 12 a 64 caracteres.', 'Botones para rellenar campos de contraseña en contextos seguros.', 'Estimación de entropía, temas e idioma sin recargar la página.']
+  },
+  pt: {
+    premium: ['Modo claro ou escuro automático conforme o sistema.', 'Permissões, detalhes expansíveis e notas salvas automaticamente.', 'Barra de formatação, realce de código e visualizador de imagens com zoom.'],
+    omnichat: ['Escolha se deseja incluir instruções e respostas da IA.', 'PDF multilíngue com metadados, tabelas e fórmulas matemáticas.'],
+    translator: ['Tradução para o idioma padrão do navegador.', 'Painel lateral redimensionável no computador e janela adaptada ao celular.', 'Temas Blue, Dark e Light, com exclusão configurável de sites.'],
+    stats: ['Visualize e baixe o SVG no gerador.', 'Link de configuração compartilhável e dados públicos sem login.'],
+    neuraveil: ['Painel lateral móvel e redimensionável com histórico local.', 'Escolha o estilo da resposta e o nível de raciocínio.'],
+    dino: ['Modos de imortalidade e caminhada no ar.', 'Pontuação personalizada e controles no menu.'],
+    securePass: ['Geração com Web Crypto API, de 12 a 64 caracteres.', 'Botões para preencher campos de senha em contextos seguros.', 'Estimativa de entropia, temas e troca de idioma sem recarregar.']
+  },
+  zh: {
+    premium: ['根据系统自动切换浅色或深色模式。', '查看权限、展开详情并自动保存备注。', '格式工具栏、代码高亮和支持缩放的图片查看器。'],
+    omnichat: ['选择是否包含指令和 AI 回复。', '多语言 PDF 支持元数据、表格和数学公式。'],
+    translator: ['翻译为浏览器的默认语言。', '桌面侧栏可调整大小，弹窗适配移动设备。', 'Blue、Dark 和 Light 主题，可按网站设置排除列表。'],
+    stats: ['在生成器中预览并下载 SVG。', '可分享配置链接，无需登录即可读取公开数据。'],
+    neuraveil: ['可移动和调整大小的侧栏，支持本地对话历史。', '选择回复风格和推理级别。'],
+    dino: ['无敌和空中行走模式。', '自定义分数及菜单控制。'],
+    securePass: ['使用 Web Crypto API 生成 12 至 64 位密码。', '在安全上下文中为检测到的密码字段提供填充按钮。', '熵估算、主题以及无需刷新页面的语言切换。']
+  },
+  hi: {
+    premium: ['सिस्टम के अनुसार हल्का या गहरा मोड अपने आप चुनें।', 'अनुमतियाँ, विस्तृत जानकारी और अपने आप सहेजे गए नोट।', 'फ़ॉर्मैटिंग टूलबार, कोड हाइलाइटिंग और ज़ूम वाला चित्र दर्शक।'],
+    omnichat: ['निर्देश और AI के उत्तर शामिल करने का विकल्प।', 'मेटाडेटा, तालिकाओं और गणितीय सूत्रों वाला बहुभाषी PDF।'],
+    translator: ['ब्राउज़र की डिफ़ॉल्ट भाषा में अनुवाद।', 'डेस्कटॉप पर आकार बदलने वाला साइड पैनल और मोबाइल पॉपअप।', 'Blue, Dark और Light थीम तथा साइटों को बाहर रखने का विकल्प।'],
+    stats: ['जनरेटर में SVG का पूर्वावलोकन और डाउनलोड।', 'साझा करने योग्य सेटिंग लिंक और बिना लॉगिन सार्वजनिक डेटा।'],
+    neuraveil: ['स्थानीय इतिहास वाला चल और आकार बदल सकने वाला साइड पैनल।', 'उत्तर शैली और तर्क का स्तर चुनें।'],
+    dino: ['अमरता और हवा में चलने के मोड।', 'कस्टम स्कोर और मेन्यू नियंत्रण।'],
+    securePass: ['Web Crypto API से 12 से 64 वर्णों का निर्माण।', 'सुरक्षित संदर्भ में पासवर्ड फ़ील्ड भरने के बटन।', 'एंट्रॉपी अनुमान, थीम और बिना रीलोड भाषा बदलना।']
+  }
+}).forEach(([language, projects]) => {
+  Object.entries(projects).forEach(([project, features]) => {
+    window.DREWX_I18N[language].projectFeatures[project].push(...features);
+  });
+});
